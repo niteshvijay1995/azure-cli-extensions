@@ -16,9 +16,9 @@ from azext_cosmosdb_preview._validators import (
     validate_seednodes,
     validate_node_count)
 
-from azext_cosmosdb_preview.actions import (
-    CreateLocation, CreateDatabaseRestoreResource, UtcDatetimeAction, AddDataTransferDataSource,
-    AddDataTransferDataSink)
+from azext_cosmosdb_preview.action import (
+    AddDataTransferDataSource,
+    AddDataTransferDataSink, AddCassandraTableAction, AddBlobContainerAction)
 
 from azure.cli.core.commands.validators import (
     get_default_location_from_resource_group,
@@ -110,30 +110,26 @@ def load_arguments(self, _):
         c.argument('instance_count', options_list=['--count', '-c'], help="Instance Count.")
         c.argument('instance_size', options_list=['--size'], help="Instance Size. Possible values are: Cosmos.D4s, Cosmos.D8s, Cosmos.D16s etc")
 
-    with self.argument_context('cosmosdb data-transfer-job create2') as c:
+    with self.argument_context('cosmosdb dts create2') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('account_name', type=str, help='Cosmos DB database account name.')
         c.argument('job_name', type=str, help='Name of the Data Transfer Job')
         c.argument('source', action=AddDataTransferDataSource, nargs='+', help='Source component of Data Transfer job', arg_group='Component')
         c.argument('destination', action=AddDataTransferDataSink, nargs='+', help='Destination component of Data Transfer job', arg_group='Component')
 
-    with self.argument_context('cosmosdb dts export cassandra-table') as c:
+    with self.argument_context('cosmosdb dts export') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('account_name', type=str, options_list=['--account-name', '-a'], help='Cosmos DB database account name.')
-        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
-        c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
-        c.argument('table_name', options_list=['--table-name', '-t'], help="Table name")
-        c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
-        c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job. A random job name will be generated if not passed.')
+        c.argument('cassandra_table', nargs='+', action=AddCassandraTableAction, help='Data source cassandra table')
+        c.argument('blob_container', nargs='+', action=AddBlobContainerAction, help='Data sink blob container')
 
-    with self.argument_context('cosmosdb dts import casssandra-table') as c:
+    with self.argument_context('cosmosdb dts import') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('account_name', type=str, options_list=['--account-name', '-a'], help='Cosmos DB database account name.')
-        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
-        c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
-        c.argument('table_name', options_list=['--table-name', '-t'], help="Table name")
-        c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
-        c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job. A random job name will be generated if not passed.')
+        c.argument('cassandra_table', nargs='+', action=AddCassandraTableAction, help='Data sink cassandra table')
+        c.argument('blob_container', nargs='+', action=AddBlobContainerAction, help='Data source blob container')
 
     with self.argument_context('cosmosdb dts list') as c:
         c.argument('resource_group_name', resource_group_name_type)

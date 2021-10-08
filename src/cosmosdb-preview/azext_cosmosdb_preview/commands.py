@@ -81,20 +81,12 @@ def load_command_table(self, _):
     with self.command_group(
             'cosmosdb dts', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
         ) as g:
-            g.custom_command('create2', 'cosmosdb_data_transfer_job_create2')
+            g.custom_command('export', 'cosmosdb_data_transfer_export_job')
+            g.custom_command('import', 'cosmosdb_data_transfer_import_job')
+            # g.custom_command('create2', 'cosmosdb_data_transfer_job_create2')
             g.custom_command('list', 'cosmosdb_dts_list')
             g.custom_show_command('show', 'cosmosdb_dts_show')
-            g.custom_command('create', 'cosmosdb_dts_create')
-
-    with self.command_group(
-            'cosmosdb dts export', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
-        ) as g:
-            g.custom_command('cassandra-table', 'cosmosdb_data_transfer_cassandra_export_job')
-
-    with self.command_group(
-            'cosmosdb dts import', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
-        ) as g:
-            g.custom_command('cassandra-table', 'cosmosdb_data_transfer_cassandra_import_job')
+            # g.custom_command('create', 'cosmosdb_dts_create')
 
     with self.command_group(
             'cosmosdb cassandra table', cosmosdb_cassandra_sdk, client_factory=cf_data_transfer_job

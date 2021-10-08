@@ -296,6 +296,82 @@ def cosmosdb_data_transfer_job_create2(client,
                          job_create_parameters=job_create_parameters)                                    
 
 
+def cosmosdb_data_transfer_export_job(client,
+                                      resource_group_name,
+                                      account_name,
+                                      cassandra_table,
+                                      blob_container,
+                                      job_name=None):
+
+    if cassandra_table is None:
+        raise CLIError('Source is required for dts export')
+
+    if blob_container is None:
+        raise CLIError('Sink is required for dts export')
+
+    job_source = {}
+    job_source['component'] = 'CosmosDBCassandra'
+    job_source['keyspace_name'] = cassandra_table['keyspace_name']
+    job_source['table_name'] = cassandra_table['table_name']
+
+    job_destination = {}
+    job_destination['component'] = 'AzureBlobStorage'
+    job_destination['container_name'] = blob_container['container_name']
+    job_destination['endpoint_url'] = blob_container['endpoint_url']
+
+    job_create_properties = {}
+    job_create_properties['source'] = job_source
+    job_create_properties['destination'] = job_destination
+
+    job_create_parameters = {}
+    job_create_parameters['properties'] = job_create_properties
+
+    if job_name is None:
+        job_name = _gen_guid()
+
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)
+
+def cosmosdb_data_transfer_import_job(client,
+                                      resource_group_name,
+                                      account_name,
+                                      cassandra_table,
+                                      blob_container,
+                                      job_name=None):
+    if blob_container is None:
+        raise CLIError('Source is required for dts import')
+
+    if cassandra_table is None:
+        raise CLIError('Sink is required for dts import')
+        
+    job_source = {}
+    job_source['component'] = 'AzureBlobStorage'
+    job_source['container_name'] = blob_container['container_name']
+    job_source['endpoint_url'] = blob_container['endpoint_url']
+    
+    job_destination = {}
+    job_destination['component'] = 'CosmosDBCassandra'
+    job_destination['keyspace_name'] = cassandra_table['keyspace_name']
+    job_destination['table_name'] = cassandra_table['table_name']
+
+    job_create_properties = {}
+    job_create_properties['source'] = job_source
+    job_create_properties['destination'] = job_destination
+
+    job_create_parameters = {}
+    job_create_parameters['properties'] = job_create_properties
+
+    if job_name is None:
+        job_name = _gen_guid()
+
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)
+
+
 def cosmosdb_data_transfer_cassandra_export_job(client,
                                       resource_group_name,
                                       account_name,
