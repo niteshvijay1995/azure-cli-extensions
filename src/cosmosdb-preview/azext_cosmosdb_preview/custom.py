@@ -11,15 +11,6 @@
 # --------------------------------------------------------------------------
 
 # pylint: disable=unused-wildcard-import,wildcard-import
-from .generated.custom import *  # noqa: F403
-try:
-    from .manual.custom import *  # noqa: F403
-except ImportError as e:
-    if e.name.endswith('manual.custom'):
-        pass
-    else:
-        raise e
-
 
 from knack.util import CLIError
 from knack.log import get_logger
@@ -287,3 +278,112 @@ def cli_cosmosdb_service_update(client,
 def _gen_guid():
     import uuid
     return uuid.uuid4()
+
+def cosmosdb_data_transfer_job_create2(client,
+                                      resource_group_name,
+                                      account_name,
+                                      job_name,
+                                      source,
+                                      destination):
+    job_create_properties = {}
+    job_create_properties['source'] = source
+    job_create_properties['destination'] = destination
+    job_create_parameters = {}
+    job_create_parameters['properties'] = job_create_properties
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)                                    
+
+
+def cosmosdb_data_transfer_cassandra_export_job(client,
+                                      resource_group_name,
+                                      account_name,
+                                      keyspace_name,
+                                      table_name,
+                                      storage_container,
+                                      storage_url,
+                                      job_name=None):
+    job_source = {}
+    job_source['component'] = 'CosmosDBCassandra'
+    job_source['keyspace_name'] = keyspace_name
+    job_source['table_name'] = table_name
+
+    job_destination = {}
+    job_destination['component'] = 'AzureBlobStorage'
+    job_destination['container_name'] = storage_container
+    job_destination['endpoint_url'] = storage_url
+
+    job_create_properties = {}
+    job_create_properties['source'] = job_source
+    job_create_properties['destination'] = job_destination
+
+    job_create_parameters = {}
+    job_create_parameters['properties'] = job_create_properties
+
+    if job_name is None:
+        job_name = _gen_guid()
+
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)
+
+def cosmosdb_data_transfer_cassandra_import_job(client,
+                                      resource_group_name,
+                                      account_name,
+                                      keyspace_name,
+                                      table_name,
+                                      storage_container,
+                                      storage_url,
+                                      job_name=None):
+    job_source = {}
+    job_source['component'] = 'AzureBlobStorage'
+    job_source['container_name'] = storage_container
+    job_source['endpoint_url'] = storage_url
+    
+    job_destination = {}
+    job_destination['component'] = 'CosmosDBCassandra'
+    job_destination['keyspace_name'] = keyspace_name
+    job_destination['table_name'] = table_name
+
+    job_create_properties = {}
+    job_create_properties['source'] = job_source
+    job_create_properties['destination'] = job_destination
+
+    job_create_parameters = {}
+    job_create_parameters['properties'] = job_create_properties
+
+    if job_name is None:
+        job_name = _gen_guid()
+
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)
+
+def cosmosdb_dts_list(client,
+                      resource_group_name,
+                      account_name):
+    return client.list_by_database_account(resource_group_name=resource_group_name,
+                                           account_name=account_name)
+
+
+def cosmosdb_dts_show(client,
+                      resource_group_name,
+                      account_name,
+                      job_name):
+    return client.get(resource_group_name=resource_group_name,
+                      account_name=account_name,
+                      job_name=job_name)
+
+
+def cosmosdb_dts_create(client,
+                        resource_group_name,
+                        account_name,
+                        job_name,
+                        job_create_parameters):
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)

@@ -50,7 +50,7 @@ class ApiProperties(msrest.serialization.Model):
         self.server_version = kwargs.get('server_version', None)
 
 
-class ARMProxyResource(msrest.serialization.Model):
+class ArmProxyResource(msrest.serialization.Model):
     """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -79,13 +79,13 @@ class ARMProxyResource(msrest.serialization.Model):
         self,
         **kwargs
     ):
-        super(ARMProxyResource, self).__init__(**kwargs)
+        super(ArmProxyResource, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
 
 
-class ARMResourceProperties(msrest.serialization.Model):
+class ArmResourceProperties(msrest.serialization.Model):
     """The core properties of ARM resources.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -128,7 +128,7 @@ class ARMResourceProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
-        super(ARMResourceProperties, self).__init__(**kwargs)
+        super(ArmResourceProperties, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
@@ -196,8 +196,8 @@ class AutoscaleSettingsResource(msrest.serialization.Model):
 class AutoUpgradePolicyResource(msrest.serialization.Model):
     """Cosmos DB resource auto-upgrade policy.
 
-    :param throughput_policy: Represents throughput policy which service must adhere to for
-     auto-upgrade.
+    :param throughput_policy: Represents throughput policy which service must adhere to for auto-
+     upgrade.
     :type throughput_policy: ~azure.mgmt.cosmosdb.models.ThroughputPolicyResource
     """
 
@@ -211,6 +211,74 @@ class AutoUpgradePolicyResource(msrest.serialization.Model):
     ):
         super(AutoUpgradePolicyResource, self).__init__(**kwargs)
         self.throughput_policy = kwargs.get('throughput_policy', None)
+
+
+class DataTransferDataSourceSink(msrest.serialization.Model):
+    """Base class for all DataTransfer source/sink.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: AzureBlobDataTransferDataSourceSink, CosmosCassandraDataTransferDataSourceSink.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param component: Required. Constant filled by server.  Possible values include:
+     "CosmosDBCassandra", "AzureStorage". Default value: "CosmosDBCassandra".
+    :type component: str or ~azure.mgmt.cosmosdb.models.DataTransferComponent
+    """
+
+    _validation = {
+        'component': {'required': True},
+    }
+
+    _attribute_map = {
+        'component': {'key': 'component', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'component': {'AzureBlobStorage': 'AzureBlobDataTransferDataSourceSink', 'CosmosDBCassandra': 'CosmosCassandraDataTransferDataSourceSink'}
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(DataTransferDataSourceSink, self).__init__(**kwargs)
+        self.component = None  # type: Optional[str]
+
+
+class AzureBlobDataTransferDataSourceSink(DataTransferDataSourceSink):
+    """An Azure Blob Storage data source/sink.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param component: Required. Constant filled by server.  Possible values include:
+     "CosmosDBCassandra", "AzureStorage". Default value: "CosmosDBCassandra".
+    :type component: str or ~azure.mgmt.cosmosdb.models.DataTransferComponent
+    :param container_name: Required.
+    :type container_name: str
+    :param endpoint_url:
+    :type endpoint_url: str
+    """
+
+    _validation = {
+        'component': {'required': True},
+        'container_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'component': {'key': 'component', 'type': 'str'},
+        'container_name': {'key': 'containerName', 'type': 'str'},
+        'endpoint_url': {'key': 'endpointUrl', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(AzureBlobDataTransferDataSourceSink, self).__init__(**kwargs)
+        self.component = 'AzureBlobStorage'  # type: str
+        self.container_name = kwargs['container_name']
+        self.endpoint_url = kwargs.get('endpoint_url', None)
 
 
 class BackupInformation(msrest.serialization.Model):
@@ -305,7 +373,7 @@ class BackupPolicyMigrationState(msrest.serialization.Model):
         self.start_time = kwargs.get('start_time', None)
 
 
-class BackupResource(ARMProxyResource):
+class BackupResource(ArmProxyResource):
     """A restorable backup of a Cassandra cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -380,7 +448,7 @@ class Capability(msrest.serialization.Model):
         self.name = kwargs.get('name', None)
 
 
-class CassandraKeyspaceCreateUpdateParameters(ARMResourceProperties):
+class CassandraKeyspaceCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Cassandra keyspace.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -588,7 +656,7 @@ class CassandraKeyspaceGetPropertiesResource(ExtendedResourceProperties, Cassand
         self.etag = None
 
 
-class CassandraKeyspaceGetResults(ARMResourceProperties):
+class CassandraKeyspaceGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Cassandra keyspace.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -612,14 +680,15 @@ class CassandraKeyspaceGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.CassandraKeyspaceGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.CassandraKeyspaceGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -630,7 +699,7 @@ class CassandraKeyspaceGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'CassandraKeyspaceGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'CassandraKeyspaceGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -639,7 +708,7 @@ class CassandraKeyspaceGetResults(ARMResourceProperties):
     ):
         super(CassandraKeyspaceGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class CassandraKeyspaceListResult(msrest.serialization.Model):
@@ -713,7 +782,7 @@ class CassandraSchema(msrest.serialization.Model):
         self.cluster_keys = kwargs.get('cluster_keys', None)
 
 
-class CassandraTableCreateUpdateParameters(ARMResourceProperties):
+class CassandraTableCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Cassandra table.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -885,7 +954,7 @@ class CassandraTableGetPropertiesResource(ExtendedResourceProperties, CassandraT
         self.etag = None
 
 
-class CassandraTableGetResults(ARMResourceProperties):
+class CassandraTableGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Cassandra table.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -909,14 +978,15 @@ class CassandraTableGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.CassandraTableGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.CassandraTableGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -927,7 +997,7 @@ class CassandraTableGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'CassandraTableGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'CassandraTableGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -936,7 +1006,7 @@ class CassandraTableGetResults(ARMResourceProperties):
     ):
         super(CassandraTableGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class CassandraTableListResult(msrest.serialization.Model):
@@ -964,7 +1034,7 @@ class CassandraTableListResult(msrest.serialization.Model):
         self.value = None
 
 
-class CassandraViewCreateUpdateParameters(ARMResourceProperties):
+class CassandraViewCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Cassandra view.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1120,7 +1190,7 @@ class CassandraViewGetPropertiesResource(ExtendedResourceProperties, CassandraVi
         self.etag = None
 
 
-class CassandraViewGetResults(ARMResourceProperties):
+class CassandraViewGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Cassandra view.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1144,14 +1214,15 @@ class CassandraViewGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.CassandraViewGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.CassandraViewGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -1162,7 +1233,7 @@ class CassandraViewGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'CassandraViewGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'CassandraViewGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -1171,7 +1242,7 @@ class CassandraViewGetResults(ARMResourceProperties):
     ):
         super(CassandraViewGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class CassandraViewListResult(msrest.serialization.Model):
@@ -1320,7 +1391,7 @@ class ClusterNodeStatusNodesItem(msrest.serialization.Model):
         self.rack = kwargs.get('rack', None)
 
 
-class ClusterResource(ARMResourceProperties):
+class ClusterResource(ArmResourceProperties):
     """Representation of a managed Cassandra cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1784,6 +1855,67 @@ class CorsPolicy(msrest.serialization.Model):
         self.max_age_in_seconds = kwargs.get('max_age_in_seconds', None)
 
 
+class CosmosCassandraDataTransferDataSourceSink(DataTransferDataSourceSink):
+    """A CosmosDB Cassandra API data source/sink.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param component: Required. Constant filled by server.  Possible values include:
+     "CosmosDBCassandra", "AzureStorage". Default value: "CosmosDBCassandra".
+    :type component: str or ~azure.mgmt.cosmosdb.models.DataTransferComponent
+    :param keyspace_name: Required.
+    :type keyspace_name: str
+    :param table_name: Required.
+    :type table_name: str
+    """
+
+    _validation = {
+        'component': {'required': True},
+        'keyspace_name': {'required': True},
+        'table_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'component': {'key': 'component', 'type': 'str'},
+        'keyspace_name': {'key': 'keyspaceName', 'type': 'str'},
+        'table_name': {'key': 'tableName', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(CosmosCassandraDataTransferDataSourceSink, self).__init__(**kwargs)
+        self.component = 'CosmosDBCassandra'  # type: str
+        self.keyspace_name = kwargs['keyspace_name']
+        self.table_name = kwargs['table_name']
+
+
+class CreateJobRequest(msrest.serialization.Model):
+    """Parameters to create Data Transfer Job.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param properties: Required. Data Transfer Create Job Properties.
+    :type properties: ~azure.mgmt.cosmosdb.models.DataTransferCreateJobProperties
+    """
+
+    _validation = {
+        'properties': {'required': True},
+    }
+
+    _attribute_map = {
+        'properties': {'key': 'properties', 'type': 'DataTransferCreateJobProperties'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(CreateJobRequest, self).__init__(**kwargs)
+        self.properties = kwargs['properties']
+
+
 class CreateUpdateOptions(msrest.serialization.Model):
     """CreateUpdateOptions are a list of key-value pairs that describe the resource. Supported keys are "If-Match", "If-None-Match", "Session-Token" and "Throughput".
 
@@ -1837,7 +1969,7 @@ class DatabaseAccountConnectionString(msrest.serialization.Model):
         self.description = None
 
 
-class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
+class DatabaseAccountCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB database accounts.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1869,7 +2001,7 @@ class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
     :param locations: Required. An array that contains the georeplication locations enabled for the
      Cosmos DB account.
     :type locations: list[~azure.mgmt.cosmosdb.models.Location]
-    :ivar database_account_offer_type: The offer type for the database. Has constant value:
+    :ivar database_account_offer_type: Required. The offer type for the database. Default value:
      "Standard".
     :vartype database_account_offer_type: str
     :param ip_rules: List of IpRules.
@@ -2035,7 +2167,7 @@ class DatabaseAccountCreateUpdateProperties(msrest.serialization.Model):
     :param locations: Required. An array that contains the georeplication locations enabled for the
      Cosmos DB account.
     :type locations: list[~azure.mgmt.cosmosdb.models.Location]
-    :ivar database_account_offer_type: The offer type for the database. Has constant value:
+    :ivar database_account_offer_type: Required. The offer type for the database. Default value:
      "Standard".
     :vartype database_account_offer_type: str
     :param ip_rules: List of IpRules.
@@ -2179,7 +2311,7 @@ class DatabaseAccountCreateUpdateProperties(msrest.serialization.Model):
         self.restore_parameters = kwargs.get('restore_parameters', None)
 
 
-class DatabaseAccountGetResults(ARMResourceProperties):
+class DatabaseAccountGetResults(ArmResourceProperties):
     """An Azure Cosmos DB database account.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2217,8 +2349,7 @@ class DatabaseAccountGetResults(ARMResourceProperties):
     :ivar document_endpoint: The connection endpoint for the Cosmos DB database account.
     :vartype document_endpoint: str
     :ivar database_account_offer_type: The offer type for the Cosmos DB database account. Default
-     value: Standard. The only acceptable values to pass in are None and "Standard". The default
-     value is None.
+     value: Standard. Default value: "Standard".
     :vartype database_account_offer_type: str
     :param ip_rules: List of IpRules.
     :type ip_rules: list[~azure.mgmt.cosmosdb.models.IpAddressOrRange]
@@ -2311,7 +2442,7 @@ class DatabaseAccountGetResults(ARMResourceProperties):
         'system_data': {'readonly': True},
         'provisioning_state': {'readonly': True},
         'document_endpoint': {'readonly': True},
-        'database_account_offer_type': {'readonly': True},
+        'database_account_offer_type': {'readonly': True, 'constant': True},
         'write_locations': {'readonly': True},
         'read_locations': {'readonly': True},
         'locations': {'readonly': True},
@@ -2364,6 +2495,8 @@ class DatabaseAccountGetResults(ARMResourceProperties):
         'diagnostic_log_settings': {'key': 'properties.diagnosticLogSettings', 'type': 'DiagnosticLogSettings'},
         'disable_local_auth': {'key': 'properties.disableLocalAuth', 'type': 'bool'},
     }
+
+    database_account_offer_type = "Standard"
 
     def __init__(
         self,
@@ -2714,7 +2847,7 @@ class DatabaseRestoreResource(msrest.serialization.Model):
         self.collection_names = kwargs.get('collection_names', None)
 
 
-class DataCenterResource(ARMProxyResource):
+class DataCenterResource(ArmProxyResource):
     """A managed Cassandra data center.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2808,6 +2941,125 @@ class DataCenterResourceProperties(msrest.serialization.Model):
         self.base64_encoded_cassandra_yaml_fragment = kwargs.get('base64_encoded_cassandra_yaml_fragment', None)
 
 
+class DataTransferCreateJobProperties(msrest.serialization.Model):
+    """Properties to create Data Transfer Job.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param source: Required. Source DataStore details.
+    :type source: ~azure.mgmt.cosmosdb.models.DataTransferDataSourceSink
+    :param destination: Required. Destination DataStore details.
+    :type destination: ~azure.mgmt.cosmosdb.models.DataTransferDataSourceSink
+    """
+
+    _validation = {
+        'source': {'required': True},
+        'destination': {'required': True},
+    }
+
+    _attribute_map = {
+        'source': {'key': 'source', 'type': 'DataTransferDataSourceSink'},
+        'destination': {'key': 'destination', 'type': 'DataTransferDataSourceSink'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(DataTransferCreateJobProperties, self).__init__(**kwargs)
+        self.source = kwargs['source']
+        self.destination = kwargs['destination']
+
+
+class DataTransferJobFeedResults(msrest.serialization.Model):
+    """The List operation response, that contains the Data Transfer jobs and their properties.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar value: List of Data Transfer jobs and their properties.
+    :vartype value: list[~azure.mgmt.cosmosdb.models.DataTransferJobGetResults]
+    :param next_link: URL to get the next set of Data Transfer job list results if there are any.
+    :type next_link: str
+    """
+
+    _validation = {
+        'value': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[DataTransferJobGetResults]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(DataTransferJobFeedResults, self).__init__(**kwargs)
+        self.value = None
+        self.next_link = kwargs.get('next_link', None)
+
+
+class DataTransferJobGetResults(ArmProxyResource):
+    """A Cosmos DB Data Transfer Job.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The unique resource identifier of the database account.
+    :vartype id: str
+    :ivar name: The name of the database account.
+    :vartype name: str
+    :ivar type: The type of Azure resource.
+    :vartype type: str
+    :ivar job_name: Job Name.
+    :vartype job_name: str
+    :param source: Source DataStore details.
+    :type source: ~azure.mgmt.cosmosdb.models.DataTransferDataSourceSink
+    :param destination: Destination DataStore details.
+    :type destination: ~azure.mgmt.cosmosdb.models.DataTransferDataSourceSink
+    :ivar status: Job Status.
+    :vartype status: str
+    :ivar percent_complete: Percentage of completion.
+    :vartype percent_complete: float
+    :ivar last_updated: Last Updated Time (ISO-8601 format).
+    :vartype last_updated: ~datetime.datetime
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'job_name': {'readonly': True},
+        'status': {'readonly': True},
+        'percent_complete': {'readonly': True},
+        'last_updated': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'job_name': {'key': 'properties.jobName', 'type': 'str'},
+        'source': {'key': 'properties.source', 'type': 'DataTransferDataSourceSink'},
+        'destination': {'key': 'properties.destination', 'type': 'DataTransferDataSourceSink'},
+        'status': {'key': 'properties.status', 'type': 'str'},
+        'percent_complete': {'key': 'properties.percentComplete', 'type': 'float'},
+        'last_updated': {'key': 'properties.lastUpdated', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(DataTransferJobGetResults, self).__init__(**kwargs)
+        self.job_name = None
+        self.source = kwargs.get('source', None)
+        self.destination = kwargs.get('destination', None)
+        self.status = None
+        self.percent_complete = None
+        self.last_updated = None
+
+
 class RegionalServiceResource(msrest.serialization.Model):
     """Resource for a regional service location.
 
@@ -2899,13 +3151,16 @@ class DataTransferServiceResource(msrest.serialization.Model):
 class ServiceResourceProperties(msrest.serialization.Model):
     """Services response resource.
 
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: DataTransferServiceResourceProperties, GraphApiComputeServiceResourceProperties, SqlDedicatedGatewayServiceResourceProperties.
+
     Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
-    :type additional_properties: dict[str, any]
+    :type additional_properties: dict[str, object]
     :ivar creation_time: Time of the last state change (ISO-8601 format).
     :vartype creation_time: ~datetime.datetime
     :param instance_size: Instance type for the service. Possible values include: "Cosmos.D4s",
@@ -2913,8 +3168,8 @@ class ServiceResourceProperties(msrest.serialization.Model):
     :type instance_size: str or ~azure.mgmt.cosmosdb.models.ServiceSize
     :param instance_count: Instance count for the service.
     :type instance_count: int
-    :param service_type: Required. ServiceType for the service. Possible values include:
-     "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+    :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
@@ -2937,6 +3192,10 @@ class ServiceResourceProperties(msrest.serialization.Model):
         'status': {'key': 'status', 'type': 'str'},
     }
 
+    _subtype_map = {
+        'service_type': {'DataTransferService': 'DataTransferServiceResourceProperties', 'GraphAPICompute': 'GraphApiComputeServiceResourceProperties', 'SqlDedicatedGateway': 'SqlDedicatedGatewayServiceResourceProperties'}
+    }
+
     def __init__(
         self,
         **kwargs
@@ -2946,7 +3205,7 @@ class ServiceResourceProperties(msrest.serialization.Model):
         self.creation_time = None
         self.instance_size = kwargs.get('instance_size', None)
         self.instance_count = kwargs.get('instance_count', None)
-        self.service_type = kwargs['service_type']
+        self.service_type = 'ServiceResourceProperties'  # type: str
         self.status = None
 
 
@@ -2959,7 +3218,7 @@ class DataTransferServiceResourceProperties(ServiceResourceProperties):
 
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
-    :type additional_properties: dict[str, any]
+    :type additional_properties: dict[str, object]
     :ivar creation_time: Time of the last state change (ISO-8601 format).
     :vartype creation_time: ~datetime.datetime
     :param instance_size: Instance type for the service. Possible values include: "Cosmos.D4s",
@@ -2967,14 +3226,14 @@ class DataTransferServiceResourceProperties(ServiceResourceProperties):
     :type instance_size: str or ~azure.mgmt.cosmosdb.models.ServiceSize
     :param instance_count: Instance count for the service.
     :type instance_count: int
-    :param service_type: Required. ServiceType for the service. Possible values include:
-     "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+    :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
     :vartype status: str or ~azure.mgmt.cosmosdb.models.ServiceStatus
     :ivar locations: An array that contains all of the locations for the service.
-    :vartype locations: list[~azure.mgmt.cosmosdb.models.DataTransferRegionalServiceResource]
+    :vartype locations: list[~azure.mgmt.cosmosdb.models.RegionalServiceResource]
     """
 
     _validation = {
@@ -2992,7 +3251,7 @@ class DataTransferServiceResourceProperties(ServiceResourceProperties):
         'instance_count': {'key': 'instanceCount', 'type': 'int'},
         'service_type': {'key': 'serviceType', 'type': 'str'},
         'status': {'key': 'status', 'type': 'str'},
-        'locations': {'key': 'locations', 'type': '[DataTransferRegionalServiceResource]'},
+        'locations': {'key': 'locations', 'type': '[RegionalServiceResource]'},
     }
 
     def __init__(
@@ -3000,6 +3259,7 @@ class DataTransferServiceResourceProperties(ServiceResourceProperties):
         **kwargs
     ):
         super(DataTransferServiceResourceProperties, self).__init__(**kwargs)
+        self.service_type = 'DataTransferService'  # type: str
         self.locations = None
 
 
@@ -3015,7 +3275,7 @@ class DefaultRequestDatabaseAccountCreateUpdateProperties(DatabaseAccountCreateU
     :param locations: Required. An array that contains the georeplication locations enabled for the
      Cosmos DB account.
     :type locations: list[~azure.mgmt.cosmosdb.models.Location]
-    :ivar database_account_offer_type: The offer type for the database. Has constant value:
+    :ivar database_account_offer_type: Required. The offer type for the database. Default value:
      "Standard".
     :vartype database_account_offer_type: str
     :param ip_rules: List of IpRules.
@@ -3256,7 +3516,7 @@ class FailoverPolicy(msrest.serialization.Model):
         self.failover_priority = kwargs.get('failover_priority', None)
 
 
-class GraphAPIComputeRegionalServiceResource(RegionalServiceResource):
+class GraphApiComputeRegionalServiceResource(RegionalServiceResource):
     """Resource for a regional service location.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3290,30 +3550,30 @@ class GraphAPIComputeRegionalServiceResource(RegionalServiceResource):
         self,
         **kwargs
     ):
-        super(GraphAPIComputeRegionalServiceResource, self).__init__(**kwargs)
+        super(GraphApiComputeRegionalServiceResource, self).__init__(**kwargs)
         self.graph_api_compute_endpoint = None
 
 
-class GraphAPIComputeServiceResource(msrest.serialization.Model):
+class GraphApiComputeServiceResource(msrest.serialization.Model):
     """Describes the service response property for GraphAPICompute.
 
     :param properties: Properties for GraphAPIComputeServiceResource.
-    :type properties: ~azure.mgmt.cosmosdb.models.GraphAPIComputeServiceResourceProperties
+    :type properties: ~azure.mgmt.cosmosdb.models.GraphApiComputeServiceResourceProperties
     """
 
     _attribute_map = {
-        'properties': {'key': 'properties', 'type': 'GraphAPIComputeServiceResourceProperties'},
+        'properties': {'key': 'properties', 'type': 'GraphApiComputeServiceResourceProperties'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(GraphAPIComputeServiceResource, self).__init__(**kwargs)
+        super(GraphApiComputeServiceResource, self).__init__(**kwargs)
         self.properties = kwargs.get('properties', None)
 
 
-class GraphAPIComputeServiceResourceProperties(ServiceResourceProperties):
+class GraphApiComputeServiceResourceProperties(ServiceResourceProperties):
     """Properties for GraphAPIComputeServiceResource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3322,7 +3582,7 @@ class GraphAPIComputeServiceResourceProperties(ServiceResourceProperties):
 
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
-    :type additional_properties: dict[str, any]
+    :type additional_properties: dict[str, object]
     :ivar creation_time: Time of the last state change (ISO-8601 format).
     :vartype creation_time: ~datetime.datetime
     :param instance_size: Instance type for the service. Possible values include: "Cosmos.D4s",
@@ -3330,8 +3590,8 @@ class GraphAPIComputeServiceResourceProperties(ServiceResourceProperties):
     :type instance_size: str or ~azure.mgmt.cosmosdb.models.ServiceSize
     :param instance_count: Instance count for the service.
     :type instance_count: int
-    :param service_type: Required. ServiceType for the service. Possible values include:
-     "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+    :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
@@ -3339,7 +3599,7 @@ class GraphAPIComputeServiceResourceProperties(ServiceResourceProperties):
     :param graph_api_compute_endpoint: GraphAPICompute endpoint for the service.
     :type graph_api_compute_endpoint: str
     :ivar locations: An array that contains all of the locations for the service.
-    :vartype locations: list[~azure.mgmt.cosmosdb.models.GraphAPIComputeRegionalServiceResource]
+    :vartype locations: list[~azure.mgmt.cosmosdb.models.GraphApiComputeRegionalServiceResource]
     """
 
     _validation = {
@@ -3358,14 +3618,15 @@ class GraphAPIComputeServiceResourceProperties(ServiceResourceProperties):
         'service_type': {'key': 'serviceType', 'type': 'str'},
         'status': {'key': 'status', 'type': 'str'},
         'graph_api_compute_endpoint': {'key': 'graphApiComputeEndpoint', 'type': 'str'},
-        'locations': {'key': 'locations', 'type': '[GraphAPIComputeRegionalServiceResource]'},
+        'locations': {'key': 'locations', 'type': '[GraphApiComputeRegionalServiceResource]'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(GraphAPIComputeServiceResourceProperties, self).__init__(**kwargs)
+        super(GraphApiComputeServiceResourceProperties, self).__init__(**kwargs)
+        self.service_type = 'GraphAPICompute'  # type: str
         self.graph_api_compute_endpoint = kwargs.get('graph_api_compute_endpoint', None)
         self.locations = None
 
@@ -3395,7 +3656,7 @@ class GraphResource(msrest.serialization.Model):
         self.id = kwargs['id']
 
 
-class GraphResourceCreateUpdateParameters(ARMResourceProperties):
+class GraphResourceCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Graph resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3518,7 +3779,7 @@ class GraphResourceGetPropertiesResource(GraphResource, ExtendedResourceProperti
         self.id = kwargs['id']
 
 
-class GraphResourceGetResults(ARMResourceProperties):
+class GraphResourceGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Graph resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3542,14 +3803,15 @@ class GraphResourceGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.GraphResourceGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.GraphResourceGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -3560,7 +3822,7 @@ class GraphResourceGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'GraphResourceGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'GraphResourceGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -3569,7 +3831,7 @@ class GraphResourceGetResults(ARMResourceProperties):
     ):
         super(GraphResourceGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class GraphResourcesListResult(msrest.serialization.Model):
@@ -3597,7 +3859,7 @@ class GraphResourcesListResult(msrest.serialization.Model):
         self.value = None
 
 
-class GremlinDatabaseCreateUpdateParameters(ARMResourceProperties):
+class GremlinDatabaseCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Gremlin database.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3745,7 +4007,7 @@ class GremlinDatabaseGetPropertiesResource(ExtendedResourceProperties, GremlinDa
         self.etag = None
 
 
-class GremlinDatabaseGetResults(ARMResourceProperties):
+class GremlinDatabaseGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Gremlin database.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3769,14 +4031,15 @@ class GremlinDatabaseGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.GremlinDatabaseGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.GremlinDatabaseGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -3787,7 +4050,7 @@ class GremlinDatabaseGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'GremlinDatabaseGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'GremlinDatabaseGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -3796,7 +4059,7 @@ class GremlinDatabaseGetResults(ARMResourceProperties):
     ):
         super(GremlinDatabaseGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class GremlinDatabaseListResult(msrest.serialization.Model):
@@ -3824,7 +4087,7 @@ class GremlinDatabaseListResult(msrest.serialization.Model):
         self.value = None
 
 
-class GremlinGraphCreateUpdateParameters(ARMResourceProperties):
+class GremlinGraphCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Gremlin graph.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4018,7 +4281,7 @@ class GremlinGraphGetPropertiesResource(ExtendedResourceProperties, GremlinGraph
         self.etag = None
 
 
-class GremlinGraphGetResults(ARMResourceProperties):
+class GremlinGraphGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Gremlin graph.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4042,14 +4305,15 @@ class GremlinGraphGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.GremlinGraphGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.GremlinGraphGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -4060,7 +4324,7 @@ class GremlinGraphGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'GremlinGraphGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'GremlinGraphGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -4069,7 +4333,7 @@ class GremlinGraphGetResults(ARMResourceProperties):
     ):
         super(GremlinGraphGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class GremlinGraphListResult(msrest.serialization.Model):
@@ -4343,7 +4607,7 @@ class Location(msrest.serialization.Model):
         self.is_zone_redundant = kwargs.get('is_zone_redundant', None)
 
 
-class LocationGetResult(ARMProxyResource):
+class LocationGetResult(ArmProxyResource):
     """Cosmos DB location get result.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4750,7 +5014,7 @@ class MetricValue(msrest.serialization.Model):
         self.total = None
 
 
-class MongoDBCollectionCreateUpdateParameters(ARMResourceProperties):
+class MongoDbCollectionCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB MongoDB collection.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4775,7 +5039,7 @@ class MongoDBCollectionCreateUpdateParameters(ARMResourceProperties):
     :param identity: Identity for the resource.
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource: Required. The standard JSON format of a MongoDB collection.
-    :type resource: ~azure.mgmt.cosmosdb.models.MongoDBCollectionResource
+    :type resource: ~azure.mgmt.cosmosdb.models.MongoDbCollectionResource
     :param options: A key-value pair of options to be applied for the request. This corresponds to
      the headers sent with the request.
     :type options: ~azure.mgmt.cosmosdb.models.CreateUpdateOptions
@@ -4795,7 +5059,7 @@ class MongoDBCollectionCreateUpdateParameters(ARMResourceProperties):
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
-        'resource': {'key': 'properties.resource', 'type': 'MongoDBCollectionResource'},
+        'resource': {'key': 'properties.resource', 'type': 'MongoDbCollectionResource'},
         'options': {'key': 'properties.options', 'type': 'CreateUpdateOptions'},
     }
 
@@ -4803,13 +5067,13 @@ class MongoDBCollectionCreateUpdateParameters(ARMResourceProperties):
         self,
         **kwargs
     ):
-        super(MongoDBCollectionCreateUpdateParameters, self).__init__(**kwargs)
+        super(MongoDbCollectionCreateUpdateParameters, self).__init__(**kwargs)
         self.resource = kwargs['resource']
         self.options = kwargs.get('options', None)
 
 
-class MongoDBCollectionGetPropertiesOptions(OptionsResource):
-    """MongoDBCollectionGetPropertiesOptions.
+class MongoDbCollectionGetPropertiesOptions(OptionsResource):
+    """MongoDbCollectionGetPropertiesOptions.
 
     :param throughput: Value of the Cosmos DB resource throughput or autoscaleSettings. Use the
      ThroughputSetting resource when retrieving offer details.
@@ -4827,10 +5091,10 @@ class MongoDBCollectionGetPropertiesOptions(OptionsResource):
         self,
         **kwargs
     ):
-        super(MongoDBCollectionGetPropertiesOptions, self).__init__(**kwargs)
+        super(MongoDbCollectionGetPropertiesOptions, self).__init__(**kwargs)
 
 
-class MongoDBCollectionResource(msrest.serialization.Model):
+class MongoDbCollectionResource(msrest.serialization.Model):
     """Cosmos DB MongoDB collection resource object.
 
     All required parameters must be populated in order to send to Azure.
@@ -4860,15 +5124,15 @@ class MongoDBCollectionResource(msrest.serialization.Model):
         self,
         **kwargs
     ):
-        super(MongoDBCollectionResource, self).__init__(**kwargs)
+        super(MongoDbCollectionResource, self).__init__(**kwargs)
         self.id = kwargs['id']
         self.shard_key = kwargs.get('shard_key', None)
         self.indexes = kwargs.get('indexes', None)
         self.analytical_storage_ttl = kwargs.get('analytical_storage_ttl', None)
 
 
-class MongoDBCollectionGetPropertiesResource(ExtendedResourceProperties, MongoDBCollectionResource):
-    """MongoDBCollectionGetPropertiesResource.
+class MongoDbCollectionGetPropertiesResource(ExtendedResourceProperties, MongoDbCollectionResource):
+    """MongoDbCollectionGetPropertiesResource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -4912,7 +5176,7 @@ class MongoDBCollectionGetPropertiesResource(ExtendedResourceProperties, MongoDB
         self,
         **kwargs
     ):
-        super(MongoDBCollectionGetPropertiesResource, self).__init__(**kwargs)
+        super(MongoDbCollectionGetPropertiesResource, self).__init__(**kwargs)
         self.id = kwargs['id']
         self.shard_key = kwargs.get('shard_key', None)
         self.indexes = kwargs.get('indexes', None)
@@ -4922,7 +5186,7 @@ class MongoDBCollectionGetPropertiesResource(ExtendedResourceProperties, MongoDB
         self.etag = None
 
 
-class MongoDBCollectionGetResults(ARMResourceProperties):
+class MongoDbCollectionGetResults(ArmResourceProperties):
     """An Azure Cosmos DB MongoDB collection.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4945,15 +5209,16 @@ class MongoDBCollectionGetResults(ARMResourceProperties):
     :param identity: Identity for the resource.
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
-    :type resource: ~azure.mgmt.cosmosdb.models.MongoDBCollectionGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.MongoDBCollectionGetPropertiesOptions
+    :type resource: ~azure.mgmt.cosmosdb.models.MongoDbCollectionGetPropertiesResource
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -4963,26 +5228,26 @@ class MongoDBCollectionGetResults(ARMResourceProperties):
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
-        'resource': {'key': 'properties.resource', 'type': 'MongoDBCollectionGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'MongoDBCollectionGetPropertiesOptions'},
+        'resource': {'key': 'properties.resource', 'type': 'MongoDbCollectionGetPropertiesResource'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(MongoDBCollectionGetResults, self).__init__(**kwargs)
+        super(MongoDbCollectionGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
-class MongoDBCollectionListResult(msrest.serialization.Model):
+class MongoDbCollectionListResult(msrest.serialization.Model):
     """The List operation response, that contains the MongoDB collections and their properties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: List of MongoDB collections and their properties.
-    :vartype value: list[~azure.mgmt.cosmosdb.models.MongoDBCollectionGetResults]
+    :vartype value: list[~azure.mgmt.cosmosdb.models.MongoDbCollectionGetResults]
     """
 
     _validation = {
@@ -4990,18 +5255,18 @@ class MongoDBCollectionListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[MongoDBCollectionGetResults]'},
+        'value': {'key': 'value', 'type': '[MongoDbCollectionGetResults]'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(MongoDBCollectionListResult, self).__init__(**kwargs)
+        super(MongoDbCollectionListResult, self).__init__(**kwargs)
         self.value = None
 
 
-class MongoDBDatabaseCreateUpdateParameters(ARMResourceProperties):
+class MongoDbDatabaseCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB MongoDB database.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5026,7 +5291,7 @@ class MongoDBDatabaseCreateUpdateParameters(ARMResourceProperties):
     :param identity: Identity for the resource.
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource: Required. The standard JSON format of a MongoDB database.
-    :type resource: ~azure.mgmt.cosmosdb.models.MongoDBDatabaseResource
+    :type resource: ~azure.mgmt.cosmosdb.models.MongoDbDatabaseResource
     :param options: A key-value pair of options to be applied for the request. This corresponds to
      the headers sent with the request.
     :type options: ~azure.mgmt.cosmosdb.models.CreateUpdateOptions
@@ -5046,7 +5311,7 @@ class MongoDBDatabaseCreateUpdateParameters(ARMResourceProperties):
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
-        'resource': {'key': 'properties.resource', 'type': 'MongoDBDatabaseResource'},
+        'resource': {'key': 'properties.resource', 'type': 'MongoDbDatabaseResource'},
         'options': {'key': 'properties.options', 'type': 'CreateUpdateOptions'},
     }
 
@@ -5054,13 +5319,13 @@ class MongoDBDatabaseCreateUpdateParameters(ARMResourceProperties):
         self,
         **kwargs
     ):
-        super(MongoDBDatabaseCreateUpdateParameters, self).__init__(**kwargs)
+        super(MongoDbDatabaseCreateUpdateParameters, self).__init__(**kwargs)
         self.resource = kwargs['resource']
         self.options = kwargs.get('options', None)
 
 
-class MongoDBDatabaseGetPropertiesOptions(OptionsResource):
-    """MongoDBDatabaseGetPropertiesOptions.
+class MongoDbDatabaseGetPropertiesOptions(OptionsResource):
+    """MongoDbDatabaseGetPropertiesOptions.
 
     :param throughput: Value of the Cosmos DB resource throughput or autoscaleSettings. Use the
      ThroughputSetting resource when retrieving offer details.
@@ -5078,10 +5343,10 @@ class MongoDBDatabaseGetPropertiesOptions(OptionsResource):
         self,
         **kwargs
     ):
-        super(MongoDBDatabaseGetPropertiesOptions, self).__init__(**kwargs)
+        super(MongoDbDatabaseGetPropertiesOptions, self).__init__(**kwargs)
 
 
-class MongoDBDatabaseResource(msrest.serialization.Model):
+class MongoDbDatabaseResource(msrest.serialization.Model):
     """Cosmos DB MongoDB database resource object.
 
     All required parameters must be populated in order to send to Azure.
@@ -5102,12 +5367,12 @@ class MongoDBDatabaseResource(msrest.serialization.Model):
         self,
         **kwargs
     ):
-        super(MongoDBDatabaseResource, self).__init__(**kwargs)
+        super(MongoDbDatabaseResource, self).__init__(**kwargs)
         self.id = kwargs['id']
 
 
-class MongoDBDatabaseGetPropertiesResource(ExtendedResourceProperties, MongoDBDatabaseResource):
-    """MongoDBDatabaseGetPropertiesResource.
+class MongoDbDatabaseGetPropertiesResource(ExtendedResourceProperties, MongoDbDatabaseResource):
+    """MongoDbDatabaseGetPropertiesResource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -5142,14 +5407,14 @@ class MongoDBDatabaseGetPropertiesResource(ExtendedResourceProperties, MongoDBDa
         self,
         **kwargs
     ):
-        super(MongoDBDatabaseGetPropertiesResource, self).__init__(**kwargs)
+        super(MongoDbDatabaseGetPropertiesResource, self).__init__(**kwargs)
         self.id = kwargs['id']
         self.rid = None
         self.ts = None
         self.etag = None
 
 
-class MongoDBDatabaseGetResults(ARMResourceProperties):
+class MongoDbDatabaseGetResults(ArmResourceProperties):
     """An Azure Cosmos DB MongoDB database.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5172,15 +5437,16 @@ class MongoDBDatabaseGetResults(ARMResourceProperties):
     :param identity: Identity for the resource.
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
-    :type resource: ~azure.mgmt.cosmosdb.models.MongoDBDatabaseGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.MongoDBDatabaseGetPropertiesOptions
+    :type resource: ~azure.mgmt.cosmosdb.models.MongoDbDatabaseGetPropertiesResource
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -5190,26 +5456,26 @@ class MongoDBDatabaseGetResults(ARMResourceProperties):
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
-        'resource': {'key': 'properties.resource', 'type': 'MongoDBDatabaseGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'MongoDBDatabaseGetPropertiesOptions'},
+        'resource': {'key': 'properties.resource', 'type': 'MongoDbDatabaseGetPropertiesResource'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(MongoDBDatabaseGetResults, self).__init__(**kwargs)
+        super(MongoDbDatabaseGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
-class MongoDBDatabaseListResult(msrest.serialization.Model):
+class MongoDbDatabaseListResult(msrest.serialization.Model):
     """The List operation response, that contains the MongoDB databases and their properties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: List of MongoDB databases and their properties.
-    :vartype value: list[~azure.mgmt.cosmosdb.models.MongoDBDatabaseGetResults]
+    :vartype value: list[~azure.mgmt.cosmosdb.models.MongoDbDatabaseGetResults]
     """
 
     _validation = {
@@ -5217,14 +5483,14 @@ class MongoDBDatabaseListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[MongoDBDatabaseGetResults]'},
+        'value': {'key': 'value', 'type': '[MongoDbDatabaseGetResults]'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(MongoDBDatabaseListResult, self).__init__(**kwargs)
+        super(MongoDbDatabaseListResult, self).__init__(**kwargs)
         self.value = None
 
 
@@ -5293,7 +5559,7 @@ class MongoIndexOptions(msrest.serialization.Model):
         self.unique = kwargs.get('unique', None)
 
 
-class NotebookWorkspace(ARMProxyResource):
+class NotebookWorkspace(ArmProxyResource):
     """A notebook workspace resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5367,7 +5633,7 @@ class NotebookWorkspaceConnectionInfoResult(msrest.serialization.Model):
         self.notebook_server_endpoint = None
 
 
-class NotebookWorkspaceCreateUpdateParameters(ARMProxyResource):
+class NotebookWorkspaceCreateUpdateParameters(ArmProxyResource):
     """Parameters to create a notebook workspace resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5983,41 +6249,7 @@ class Resource(msrest.serialization.Model):
         self.type = None
 
 
-class ProxyResource(Resource):
-    """The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Fully qualified resource ID for the resource. Ex -
-     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
-    :vartype id: str
-    :ivar name: The name of the resource.
-    :vartype name: str
-    :ivar type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or
-     "Microsoft.Storage/storageAccounts".
-    :vartype type: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-    }
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(**kwargs)
-
-
-class PrivateEndpointConnection(ProxyResource):
+class PrivateEndpointConnection(Resource):
     """A private endpoint connection.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -6107,7 +6339,7 @@ class PrivateEndpointProperty(msrest.serialization.Model):
         self.id = kwargs.get('id', None)
 
 
-class PrivateLinkResource(ARMProxyResource):
+class PrivateLinkResource(ArmProxyResource):
     """A private link resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -6205,6 +6437,40 @@ class PrivateLinkServiceConnectionStateProperty(msrest.serialization.Model):
         self.status = kwargs.get('status', None)
         self.description = kwargs.get('description', None)
         self.actions_required = None
+
+
+class ProxyResource(Resource):
+    """The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Fully qualified resource ID for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or
+     "Microsoft.Storage/storageAccounts".
+    :vartype type: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
 
 
 class RegionForOnlineOffline(msrest.serialization.Model):
@@ -7163,7 +7429,7 @@ class SeedNode(msrest.serialization.Model):
         self.ip_address = kwargs.get('ip_address', None)
 
 
-class ServiceResource(ARMProxyResource):
+class ServiceResource(ArmProxyResource):
     """Properties for the database account.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7200,7 +7466,7 @@ class ServiceResource(ARMProxyResource):
 
 
 class ServiceResourceCreateUpdateParameters(msrest.serialization.Model):
-    """ServiceResourceCreateUpdateParameters.
+    """Parameters for Create or Update Request for ServiceResource.
 
     :param instance_size: Instance type for the service. Possible values include: "Cosmos.D4s",
      "Cosmos.D8s", "Cosmos.D16s".
@@ -7208,7 +7474,7 @@ class ServiceResourceCreateUpdateParameters(msrest.serialization.Model):
     :param instance_count: Instance count for the service.
     :type instance_count: int
     :param service_type: ServiceType for the service. Possible values include:
-     "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+     "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     """
 
@@ -7281,7 +7547,7 @@ class SpatialSpec(msrest.serialization.Model):
         self.types = kwargs.get('types', None)
 
 
-class SqlContainerCreateUpdateParameters(ARMResourceProperties):
+class SqlContainerCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB container.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7431,7 +7697,7 @@ class SqlContainerGetPropertiesResource(ExtendedResourceProperties, SqlContainer
         self.etag = None
 
 
-class SqlContainerGetResults(ARMResourceProperties):
+class SqlContainerGetResults(ArmResourceProperties):
     """An Azure Cosmos DB container.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7455,14 +7721,15 @@ class SqlContainerGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.SqlContainerGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.SqlContainerGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -7473,7 +7740,7 @@ class SqlContainerGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'SqlContainerGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'SqlContainerGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -7482,7 +7749,7 @@ class SqlContainerGetResults(ARMResourceProperties):
     ):
         super(SqlContainerGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class SqlContainerListResult(msrest.serialization.Model):
@@ -7510,7 +7777,7 @@ class SqlContainerListResult(msrest.serialization.Model):
         self.value = None
 
 
-class SqlDatabaseCreateUpdateParameters(ARMResourceProperties):
+class SqlDatabaseCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB SQL database.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7645,7 +7912,7 @@ class SqlDatabaseGetPropertiesResource(ExtendedResourceProperties, SqlDatabaseRe
         self.users = kwargs.get('users', None)
 
 
-class SqlDatabaseGetResults(ARMResourceProperties):
+class SqlDatabaseGetResults(ArmResourceProperties):
     """An Azure Cosmos DB SQL database.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7669,14 +7936,15 @@ class SqlDatabaseGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.SqlDatabaseGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.SqlDatabaseGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -7687,7 +7955,7 @@ class SqlDatabaseGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'SqlDatabaseGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'SqlDatabaseGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -7696,7 +7964,7 @@ class SqlDatabaseGetResults(ARMResourceProperties):
     ):
         super(SqlDatabaseGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class SqlDatabaseListResult(msrest.serialization.Model):
@@ -7790,7 +8058,7 @@ class SqlDedicatedGatewayServiceResourceProperties(ServiceResourceProperties):
 
     :param additional_properties: Unmatched properties from the message are deserialized to this
      collection.
-    :type additional_properties: dict[str, any]
+    :type additional_properties: dict[str, object]
     :ivar creation_time: Time of the last state change (ISO-8601 format).
     :vartype creation_time: ~datetime.datetime
     :param instance_size: Instance type for the service. Possible values include: "Cosmos.D4s",
@@ -7798,8 +8066,8 @@ class SqlDedicatedGatewayServiceResourceProperties(ServiceResourceProperties):
     :type instance_size: str or ~azure.mgmt.cosmosdb.models.ServiceSize
     :param instance_count: Instance count for the service.
     :type instance_count: int
-    :param service_type: Required. ServiceType for the service. Possible values include:
-     "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+    :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
@@ -7835,6 +8103,7 @@ class SqlDedicatedGatewayServiceResourceProperties(ServiceResourceProperties):
         **kwargs
     ):
         super(SqlDedicatedGatewayServiceResourceProperties, self).__init__(**kwargs)
+        self.service_type = 'SqlDedicatedGateway'  # type: str
         self.sql_dedicated_gateway_endpoint = kwargs.get('sql_dedicated_gateway_endpoint', None)
         self.locations = None
 
@@ -7869,7 +8138,7 @@ class SqlRoleAssignmentCreateUpdateParameters(msrest.serialization.Model):
         self.principal_id = kwargs.get('principal_id', None)
 
 
-class SqlRoleAssignmentGetResults(ARMProxyResource):
+class SqlRoleAssignmentGetResults(ArmProxyResource):
     """An Azure Cosmos DB Role Assignment.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7978,7 +8247,7 @@ class SqlRoleDefinitionCreateUpdateParameters(msrest.serialization.Model):
         self.permissions = kwargs.get('permissions', None)
 
 
-class SqlRoleDefinitionGetResults(ARMProxyResource):
+class SqlRoleDefinitionGetResults(ArmProxyResource):
     """An Azure Cosmos DB SQL Role Definition.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8057,7 +8326,7 @@ class SqlRoleDefinitionListResult(msrest.serialization.Model):
         self.value = None
 
 
-class SqlStoredProcedureCreateUpdateParameters(ARMResourceProperties):
+class SqlStoredProcedureCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB storedProcedure.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8191,7 +8460,7 @@ class SqlStoredProcedureGetPropertiesResource(ExtendedResourceProperties, SqlSto
         self.etag = None
 
 
-class SqlStoredProcedureGetResults(ARMResourceProperties):
+class SqlStoredProcedureGetResults(ArmResourceProperties):
     """An Azure Cosmos DB storedProcedure.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8266,7 +8535,7 @@ class SqlStoredProcedureListResult(msrest.serialization.Model):
         self.value = None
 
 
-class SqlTriggerCreateUpdateParameters(ARMResourceProperties):
+class SqlTriggerCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB trigger.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8418,7 +8687,7 @@ class SqlTriggerGetPropertiesResource(ExtendedResourceProperties, SqlTriggerReso
         self.etag = None
 
 
-class SqlTriggerGetResults(ARMResourceProperties):
+class SqlTriggerGetResults(ArmResourceProperties):
     """An Azure Cosmos DB trigger.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8493,7 +8762,7 @@ class SqlTriggerListResult(msrest.serialization.Model):
         self.value = None
 
 
-class SqlUserDefinedFunctionCreateUpdateParameters(ARMResourceProperties):
+class SqlUserDefinedFunctionCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB userDefinedFunction.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8627,7 +8896,7 @@ class SqlUserDefinedFunctionGetPropertiesResource(ExtendedResourceProperties, Sq
         self.etag = None
 
 
-class SqlUserDefinedFunctionGetResults(ARMResourceProperties):
+class SqlUserDefinedFunctionGetResults(ArmResourceProperties):
     """An Azure Cosmos DB userDefinedFunction.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8743,7 +9012,7 @@ class SystemData(msrest.serialization.Model):
         self.last_modified_at = kwargs.get('last_modified_at', None)
 
 
-class TableCreateUpdateParameters(ARMResourceProperties):
+class TableCreateUpdateParameters(ArmResourceProperties):
     """Parameters to create and update Cosmos DB Table.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8891,7 +9160,7 @@ class TableGetPropertiesResource(ExtendedResourceProperties, TableResource):
         self.etag = None
 
 
-class TableGetResults(ARMResourceProperties):
+class TableGetResults(ArmResourceProperties):
     """An Azure Cosmos DB Table.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -8915,14 +9184,15 @@ class TableGetResults(ARMResourceProperties):
     :type identity: ~azure.mgmt.cosmosdb.models.ManagedServiceIdentity
     :param resource:
     :type resource: ~azure.mgmt.cosmosdb.models.TableGetPropertiesResource
-    :param options:
-    :type options: ~azure.mgmt.cosmosdb.models.TableGetPropertiesOptions
+    :ivar options: Cosmos DB options resource object.
+    :vartype options: ~azure.mgmt.cosmosdb.models.OptionsResource
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'options': {'readonly': True},
     }
 
     _attribute_map = {
@@ -8933,7 +9203,7 @@ class TableGetResults(ARMResourceProperties):
         'tags': {'key': 'tags', 'type': '{str}'},
         'identity': {'key': 'identity', 'type': 'ManagedServiceIdentity'},
         'resource': {'key': 'properties.resource', 'type': 'TableGetPropertiesResource'},
-        'options': {'key': 'properties.options', 'type': 'TableGetPropertiesOptions'},
+        'options': {'key': 'properties.options', 'type': 'OptionsResource'},
     }
 
     def __init__(
@@ -8942,7 +9212,7 @@ class TableGetResults(ARMResourceProperties):
     ):
         super(TableGetResults, self).__init__(**kwargs)
         self.resource = kwargs.get('resource', None)
-        self.options = kwargs.get('options', None)
+        self.options = None
 
 
 class TableListResult(msrest.serialization.Model):
@@ -9090,7 +9360,7 @@ class ThroughputSettingsGetPropertiesResource(ExtendedResourceProperties, Throug
         self.etag = None
 
 
-class ThroughputSettingsGetResults(ARMResourceProperties):
+class ThroughputSettingsGetResults(ArmResourceProperties):
     """An Azure Cosmos DB resource throughput.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -9140,7 +9410,7 @@ class ThroughputSettingsGetResults(ARMResourceProperties):
         self.resource = kwargs.get('resource', None)
 
 
-class ThroughputSettingsUpdateParameters(ARMResourceProperties):
+class ThroughputSettingsUpdateParameters(ArmResourceProperties):
     """Parameters to update Cosmos DB resource throughput.
 
     Variables are only populated by the server, and will be ignored when sending a request.

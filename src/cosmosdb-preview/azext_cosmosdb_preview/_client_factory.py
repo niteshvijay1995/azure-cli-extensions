@@ -24,3 +24,7 @@ def cf_cassandra_cluster(cli_ctx, _):
 
 def cf_cassandra_data_center(cli_ctx, _):
     return cf_cosmosdb_preview(cli_ctx).cassandra_data_centers
+
+def cf_data_transfer_job(cli_ctx, *_):
+    return cf_cosmosdb_preview(cli_ctx).data_transfer_jobs
+

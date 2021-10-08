@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models as _models
+from ... import models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class CassandraClustersOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = _models
+    models = models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -45,8 +45,8 @@ class CassandraClustersOperations:
 
     def list_by_subscription(
         self,
-        **kwargs: Any
-    ) -> AsyncIterable["_models.ListClusters"]:
+        **kwargs
+    ) -> AsyncIterable["models.ListClusters"]:
         """List all managed Cassandra clusters in this subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -54,12 +54,12 @@ class CassandraClustersOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.ListClusters]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ListClusters"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ListClusters"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -112,8 +112,8 @@ class CassandraClustersOperations:
     def list_by_resource_group(
         self,
         resource_group_name: str,
-        **kwargs: Any
-    ) -> AsyncIterable["_models.ListClusters"]:
+        **kwargs
+    ) -> AsyncIterable["models.ListClusters"]:
         """List all managed Cassandra clusters in this resource group.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -123,12 +123,12 @@ class CassandraClustersOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.ListClusters]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ListClusters"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ListClusters"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -183,8 +183,8 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs: Any
-    ) -> "_models.ClusterResource":
+        **kwargs
+    ) -> "models.ClusterResource":
         """Get the properties of a managed Cassandra cluster.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -196,12 +196,12 @@ class CassandraClustersOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ClusterResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -241,14 +241,14 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs: Any
+        **kwargs
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -285,7 +285,7 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs: Any
+        **kwargs
     ) -> AsyncLROPoller[None]:
         """Deletes a managed Cassandra cluster.
 
@@ -295,8 +295,8 @@ class CassandraClustersOperations:
         :type cluster_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be AsyncARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -349,15 +349,15 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        body: "_models.ClusterResource",
-        **kwargs: Any
-    ) -> "_models.ClusterResource":
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterResource"]
+        body: "models.ClusterResource",
+        **kwargs
+    ) -> "models.ClusterResource":
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -406,9 +406,9 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        body: "_models.ClusterResource",
-        **kwargs: Any
-    ) -> AsyncLROPoller["_models.ClusterResource"]:
+        body: "models.ClusterResource",
+        **kwargs
+    ) -> AsyncLROPoller["models.ClusterResource"]:
         """Create or update a managed Cassandra cluster. When updating, you must specify all writable
         properties. To update only some properties, use PATCH.
 
@@ -420,8 +420,8 @@ class CassandraClustersOperations:
         :type body: ~azure.mgmt.cosmosdb.models.ClusterResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be AsyncARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ClusterResource or the result of cls(response)
@@ -429,7 +429,7 @@ class CassandraClustersOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -478,15 +478,15 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        body: "_models.ClusterResource",
-        **kwargs: Any
-    ) -> "_models.ClusterResource":
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterResource"]
+        body: "models.ClusterResource",
+        **kwargs
+    ) -> "models.ClusterResource":
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -535,9 +535,9 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        body: "_models.ClusterResource",
-        **kwargs: Any
-    ) -> AsyncLROPoller["_models.ClusterResource"]:
+        body: "models.ClusterResource",
+        **kwargs
+    ) -> AsyncLROPoller["models.ClusterResource"]:
         """Updates some of the properties of a managed Cassandra cluster.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -548,8 +548,8 @@ class CassandraClustersOperations:
         :type body: ~azure.mgmt.cosmosdb.models.ClusterResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be AsyncARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ClusterResource or the result of cls(response)
@@ -557,7 +557,7 @@ class CassandraClustersOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -606,15 +606,15 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        body: "_models.RepairPostBody",
-        **kwargs: Any
+        body: "models.RepairPostBody",
+        **kwargs
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -656,8 +656,8 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        body: "_models.RepairPostBody",
-        **kwargs: Any
+        body: "models.RepairPostBody",
+        **kwargs
     ) -> AsyncLROPoller[None]:
         """Request that repair begin on this cluster as soon as possible.
 
@@ -669,8 +669,8 @@ class CassandraClustersOperations:
         :type body: ~azure.mgmt.cosmosdb.models.RepairPostBody
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be AsyncARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -724,14 +724,14 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs: Any
-    ) -> Optional["_models.ClusterNodeStatus"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ClusterNodeStatus"]]
+        **kwargs
+    ) -> Optional["models.ClusterNodeStatus"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ClusterNodeStatus"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -773,8 +773,8 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs: Any
-    ) -> AsyncLROPoller["_models.ClusterNodeStatus"]:
+        **kwargs
+    ) -> AsyncLROPoller["models.ClusterNodeStatus"]:
         """Request the status of all nodes in the cluster (as returned by 'nodetool status').
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -783,8 +783,8 @@ class CassandraClustersOperations:
         :type cluster_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be AsyncARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ClusterNodeStatus or the result of cls(response)
@@ -792,7 +792,7 @@ class CassandraClustersOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterNodeStatus"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterNodeStatus"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -840,8 +840,8 @@ class CassandraClustersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs: Any
-    ) -> AsyncIterable["_models.ListBackups"]:
+        **kwargs
+    ) -> AsyncIterable["models.ListBackups"]:
         """List the backups of this cluster that are available to restore.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -853,12 +853,12 @@ class CassandraClustersOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.ListBackups]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ListBackups"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ListBackups"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -915,8 +915,8 @@ class CassandraClustersOperations:
         resource_group_name: str,
         cluster_name: str,
         backup_id: str,
-        **kwargs: Any
-    ) -> "_models.BackupResource":
+        **kwargs
+    ) -> "models.BackupResource":
         """Get the properties of an individual backup of this cluster that is available to restore.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -930,12 +930,12 @@ class CassandraClustersOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.BackupResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BackupResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.BackupResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-07-01-preview"
+        api_version = "2021-10-15-preview"
         accept = "application/json"
 
         # Construct URL

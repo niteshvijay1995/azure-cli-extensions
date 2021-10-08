@@ -26,13 +26,13 @@ class Cosmosdb_previewCommandsLoader(AzCommandsLoader):
         super().__init__(cli_ctx=cli_ctx, custom_command_type=cosmosdb_preview_custom)
 
     def load_command_table(self, args):
-        from azext_cosmosdb_preview.commands import load_command_table
-        load_command_table(self, args)
         try:
-            from .generated.commands import load_command_table as load_command_table_generated
-            load_command_table_generated(self, args)
-            from .manual.commands import load_command_table as load_command_table_manual
-            load_command_table_manual(self, args)
+            # from .generated.commands import load_command_table as load_command_table_generated
+            # load_command_table_generated(self, args)
+            # from .manual.commands import load_command_table as load_command_table_manual
+            # load_command_table_manual(self, args)
+            from azext_cosmosdb_preview.commands import load_command_table
+            load_command_table(self, args)
         except ImportError as e:
             if e.name.endswith('manual.commands'):
                 pass
@@ -41,13 +41,13 @@ class Cosmosdb_previewCommandsLoader(AzCommandsLoader):
         return self.command_table
 
     def load_arguments(self, command):
-        from azext_cosmosdb_preview._params import load_arguments
-        load_arguments(self, command)
         try:
-            from .generated._params import load_arguments as load_arguments_generated
-            load_arguments_generated(self, command)
-            from .manual._params import load_arguments as load_arguments_manual
-            load_arguments_manual(self, command)
+            # from .generated._params import load_arguments as load_arguments_generated
+            # load_arguments_generated(self, command)
+            # from .manual._params import load_arguments as load_arguments_manual
+            # load_arguments_manual(self, command)
+            from azext_cosmosdb_preview._params import load_arguments
+            load_arguments(self, command)
         except ImportError as e:
             if e.name.endswith('manual._params'):
                 pass

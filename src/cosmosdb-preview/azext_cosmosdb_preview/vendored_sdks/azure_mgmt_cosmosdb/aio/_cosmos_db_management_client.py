@@ -8,7 +8,6 @@
 
 from typing import Any, Optional, TYPE_CHECKING
 
-from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core import AsyncARMPipelineClient
 from msrest import Deserializer, Serializer
 
@@ -32,11 +31,13 @@ from .operations import PartitionKeyRangeIdOperations
 from .operations import PartitionKeyRangeIdRegionOperations
 from .operations import GraphResourcesOperations
 from .operations import SqlResourcesOperations
-from .operations import MongoDBResourcesOperations
+from .operations import MongoDbResourcesOperations
 from .operations import TableResourcesOperations
 from .operations import CassandraResourcesOperations
 from .operations import GremlinResourcesOperations
 from .operations import CosmosDBManagementClientOperationsMixin
+from .operations import CassandraClustersOperations
+from .operations import CassandraDataCentersOperations
 from .operations import NotebookWorkspacesOperations
 from .operations import PrivateEndpointConnectionsOperations
 from .operations import PrivateLinkResourcesOperations
@@ -47,9 +48,8 @@ from .operations import RestorableSqlResourcesOperations
 from .operations import RestorableMongodbDatabasesOperations
 from .operations import RestorableMongodbCollectionsOperations
 from .operations import RestorableMongodbResourcesOperations
-from .operations import CassandraClustersOperations
-from .operations import CassandraDataCentersOperations
 from .operations import ServiceOperations
+from .operations import DataTransferJobsOperations
 from .. import models
 
 
@@ -86,14 +86,18 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
     :vartype graph_resources: azure.mgmt.cosmosdb.aio.operations.GraphResourcesOperations
     :ivar sql_resources: SqlResourcesOperations operations
     :vartype sql_resources: azure.mgmt.cosmosdb.aio.operations.SqlResourcesOperations
-    :ivar mongo_db_resources: MongoDBResourcesOperations operations
-    :vartype mongo_db_resources: azure.mgmt.cosmosdb.aio.operations.MongoDBResourcesOperations
+    :ivar mongo_db_resources: MongoDbResourcesOperations operations
+    :vartype mongo_db_resources: azure.mgmt.cosmosdb.aio.operations.MongoDbResourcesOperations
     :ivar table_resources: TableResourcesOperations operations
     :vartype table_resources: azure.mgmt.cosmosdb.aio.operations.TableResourcesOperations
     :ivar cassandra_resources: CassandraResourcesOperations operations
     :vartype cassandra_resources: azure.mgmt.cosmosdb.aio.operations.CassandraResourcesOperations
     :ivar gremlin_resources: GremlinResourcesOperations operations
     :vartype gremlin_resources: azure.mgmt.cosmosdb.aio.operations.GremlinResourcesOperations
+    :ivar cassandra_clusters: CassandraClustersOperations operations
+    :vartype cassandra_clusters: azure.mgmt.cosmosdb.aio.operations.CassandraClustersOperations
+    :ivar cassandra_data_centers: CassandraDataCentersOperations operations
+    :vartype cassandra_data_centers: azure.mgmt.cosmosdb.aio.operations.CassandraDataCentersOperations
     :ivar notebook_workspaces: NotebookWorkspacesOperations operations
     :vartype notebook_workspaces: azure.mgmt.cosmosdb.aio.operations.NotebookWorkspacesOperations
     :ivar private_endpoint_connections: PrivateEndpointConnectionsOperations operations
@@ -114,12 +118,10 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
     :vartype restorable_mongodb_collections: azure.mgmt.cosmosdb.aio.operations.RestorableMongodbCollectionsOperations
     :ivar restorable_mongodb_resources: RestorableMongodbResourcesOperations operations
     :vartype restorable_mongodb_resources: azure.mgmt.cosmosdb.aio.operations.RestorableMongodbResourcesOperations
-    :ivar cassandra_clusters: CassandraClustersOperations operations
-    :vartype cassandra_clusters: azure.mgmt.cosmosdb.aio.operations.CassandraClustersOperations
-    :ivar cassandra_data_centers: CassandraDataCentersOperations operations
-    :vartype cassandra_data_centers: azure.mgmt.cosmosdb.aio.operations.CassandraDataCentersOperations
     :ivar service: ServiceOperations operations
     :vartype service: azure.mgmt.cosmosdb.aio.operations.ServiceOperations
+    :ivar data_transfer_jobs: DataTransferJobsOperations operations
+    :vartype data_transfer_jobs: azure.mgmt.cosmosdb.aio.operations.DataTransferJobsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The ID of the target subscription.
@@ -175,13 +177,17 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
             self._client, self._config, self._serialize, self._deserialize)
         self.sql_resources = SqlResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.mongo_db_resources = MongoDBResourcesOperations(
+        self.mongo_db_resources = MongoDbResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.table_resources = TableResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.cassandra_resources = CassandraResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.gremlin_resources = GremlinResourcesOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.cassandra_clusters = CassandraClustersOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.cassandra_data_centers = CassandraDataCentersOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.notebook_workspaces = NotebookWorkspacesOperations(
             self._client, self._config, self._serialize, self._deserialize)
@@ -203,29 +209,10 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
             self._client, self._config, self._serialize, self._deserialize)
         self.restorable_mongodb_resources = RestorableMongodbResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.cassandra_clusters = CassandraClustersOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.cassandra_data_centers = CassandraDataCentersOperations(
-            self._client, self._config, self._serialize, self._deserialize)
         self.service = ServiceOperations(
             self._client, self._config, self._serialize, self._deserialize)
-
-    async def _send_request(self, http_request: HttpRequest, **kwargs: Any) -> AsyncHttpResponse:
-        """Runs the network request through the client's chained policies.
-
-        :param http_request: The network request you want to make. Required.
-        :type http_request: ~azure.core.pipeline.transport.HttpRequest
-        :keyword bool stream: Whether the response payload will be streamed. Defaults to True.
-        :return: The response of your network call. Does not do error handling on your response.
-        :rtype: ~azure.core.pipeline.transport.AsyncHttpResponse
-        """
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-        }
-        http_request.url = self._client.format_url(http_request.url, **path_format_arguments)
-        stream = kwargs.pop("stream", True)
-        pipeline_response = await self._client._pipeline.run(http_request, stream=stream, **kwargs)
-        return pipeline_response.http_response
+        self.data_transfer_jobs = DataTransferJobsOperations(
+            self._client, self._config, self._serialize, self._deserialize)
 
     async def close(self) -> None:
         await self._client.close()

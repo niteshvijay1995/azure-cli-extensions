@@ -987,10 +987,10 @@ def step_database_account_delete(test, checks=None):
 
 # EXAMPLE: /DataTransferJobs/put/CosmosDBDataTransferJobCreate
 @try_manual
-def step_data_transfer_job_create(test, checks=None):
+def step_dts_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az cosmosdb data-transfer-job create '
+    test.cmd('az cosmosdb dts create '
              '--account-name "ddb1" '
              '--job-create-parameters "{{\\"source\\":{{\\"component\\":\\"CosmosDBCassandra\\",\\"keyspaceName\\":\\"k'
              'eyspace\\",\\"tableName\\":\\"table\\"}},\\"destination\\":{{\\"component\\":\\"AzureBlobStorage\\",\\"co'
@@ -1002,10 +1002,10 @@ def step_data_transfer_job_create(test, checks=None):
 
 # EXAMPLE: /DataTransferJobs/get/CosmosDBDataTransferJobFeed
 @try_manual
-def step_data_transfer_job_list(test, checks=None):
+def step_dts_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az cosmosdb data-transfer-job list '
+    test.cmd('az cosmosdb dts list '
              '--account-name "ddb1" '
              '--resource-group "{rg}"',
              checks=checks)
@@ -1013,10 +1013,10 @@ def step_data_transfer_job_list(test, checks=None):
 
 # EXAMPLE: /DataTransferJobs/get/CosmosDBDataTransferJobGet
 @try_manual
-def step_data_transfer_job_show(test, checks=None):
+def step_dts_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az cosmosdb data-transfer-job show '
+    test.cmd('az cosmosdb dts show '
              '--account-name "ddb1" '
              '--job-name "j1" '
              '--resource-group "{rg}"',

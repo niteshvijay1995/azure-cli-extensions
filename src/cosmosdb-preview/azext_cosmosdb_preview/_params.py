@@ -5,11 +5,27 @@
 # pylint: disable=line-too-long, too-many-statements
 
 
+from azure.cli.core.commands.parameters import (
+    get_resource_name_completion_list, name_type, get_enum_type, get_three_state_flag, get_location_type,
+    tags_type,
+    resource_group_name_type)
+
 from azext_cosmosdb_preview._validators import (
     validate_gossip_certificates,
     validate_client_certificates,
     validate_seednodes,
     validate_node_count)
+
+from azext_cosmosdb_preview.actions import (
+    CreateLocation, CreateDatabaseRestoreResource, UtcDatetimeAction, AddDataTransferDataSource,
+    AddDataTransferDataSink)
+
+from azure.cli.core.commands.validators import (
+    get_default_location_from_resource_group,
+    validate_file_or_dict
+)
+
+from azext_cosmosdb_preview.vendored_sdks.azure_mgmt_cosmosdb.models import DefaultConsistencyLevel, DatabaseAccountKind, ServerVersion, BackupPolicyType
 
 
 def load_arguments(self, _):
@@ -86,10 +102,102 @@ def load_arguments(self, _):
         c.argument('graph_name', options_list=['--name', '-n'], help="Graph name")
 
     # Services
-        with self.argument_context('cosmosdb service') as c:
-            c.argument('account_name', completer=None, options_list=['--account-name', '-a'], help='Name of the Cosmos DB database account.', id_part=None)
-            c.argument('resource_group_name', completer=None, options_list=['--resource-group-name', '-g'], help='Name of the resource group of the database account.', id_part=None)
-            c.argument('service_kind', options_list=['--kind', '-k'], help="Service kind")
-            c.argument('service_name', options_list=['--name', '-n'], help="Service Name.")
-            c.argument('instance_count', options_list=['--count', '-c'], help="Instance Count.")
-            c.argument('instance_size', options_list=['--size'], help="Instance Size. Possible values are: Cosmos.D4s, Cosmos.D8s, Cosmos.D16s etc")
+    with self.argument_context('cosmosdb service') as c:
+        c.argument('account_name', completer=None, options_list=['--account-name', '-a'], help='Name of the Cosmos DB database account.', id_part=None)
+        c.argument('resource_group_name', completer=None, options_list=['--resource-group-name', '-g'], help='Name of the resource group of the database account.', id_part=None)
+        c.argument('service_kind', options_list=['--kind', '-k'], help="Service kind")
+        c.argument('service_name', options_list=['--name', '-n'], help="Service Name.")
+        c.argument('instance_count', options_list=['--count', '-c'], help="Instance Count.")
+        c.argument('instance_size', options_list=['--size'], help="Instance Size. Possible values are: Cosmos.D4s, Cosmos.D8s, Cosmos.D16s etc")
+
+    with self.argument_context('cosmosdb data-transfer-job create2') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('source', action=AddDataTransferDataSource, nargs='+', help='Source component of Data Transfer job', arg_group='Component')
+        c.argument('destination', action=AddDataTransferDataSink, nargs='+', help='Destination component of Data Transfer job', arg_group='Component')
+
+    with self.argument_context('cosmosdb dts export cassandra-table') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
+        c.argument('table_name', options_list=['--table-name'], help="Table name")
+        c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
+        c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
+
+    with self.argument_context('cosmosdb dts import casssandra-table') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
+        c.argument('table_name', options_list=['--table-name'], help="Table name")
+        c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
+        c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
+
+    with self.argument_context('cosmosdb dts list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+
+    with self.argument_context('cosmosdb dts show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.', id_part='name')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job', id_part='child_name_1')
+
+    with self.argument_context('cosmosdb dts create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('job_create_parameters', type=validate_file_or_dict, help=' Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('cosmosdb cassandra table export') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
+        c.argument('table_name', options_list=['--table-name'], help="Table name")
+        c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
+        c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
+
+    with self.argument_context('cosmosdb cassandra table import') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
+        c.argument('table_name', options_list=['--table-name'], help="Table name")
+        c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
+        c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
+
+    with self.argument_context('cosmosdb service list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+
+    with self.argument_context('cosmosdb service show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.', id_part='name')
+        c.argument('service_name', options_list=['--service-name'], type=str, help='Cosmos DB service '
+                   'name.', id_part='child_name_1')
+
+    with self.argument_context('cosmosdb service create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('service_name', options_list=['--service-name'], type=str, help='Cosmos DB service '
+                   'name.')
+        c.argument('instance_size', arg_type=get_enum_type(['Cosmos.D4s', 'Cosmos.D8s', 'Cosmos.D16s']),
+                   help='Instance type for the service.')
+        c.argument('instance_count', type=int, help='Instance count for the service.')
+        c.argument('service_type', arg_type=get_enum_type(['SqlDedicatedGateway', 'DataTransferService',
+                                                           'GraphAPICompute']), help='ServiceType for the service.')
+
+    with self.argument_context('cosmosdb service delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.', id_part='name')
+        c.argument('service_name', options_list=['--service-name'], type=str, help='Cosmos DB service '
+                   'name.', id_part='child_name_1')
+
+    with self.argument_context('cosmosdb service wait') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.', id_part='name')
+        c.argument('service_name', options_list=['--service-name'], type=str, help='Cosmos DB service '
+                   'name.', id_part='child_name_1')

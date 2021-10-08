@@ -9,15 +9,6 @@
 #
 # Generation mode: Incremental
 # --------------------------------------------------------------------------
-from .generated._help import helps  # pylint: disable=reimported
-try:
-    from .manual._help import helps  # pylint: disable=reimported
-except ImportError as e:
-    if e.name.endswith('manual._help'):
-        pass
-    else:
-        raise e
-
 
 from knack.help_files import helps  # pylint: disable=unused-import
 
@@ -227,4 +218,124 @@ short-summary: Delete the given cosmosdb graph resource.
 helps['cosmosdb graph exists'] = """
 type: command
 short-summary: Return if the given cosmosdb graph resource exist.
+"""
+
+helps['cosmosdb data-transfer-job create2'] = """
+    type: command
+    short-summary: "Creates a Data Transfer Job."
+    parameters:
+      - name: --source
+        short-summary: "Data Source"
+        long-summary: |
+            Usage: --source type=CosmosDBCassandra keyspace-name=XX table-name=XX'
+                   --source type=AzureBlobStorage container-name=XX endpoint-url=XX
+
+            type: Type of component, Possible values: CosmosDBCassandra, AzureBlobStorage
+            keyspace-name: Keyspace name of CosmosDB Cassandra data source. Use with type=CosmosDBCassandra
+            table-name: Table name of CosmosDB Cassandra data source. Use with type=CosmosDBCassandra
+            container-name: Container name of Azure Blob Storage. Use with type=AzureBlobStorage
+            endpoint-url: Endpoint Url of Azure Blob Storage. Use with type=AzureBlobStorage
+
+      - name: --destination
+        short-summary: "Data Sink"
+        long-summary: |
+            Usage: --destination type=AzureBlobStorage container-name=XX endpoint-url=XX
+                   --destination type=CosmosDBCassandra keyspace-name=XX table-name=XX'
+
+            type: Type of component, Possible values: CosmosDBCassandra, AzureBlobStorage
+            keyspace-name: Keyspace name of CosmosDB Cassandra data source. Use with type=CosmosDBCassandra
+            table-name: Table name of CosmosDB Cassandra data source. Use with type=CosmosDBCassandra
+            container-name: Container name of Azure Blob Storage. Use with type=AzureBlobStorage
+            endpoint-url: Endpoint Url of Azure Blob Storage. Use with type=AzureBlobStorage
+            
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+          az cosmosdb data-transfer-job create2 --name "db1" --resource-group "rg1" --job-name "j1"\
+ --destination type=CosmosDBCassandra keyspace-name=keyspace table-name=t1\
+ --source type=AzureBlobStorage container-name=backup1 endpoint-url=https://backupstorage.blob.core.windows.net/ 
+
+"""
+
+helps['cosmosdb dts export cassandra-table'] = """
+    type: command
+    short-summary: "Creates a Data Transfer Job to export cassandra table to blob storage"
+
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+          az cosmosdb dts export cassandra-table --name "db1" --resource-group "rg1" \
+--keyspace-name=keyspace --table-name=t1 --storage-container=backup1 --storage-url=https://backupstorage.blob.core.windows.net/
+
+"""
+
+helps['cosmosdb dts import cassandra-table'] = """
+    type: command
+    short-summary: "Creates a Data Transfer Job to import data from blob storage to cassandra table"
+
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+          az cosmosdb dts import cassandra-table --name "db1" --resource-group "rg1" \
+--keyspace-name=keyspace --table-name=t1 --storage-container=backup1 --storage-url=https://backupstorage.blob.core.windows.net/
+
+"""
+
+helps['cosmosdb cassandra table export'] = """
+    type: command
+    short-summary: "Creates a Data Transfer Job to export cassandra table to blob storage"
+
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+          az cosmosdb cassandra table export --name "db1" --resource-group "rg1" \
+--keyspace-name=keyspace --table-name=t1 --storage-container=backup1 --storage-url=https://backupstorage.blob.core.windows.net/
+
+"""
+
+helps['cosmosdb cassandra table import'] = """
+    type: command
+    short-summary: "Creates a Data Transfer Job to import data from blob storage to cassandra table"
+
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+          az cosmosdb cassandra table import --name "db1" --resource-group "rg1" \
+--keyspace-name=keyspace --table-name=t1 --storage-container=backup1 --storage-url=https://backupstorage.blob.core.windows.net/
+
+"""
+
+helps['cosmosdb dts'] = """
+    type: group
+    short-summary: Manage data transfer job with cosmosdb
+"""
+
+helps['cosmosdb dts list'] = """
+    type: command
+    short-summary: "Get a list of Data Transfer jobs."
+    examples:
+      - name: CosmosDBDataTransferJobFeed
+        text: |-
+               az cosmosdb dts list --account-name "ddb1" --resource-group "rg1"
+"""
+
+helps['cosmosdb dts show'] = """
+    type: command
+    short-summary: "Get a Data Transfer Job."
+    examples:
+      - name: CosmosDBDataTransferJobGet
+        text: |-
+               az cosmosdb dts show --account-name "ddb1" --job-name "j1" --resource-group "rg1"
+"""
+
+helps['cosmosdb dts create'] = """
+    type: command
+    short-summary: "Creates a Data Transfer Job."
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+               az cosmosdb dts create --account-name "ddb1" --job-create-parameters "{\\"source\\":{\\"component\\":\\"\
+CosmosDBCassandra\\",\\"keyspaceName\\":\\"keyspace\\",\\"tableName\\":\\"table\\"},\\"destination\\":{\\"component\\":\
+\\"AzureBlobStorage\\",\\"containerName\\":\\"blob_container\\",\\"endpointUrl\\":\\"https://blob.windows.net\\"}}" \
+--job-name "j1" --resource-group "rg1"
 """

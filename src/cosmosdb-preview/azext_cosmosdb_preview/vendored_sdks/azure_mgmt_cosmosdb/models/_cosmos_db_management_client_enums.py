@@ -121,6 +121,11 @@ class DatabaseAccountKind(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     MONGO_DB = "MongoDB"
     PARSE = "Parse"
 
+class DataTransferComponent(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    COSMOS_DB_CASSANDRA = "CosmosDBCassandra"
+    AZURE_STORAGE = "AzureStorage"
+
 class DataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The datatype for which the indexing behavior is applied to.
     """
@@ -306,7 +311,7 @@ class ServiceType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """
 
     SQL_DEDICATED_GATEWAY = "SqlDedicatedGateway"
-    DATA_TRANSFER = "DataTransfer"
+    DATA_TRANSFER_SERVICE = "DataTransferService"
     GRAPH_API_COMPUTE = "GraphAPICompute"
 
 class SpatialType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):

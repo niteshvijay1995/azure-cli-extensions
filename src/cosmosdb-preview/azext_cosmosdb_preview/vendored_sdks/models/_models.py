@@ -3169,7 +3169,7 @@ class ServiceResourceProperties(msrest.serialization.Model):
     :param instance_count: Instance count for the service.
     :type instance_count: int
     :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
-     values include: "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
@@ -3193,7 +3193,7 @@ class ServiceResourceProperties(msrest.serialization.Model):
     }
 
     _subtype_map = {
-        'service_type': {'DataTransfer': 'DataTransferServiceResourceProperties', 'GraphAPICompute': 'GraphApiComputeServiceResourceProperties', 'SqlDedicatedGateway': 'SqlDedicatedGatewayServiceResourceProperties'}
+        'service_type': {'DataTransferService': 'DataTransferServiceResourceProperties', 'GraphAPICompute': 'GraphApiComputeServiceResourceProperties', 'SqlDedicatedGateway': 'SqlDedicatedGatewayServiceResourceProperties'}
     }
 
     def __init__(
@@ -3227,7 +3227,7 @@ class DataTransferServiceResourceProperties(ServiceResourceProperties):
     :param instance_count: Instance count for the service.
     :type instance_count: int
     :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
-     values include: "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
@@ -3259,7 +3259,7 @@ class DataTransferServiceResourceProperties(ServiceResourceProperties):
         **kwargs
     ):
         super(DataTransferServiceResourceProperties, self).__init__(**kwargs)
-        self.service_type = 'DataTransfer'  # type: str
+        self.service_type = 'DataTransferService'  # type: str
         self.locations = None
 
 
@@ -3591,7 +3591,7 @@ class GraphApiComputeServiceResourceProperties(ServiceResourceProperties):
     :param instance_count: Instance count for the service.
     :type instance_count: int
     :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
-     values include: "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".
@@ -7474,7 +7474,7 @@ class ServiceResourceCreateUpdateParameters(msrest.serialization.Model):
     :param instance_count: Instance count for the service.
     :type instance_count: int
     :param service_type: ServiceType for the service. Possible values include:
-     "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+     "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     """
 
@@ -8067,7 +8067,7 @@ class SqlDedicatedGatewayServiceResourceProperties(ServiceResourceProperties):
     :param instance_count: Instance count for the service.
     :type instance_count: int
     :param service_type: Required. ServiceType for the service.Constant filled by server.  Possible
-     values include: "SqlDedicatedGateway", "DataTransfer", "GraphAPICompute".
+     values include: "SqlDedicatedGateway", "DataTransferService", "GraphAPICompute".
     :type service_type: str or ~azure.mgmt.cosmosdb.models.ServiceType
     :ivar status: Describes the status of a service. Possible values include: "Creating",
      "Running", "Updating", "Deleting", "Error", "Stopped".

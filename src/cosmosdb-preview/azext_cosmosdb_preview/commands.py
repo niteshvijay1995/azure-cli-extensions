@@ -10,8 +10,14 @@ from azext_cosmosdb_preview._client_factory import (
     cf_cassandra_cluster,
     cf_cassandra_data_center,
     cf_graph_resources,
-    cf_service
+    cf_service,
+    cf_data_transfer_job
 )
+
+from azure.cli.command_modules.cosmosdb._client_factory import (
+    cf_cassandra_resources
+)
+
 from azext_cosmosdb_preview._format import (
     amc_node_status_table_format
 )
@@ -29,6 +35,15 @@ def load_command_table(self, _):
     cosmosdb_managed_cassandra_cluster_sdk = CliCommandType(
         operations_tmpl='azext_cosmosdb_preview.vendored_sdks.azure_mgmt_cosmosdb.operations#CassandraClustersOperations.{}',
         client_factory=cf_cassandra_cluster)
+
+    cosmosdb_data_transfer_job = CliCommandType(
+        operations_tmpl='azext_cosmosdb_preview.vendored_sdks.cosmodb.operations._data_transfer_jobs_operations#DataTransferJobsOperations.{}',
+        client_factory=cf_data_transfer_job,
+    )
+
+    cosmosdb_cassandra_sdk = CliCommandType(
+        operations_tmpl='azure.mgmt.cosmosdb.operations#CassandraResourcesOperations.{}',
+        client_factory=cf_cassandra_resources)
 
     cosmosdb_managed_cassandra_datacenter_sdk = CliCommandType(
         operations_tmpl='azext_cosmosdb_preview.vendored_sdks.azure_mgmt_cosmosdb.operations#CassandraDataCentersOperations.{}',
@@ -62,3 +77,31 @@ def load_command_table(self, _):
         g.command('list', 'list')
         g.show_command('show', 'get')
         g.command('delete', 'begin_delete', confirmation=True, supports_no_wait=True)
+
+    with self.command_group(
+            'cosmosdb dts', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
+        ) as g:
+            g.custom_command('create2', 'cosmosdb_data_transfer_job_create2')
+            g.custom_command('list', 'cosmosdb_dts_list')
+            g.custom_show_command('show', 'cosmosdb_dts_show')
+            g.custom_command('create', 'cosmosdb_dts_create')
+
+    with self.command_group(
+            'cosmosdb dts export', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
+        ) as g:
+            g.custom_command('cassandra-table', 'cosmosdb_data_transfer_cassandra_export_job')
+
+    with self.command_group(
+            'cosmosdb dts import', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
+        ) as g:
+            g.custom_command('cassandra-table', 'cosmosdb_data_transfer_cassandra_import_job')
+
+    with self.command_group(
+            'cosmosdb cassandra table', cosmosdb_cassandra_sdk, client_factory=cf_data_transfer_job
+        ) as g:
+            g.custom_command('export', 'cosmosdb_data_transfer_cassandra_export_job')
+
+    with self.command_group(
+            'cosmosdb cassandra table', cosmosdb_cassandra_sdk, client_factory=cf_data_transfer_job
+        ) as g:
+            g.custom_command('import', 'cosmosdb_data_transfer_cassandra_import_job')

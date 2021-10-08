@@ -7,13 +7,14 @@
 # --------------------------------------------------------------------------
 
 try:
-    from ._models_py3 import ARMProxyResource
-    from ._models_py3 import ARMResourceProperties
     from ._models_py3 import AnalyticalStorageConfiguration
     from ._models_py3 import ApiProperties
+    from ._models_py3 import ArmProxyResource
+    from ._models_py3 import ArmResourceProperties
     from ._models_py3 import AutoUpgradePolicyResource
     from ._models_py3 import AutoscaleSettings
     from ._models_py3 import AutoscaleSettingsResource
+    from ._models_py3 import AzureBlobDataTransferDataSourceSink
     from ._models_py3 import BackupInformation
     from ._models_py3 import BackupPolicy
     from ._models_py3 import BackupPolicyMigrationState
@@ -56,9 +57,15 @@ try:
     from ._models_py3 import ContinuousBackupRestoreLocation
     from ._models_py3 import ContinuousModeBackupPolicy
     from ._models_py3 import CorsPolicy
+    from ._models_py3 import CosmosCassandraDataTransferDataSourceSink
+    from ._models_py3 import CreateJobRequest
     from ._models_py3 import CreateUpdateOptions
     from ._models_py3 import DataCenterResource
     from ._models_py3 import DataCenterResourceProperties
+    from ._models_py3 import DataTransferCreateJobProperties
+    from ._models_py3 import DataTransferDataSourceSink
+    from ._models_py3 import DataTransferJobFeedResults
+    from ._models_py3 import DataTransferJobGetResults
     from ._models_py3 import DataTransferRegionalServiceResource
     from ._models_py3 import DataTransferServiceResource
     from ._models_py3 import DataTransferServiceResourceProperties
@@ -80,9 +87,9 @@ try:
     from ._models_py3 import ExtendedResourceProperties
     from ._models_py3 import FailoverPolicies
     from ._models_py3 import FailoverPolicy
-    from ._models_py3 import GraphAPIComputeRegionalServiceResource
-    from ._models_py3 import GraphAPIComputeServiceResource
-    from ._models_py3 import GraphAPIComputeServiceResourceProperties
+    from ._models_py3 import GraphApiComputeRegionalServiceResource
+    from ._models_py3 import GraphApiComputeServiceResource
+    from ._models_py3 import GraphApiComputeServiceResourceProperties
     from ._models_py3 import GraphResource
     from ._models_py3 import GraphResourceCreateUpdateParameters
     from ._models_py3 import GraphResourceGetPropertiesOptions
@@ -120,18 +127,18 @@ try:
     from ._models_py3 import MetricListResult
     from ._models_py3 import MetricName
     from ._models_py3 import MetricValue
-    from ._models_py3 import MongoDBCollectionCreateUpdateParameters
-    from ._models_py3 import MongoDBCollectionGetPropertiesOptions
-    from ._models_py3 import MongoDBCollectionGetPropertiesResource
-    from ._models_py3 import MongoDBCollectionGetResults
-    from ._models_py3 import MongoDBCollectionListResult
-    from ._models_py3 import MongoDBCollectionResource
-    from ._models_py3 import MongoDBDatabaseCreateUpdateParameters
-    from ._models_py3 import MongoDBDatabaseGetPropertiesOptions
-    from ._models_py3 import MongoDBDatabaseGetPropertiesResource
-    from ._models_py3 import MongoDBDatabaseGetResults
-    from ._models_py3 import MongoDBDatabaseListResult
-    from ._models_py3 import MongoDBDatabaseResource
+    from ._models_py3 import MongoDbCollectionCreateUpdateParameters
+    from ._models_py3 import MongoDbCollectionGetPropertiesOptions
+    from ._models_py3 import MongoDbCollectionGetPropertiesResource
+    from ._models_py3 import MongoDbCollectionGetResults
+    from ._models_py3 import MongoDbCollectionListResult
+    from ._models_py3 import MongoDbCollectionResource
+    from ._models_py3 import MongoDbDatabaseCreateUpdateParameters
+    from ._models_py3 import MongoDbDatabaseGetPropertiesOptions
+    from ._models_py3 import MongoDbDatabaseGetPropertiesResource
+    from ._models_py3 import MongoDbDatabaseGetResults
+    from ._models_py3 import MongoDbDatabaseListResult
+    from ._models_py3 import MongoDbDatabaseResource
     from ._models_py3 import MongoIndex
     from ._models_py3 import MongoIndexKeys
     from ._models_py3 import MongoIndexOptions
@@ -244,13 +251,14 @@ try:
     from ._models_py3 import UsagesResult
     from ._models_py3 import VirtualNetworkRule
 except (SyntaxError, ImportError):
-    from ._models import ARMProxyResource  # type: ignore
-    from ._models import ARMResourceProperties  # type: ignore
     from ._models import AnalyticalStorageConfiguration  # type: ignore
     from ._models import ApiProperties  # type: ignore
+    from ._models import ArmProxyResource  # type: ignore
+    from ._models import ArmResourceProperties  # type: ignore
     from ._models import AutoUpgradePolicyResource  # type: ignore
     from ._models import AutoscaleSettings  # type: ignore
     from ._models import AutoscaleSettingsResource  # type: ignore
+    from ._models import AzureBlobDataTransferDataSourceSink  # type: ignore
     from ._models import BackupInformation  # type: ignore
     from ._models import BackupPolicy  # type: ignore
     from ._models import BackupPolicyMigrationState  # type: ignore
@@ -293,9 +301,15 @@ except (SyntaxError, ImportError):
     from ._models import ContinuousBackupRestoreLocation  # type: ignore
     from ._models import ContinuousModeBackupPolicy  # type: ignore
     from ._models import CorsPolicy  # type: ignore
+    from ._models import CosmosCassandraDataTransferDataSourceSink  # type: ignore
+    from ._models import CreateJobRequest  # type: ignore
     from ._models import CreateUpdateOptions  # type: ignore
     from ._models import DataCenterResource  # type: ignore
     from ._models import DataCenterResourceProperties  # type: ignore
+    from ._models import DataTransferCreateJobProperties  # type: ignore
+    from ._models import DataTransferDataSourceSink  # type: ignore
+    from ._models import DataTransferJobFeedResults  # type: ignore
+    from ._models import DataTransferJobGetResults  # type: ignore
     from ._models import DataTransferRegionalServiceResource  # type: ignore
     from ._models import DataTransferServiceResource  # type: ignore
     from ._models import DataTransferServiceResourceProperties  # type: ignore
@@ -317,9 +331,9 @@ except (SyntaxError, ImportError):
     from ._models import ExtendedResourceProperties  # type: ignore
     from ._models import FailoverPolicies  # type: ignore
     from ._models import FailoverPolicy  # type: ignore
-    from ._models import GraphAPIComputeRegionalServiceResource  # type: ignore
-    from ._models import GraphAPIComputeServiceResource  # type: ignore
-    from ._models import GraphAPIComputeServiceResourceProperties  # type: ignore
+    from ._models import GraphApiComputeRegionalServiceResource  # type: ignore
+    from ._models import GraphApiComputeServiceResource  # type: ignore
+    from ._models import GraphApiComputeServiceResourceProperties  # type: ignore
     from ._models import GraphResource  # type: ignore
     from ._models import GraphResourceCreateUpdateParameters  # type: ignore
     from ._models import GraphResourceGetPropertiesOptions  # type: ignore
@@ -357,18 +371,18 @@ except (SyntaxError, ImportError):
     from ._models import MetricListResult  # type: ignore
     from ._models import MetricName  # type: ignore
     from ._models import MetricValue  # type: ignore
-    from ._models import MongoDBCollectionCreateUpdateParameters  # type: ignore
-    from ._models import MongoDBCollectionGetPropertiesOptions  # type: ignore
-    from ._models import MongoDBCollectionGetPropertiesResource  # type: ignore
-    from ._models import MongoDBCollectionGetResults  # type: ignore
-    from ._models import MongoDBCollectionListResult  # type: ignore
-    from ._models import MongoDBCollectionResource  # type: ignore
-    from ._models import MongoDBDatabaseCreateUpdateParameters  # type: ignore
-    from ._models import MongoDBDatabaseGetPropertiesOptions  # type: ignore
-    from ._models import MongoDBDatabaseGetPropertiesResource  # type: ignore
-    from ._models import MongoDBDatabaseGetResults  # type: ignore
-    from ._models import MongoDBDatabaseListResult  # type: ignore
-    from ._models import MongoDBDatabaseResource  # type: ignore
+    from ._models import MongoDbCollectionCreateUpdateParameters  # type: ignore
+    from ._models import MongoDbCollectionGetPropertiesOptions  # type: ignore
+    from ._models import MongoDbCollectionGetPropertiesResource  # type: ignore
+    from ._models import MongoDbCollectionGetResults  # type: ignore
+    from ._models import MongoDbCollectionListResult  # type: ignore
+    from ._models import MongoDbCollectionResource  # type: ignore
+    from ._models import MongoDbDatabaseCreateUpdateParameters  # type: ignore
+    from ._models import MongoDbDatabaseGetPropertiesOptions  # type: ignore
+    from ._models import MongoDbDatabaseGetPropertiesResource  # type: ignore
+    from ._models import MongoDbDatabaseGetResults  # type: ignore
+    from ._models import MongoDbDatabaseListResult  # type: ignore
+    from ._models import MongoDbDatabaseResource  # type: ignore
     from ._models import MongoIndex  # type: ignore
     from ._models import MongoIndexKeys  # type: ignore
     from ._models import MongoIndexOptions  # type: ignore
@@ -493,6 +507,7 @@ from ._cosmos_db_management_client_enums import (
     ConnectorOffer,
     CreateMode,
     CreatedByType,
+    DataTransferComponent,
     DataType,
     DatabaseAccountKind,
     DefaultConsistencyLevel,
@@ -523,13 +538,14 @@ from ._cosmos_db_management_client_enums import (
 )
 
 __all__ = [
-    'ARMProxyResource',
-    'ARMResourceProperties',
     'AnalyticalStorageConfiguration',
     'ApiProperties',
+    'ArmProxyResource',
+    'ArmResourceProperties',
     'AutoUpgradePolicyResource',
     'AutoscaleSettings',
     'AutoscaleSettingsResource',
+    'AzureBlobDataTransferDataSourceSink',
     'BackupInformation',
     'BackupPolicy',
     'BackupPolicyMigrationState',
@@ -572,9 +588,15 @@ __all__ = [
     'ContinuousBackupRestoreLocation',
     'ContinuousModeBackupPolicy',
     'CorsPolicy',
+    'CosmosCassandraDataTransferDataSourceSink',
+    'CreateJobRequest',
     'CreateUpdateOptions',
     'DataCenterResource',
     'DataCenterResourceProperties',
+    'DataTransferCreateJobProperties',
+    'DataTransferDataSourceSink',
+    'DataTransferJobFeedResults',
+    'DataTransferJobGetResults',
     'DataTransferRegionalServiceResource',
     'DataTransferServiceResource',
     'DataTransferServiceResourceProperties',
@@ -596,9 +618,9 @@ __all__ = [
     'ExtendedResourceProperties',
     'FailoverPolicies',
     'FailoverPolicy',
-    'GraphAPIComputeRegionalServiceResource',
-    'GraphAPIComputeServiceResource',
-    'GraphAPIComputeServiceResourceProperties',
+    'GraphApiComputeRegionalServiceResource',
+    'GraphApiComputeServiceResource',
+    'GraphApiComputeServiceResourceProperties',
     'GraphResource',
     'GraphResourceCreateUpdateParameters',
     'GraphResourceGetPropertiesOptions',
@@ -636,18 +658,18 @@ __all__ = [
     'MetricListResult',
     'MetricName',
     'MetricValue',
-    'MongoDBCollectionCreateUpdateParameters',
-    'MongoDBCollectionGetPropertiesOptions',
-    'MongoDBCollectionGetPropertiesResource',
-    'MongoDBCollectionGetResults',
-    'MongoDBCollectionListResult',
-    'MongoDBCollectionResource',
-    'MongoDBDatabaseCreateUpdateParameters',
-    'MongoDBDatabaseGetPropertiesOptions',
-    'MongoDBDatabaseGetPropertiesResource',
-    'MongoDBDatabaseGetResults',
-    'MongoDBDatabaseListResult',
-    'MongoDBDatabaseResource',
+    'MongoDbCollectionCreateUpdateParameters',
+    'MongoDbCollectionGetPropertiesOptions',
+    'MongoDbCollectionGetPropertiesResource',
+    'MongoDbCollectionGetResults',
+    'MongoDbCollectionListResult',
+    'MongoDbCollectionResource',
+    'MongoDbDatabaseCreateUpdateParameters',
+    'MongoDbDatabaseGetPropertiesOptions',
+    'MongoDbDatabaseGetPropertiesResource',
+    'MongoDbDatabaseGetResults',
+    'MongoDbDatabaseListResult',
+    'MongoDbDatabaseResource',
     'MongoIndex',
     'MongoIndexKeys',
     'MongoIndexOptions',
@@ -770,6 +792,7 @@ __all__ = [
     'ConnectorOffer',
     'CreateMode',
     'CreatedByType',
+    'DataTransferComponent',
     'DataType',
     'DatabaseAccountKind',
     'DefaultConsistencyLevel',
