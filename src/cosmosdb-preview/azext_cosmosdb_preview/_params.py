@@ -119,19 +119,19 @@ def load_arguments(self, _):
 
     with self.argument_context('cosmosdb dts export cassandra-table') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('account_name', type=str, options_list=['--account-name', '-a'], help='Cosmos DB database account name.')
         c.argument('job_name', type=str, help='Name of the Data Transfer Job')
         c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
-        c.argument('table_name', options_list=['--table-name'], help="Table name")
+        c.argument('table_name', options_list=['--table-name', '-t'], help="Table name")
         c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
         c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
 
     with self.argument_context('cosmosdb dts import casssandra-table') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('account_name', type=str, options_list=['--account-name', '-a'], help='Cosmos DB database account name.')
         c.argument('job_name', type=str, help='Name of the Data Transfer Job')
         c.argument('keyspace_name', options_list=['--keyspace-name', '-k'], help="Keyspace name")
-        c.argument('table_name', options_list=['--table-name'], help="Table name")
+        c.argument('table_name', options_list=['--table-name', '-t'], help="Table name")
         c.argument('storage_container', options_list=['--storage-container', '-container'], help="Blob storage container name")
         c.argument('storage_url', options_list=['--storage-url'], help="Blob storage endpoint url")
 

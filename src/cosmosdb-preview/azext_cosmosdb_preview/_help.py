@@ -220,7 +220,7 @@ type: command
 short-summary: Return if the given cosmosdb graph resource exist.
 """
 
-helps['cosmosdb data-transfer-job create2'] = """
+helps['cosmosdb dts create2'] = """
     type: command
     short-summary: "Creates a Data Transfer Job."
     parameters:
