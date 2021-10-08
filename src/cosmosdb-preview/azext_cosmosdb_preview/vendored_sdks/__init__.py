@@ -6,14 +6,4 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._cosmos_db_management_client import CosmosDBManagementClient
-from ._version import VERSION
-
-__version__ = VERSION
-__all__ = ['CosmosDBManagementClient']
-
-try:
-    from ._patch import patch_sdk  # type: ignore
-    patch_sdk()
-except ImportError:
-    pass
+__import__('pkg_resources').declare_namespace(__name__)
