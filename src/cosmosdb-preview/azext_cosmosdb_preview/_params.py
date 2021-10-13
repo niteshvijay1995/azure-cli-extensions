@@ -123,6 +123,7 @@ def load_arguments(self, _):
         c.argument('job_name', type=str, help='Name of the Data Transfer Job. A random job name will be generated if not passed.')
         c.argument('cassandra_table', nargs='+', action=AddCassandraTableAction, help='Data source cassandra table')
         c.argument('blob_container', nargs='+', action=AddBlobContainerAction, help='Data sink blob container')
+        c.argument('worker_count', type=int, help='Worker count')
 
     with self.argument_context('cosmosdb dts import') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -130,6 +131,7 @@ def load_arguments(self, _):
         c.argument('job_name', type=str, help='Name of the Data Transfer Job. A random job name will be generated if not passed.')
         c.argument('cassandra_table', nargs='+', action=AddCassandraTableAction, help='Data sink cassandra table')
         c.argument('blob_container', nargs='+', action=AddBlobContainerAction, help='Data source blob container')
+        c.argument('worker_count', type=int, help='Worker count')
 
     with self.argument_context('cosmosdb dts list') as c:
         c.argument('resource_group_name', resource_group_name_type)

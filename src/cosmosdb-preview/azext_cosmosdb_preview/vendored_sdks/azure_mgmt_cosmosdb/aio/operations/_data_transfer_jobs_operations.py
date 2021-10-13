@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class DataTransferJobsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,9 +46,9 @@ class DataTransferJobsOperations:
         resource_group_name: str,
         account_name: str,
         job_name: str,
-        job_create_parameters: "models.CreateJobRequest",
-        **kwargs
-    ) -> "models.DataTransferJobGetResults":
+        job_create_parameters: "_models.CreateJobRequest",
+        **kwargs: Any
+    ) -> "_models.DataTransferJobGetResults":
         """Creates a Data Transfer Job.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -64,7 +64,7 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataTransferJobGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -116,8 +116,8 @@ class DataTransferJobsOperations:
         resource_group_name: str,
         account_name: str,
         job_name: str,
-        **kwargs
-    ) -> "models.DataTransferJobGetResults":
+        **kwargs: Any
+    ) -> "_models.DataTransferJobGetResults":
         """Get a Data Transfer Job.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -131,7 +131,7 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataTransferJobGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -177,8 +177,8 @@ class DataTransferJobsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.DataTransferJobFeedResults"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.DataTransferJobFeedResults"]:
         """Get a list of Data Transfer jobs.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -190,7 +190,7 @@ class DataTransferJobsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.DataTransferJobFeedResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataTransferJobFeedResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobFeedResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

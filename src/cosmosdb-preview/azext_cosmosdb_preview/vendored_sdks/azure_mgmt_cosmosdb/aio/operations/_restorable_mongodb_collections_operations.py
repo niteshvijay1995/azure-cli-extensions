@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class RestorableMongodbCollectionsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,8 +46,8 @@ class RestorableMongodbCollectionsOperations:
         location: str,
         instance_id: str,
         restorable_mongodb_database_rid: Optional[str] = None,
-        **kwargs
-    ) -> AsyncIterable["models.RestorableMongodbCollectionsListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.RestorableMongodbCollectionsListResult"]:
         """Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under
         a specific database.  This helps in scenario where container was accidentally deleted.  This
         API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
@@ -63,7 +63,7 @@ class RestorableMongodbCollectionsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.RestorableMongodbCollectionsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.RestorableMongodbCollectionsListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableMongodbCollectionsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

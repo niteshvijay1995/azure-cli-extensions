@@ -33,10 +33,10 @@ from .example_steps import step_gremlin_resource_update
 from .example_steps import step_cassandra_resource_update
 from .example_steps import step_sql_resource_create_update_sql_trigger
 from .example_steps import step_gremlin_resource_update2
-from .example_steps import step_sql_resource_create3
+from .example_steps import step_sql_resource_create4
 from .example_steps import step_cassandra_resource_update2
 from .example_steps import step_sql_resource_update_sql_container_throughput
-from .example_steps import step_sql_resource_create4
+from .example_steps import step_sql_resource_create5
 from .example_steps import step_mongo_db_resource2
 from .example_steps import step_partition_key_range_id_region_list_metric
 from .example_steps import step_mongo_db_resource5
@@ -192,10 +192,10 @@ def call_scenario(test):
     step_cassandra_resource_update(test, checks=[])
     step_sql_resource_create_update_sql_trigger(test, checks=[])
     step_gremlin_resource_update2(test, checks=[])
-    step_sql_resource_create3(test, checks=[])
+    step_sql_resource_create4(test, checks=[])
     step_cassandra_resource_update2(test, checks=[])
     step_sql_resource_update_sql_container_throughput(test, checks=[])
-    step_sql_resource_create4(test, checks=[])
+    step_sql_resource_create5(test, checks=[])
     step_mongo_db_resource2(test, checks=[])
     step_partition_key_range_id_region_list_metric(test, checks=[])
     step_mongo_db_resource5(test, checks=[])

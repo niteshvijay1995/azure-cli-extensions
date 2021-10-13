@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class CassandraResourcesOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,8 +47,8 @@ class CassandraResourcesOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.CassandraKeyspaceListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.CassandraKeyspaceListResult"]:
         """Lists the Cassandra keyspaces under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.CassandraKeyspaceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraKeyspaceListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraKeyspaceListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,8 +122,8 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> "models.CassandraKeyspaceGetResults":
+        **kwargs: Any
+    ) -> "_models.CassandraKeyspaceGetResults":
         """Gets the Cassandra keyspaces under an existing Azure Cosmos DB database account with the
         provided name.
 
@@ -138,7 +138,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.CassandraKeyspaceGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraKeyspaceGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraKeyspaceGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -185,10 +185,10 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        create_update_cassandra_keyspace_parameters: "models.CassandraKeyspaceCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.CassandraKeyspaceGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.CassandraKeyspaceGetResults"]]
+        create_update_cassandra_keyspace_parameters: "_models.CassandraKeyspaceCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.CassandraKeyspaceGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.CassandraKeyspaceGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -242,9 +242,9 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        create_update_cassandra_keyspace_parameters: "models.CassandraKeyspaceCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.CassandraKeyspaceGetResults"]:
+        create_update_cassandra_keyspace_parameters: "_models.CassandraKeyspaceCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.CassandraKeyspaceGetResults"]:
         """Create or update an Azure Cosmos DB Cassandra keyspace.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -258,8 +258,8 @@ class CassandraResourcesOperations:
         :type create_update_cassandra_keyspace_parameters: ~azure.mgmt.cosmosdb.models.CassandraKeyspaceCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either CassandraKeyspaceGetResults or the result of cls(response)
@@ -267,7 +267,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraKeyspaceGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraKeyspaceGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -319,7 +319,7 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -363,7 +363,7 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB Cassandra keyspace.
 
@@ -375,8 +375,8 @@ class CassandraResourcesOperations:
         :type keyspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -432,8 +432,8 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the RUs per second of the Cassandra Keyspace under an existing Azure Cosmos DB database
         account with the provided name.
 
@@ -448,7 +448,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -495,10 +495,10 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -552,9 +552,9 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update RUs per second of an Azure Cosmos DB Cassandra Keyspace.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -568,8 +568,8 @@ class CassandraResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -577,7 +577,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -629,9 +629,9 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -680,8 +680,8 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Cassandra Keyspace from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -692,8 +692,8 @@ class CassandraResourcesOperations:
         :type keyspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -701,7 +701,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -752,9 +752,9 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -803,8 +803,8 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Cassandra Keyspace from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -815,8 +815,8 @@ class CassandraResourcesOperations:
         :type keyspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -824,7 +824,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -875,8 +875,8 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.CassandraTableListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.CassandraTableListResult"]:
         """Lists the Cassandra table under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -890,7 +890,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.CassandraTableListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraTableListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraTableListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -954,8 +954,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
-    ) -> "models.CassandraTableGetResults":
+        **kwargs: Any
+    ) -> "_models.CassandraTableGetResults":
         """Gets the Cassandra table under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -971,7 +971,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.CassandraTableGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraTableGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraTableGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1020,10 +1020,10 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        create_update_cassandra_table_parameters: "models.CassandraTableCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.CassandraTableGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.CassandraTableGetResults"]]
+        create_update_cassandra_table_parameters: "_models.CassandraTableCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.CassandraTableGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.CassandraTableGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1079,9 +1079,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        create_update_cassandra_table_parameters: "models.CassandraTableCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.CassandraTableGetResults"]:
+        create_update_cassandra_table_parameters: "_models.CassandraTableCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.CassandraTableGetResults"]:
         """Create or update an Azure Cosmos DB Cassandra Table.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1097,8 +1097,8 @@ class CassandraResourcesOperations:
         :type create_update_cassandra_table_parameters: ~azure.mgmt.cosmosdb.models.CassandraTableCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either CassandraTableGetResults or the result of cls(response)
@@ -1106,7 +1106,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraTableGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraTableGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1161,7 +1161,7 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -1207,7 +1207,7 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB Cassandra table.
 
@@ -1221,8 +1221,8 @@ class CassandraResourcesOperations:
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1281,8 +1281,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the RUs per second of the Cassandra table under an existing Azure Cosmos DB database
         account with the provided name.
 
@@ -1299,7 +1299,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1348,10 +1348,10 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1407,9 +1407,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update RUs per second of an Azure Cosmos DB Cassandra table.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1425,8 +1425,8 @@ class CassandraResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1434,7 +1434,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1489,9 +1489,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1542,8 +1542,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Cassandra table from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1556,8 +1556,8 @@ class CassandraResourcesOperations:
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1565,7 +1565,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1619,9 +1619,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1672,8 +1672,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         table_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Cassandra table from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1686,8 +1686,8 @@ class CassandraResourcesOperations:
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1695,7 +1695,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1748,8 +1748,8 @@ class CassandraResourcesOperations:
         resource_group_name: str,
         account_name: str,
         keyspace_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.CassandraViewListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.CassandraViewListResult"]:
         """Lists the Cassandra materialized views under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1763,7 +1763,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.CassandraViewListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraViewListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraViewListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1827,8 +1827,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
-    ) -> "models.CassandraViewGetResults":
+        **kwargs: Any
+    ) -> "_models.CassandraViewGetResults":
         """Gets the Cassandra view under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1844,7 +1844,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.CassandraViewGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraViewGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraViewGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1893,10 +1893,10 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        create_update_cassandra_view_parameters: "models.CassandraViewCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.CassandraViewGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.CassandraViewGetResults"]]
+        create_update_cassandra_view_parameters: "_models.CassandraViewCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.CassandraViewGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.CassandraViewGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1952,9 +1952,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        create_update_cassandra_view_parameters: "models.CassandraViewCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.CassandraViewGetResults"]:
+        create_update_cassandra_view_parameters: "_models.CassandraViewCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.CassandraViewGetResults"]:
         """Create or update an Azure Cosmos DB Cassandra View.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1970,8 +1970,8 @@ class CassandraResourcesOperations:
         :type create_update_cassandra_view_parameters: ~azure.mgmt.cosmosdb.models.CassandraViewCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either CassandraViewGetResults or the result of cls(response)
@@ -1979,7 +1979,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CassandraViewGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CassandraViewGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -2034,7 +2034,7 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -2080,7 +2080,7 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB Cassandra view.
 
@@ -2094,8 +2094,8 @@ class CassandraResourcesOperations:
         :type view_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -2154,8 +2154,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the RUs per second of the Cassandra view under an existing Azure Cosmos DB database
         account with the provided name.
 
@@ -2172,7 +2172,7 @@ class CassandraResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2221,10 +2221,10 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2280,9 +2280,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update RUs per second of an Azure Cosmos DB Cassandra view.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2298,8 +2298,8 @@ class CassandraResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -2307,7 +2307,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -2362,9 +2362,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2415,8 +2415,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Cassandra view from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2429,8 +2429,8 @@ class CassandraResourcesOperations:
         :type view_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -2438,7 +2438,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -2492,9 +2492,9 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2545,8 +2545,8 @@ class CassandraResourcesOperations:
         account_name: str,
         keyspace_name: str,
         view_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Cassandra view from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2559,8 +2559,8 @@ class CassandraResourcesOperations:
         :type view_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -2568,7 +2568,7 @@ class CassandraResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

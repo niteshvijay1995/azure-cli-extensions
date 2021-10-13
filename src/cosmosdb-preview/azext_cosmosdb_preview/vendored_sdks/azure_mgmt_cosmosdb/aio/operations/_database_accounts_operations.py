@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class DatabaseAccountsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,8 +47,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> "models.DatabaseAccountGetResults":
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountGetResults":
         """Retrieves the properties of an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DatabaseAccountGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -105,10 +105,10 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        update_parameters: "models.DatabaseAccountUpdateParameters",
-        **kwargs
-    ) -> "models.DatabaseAccountGetResults":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountGetResults"]
+        update_parameters: "_models.DatabaseAccountUpdateParameters",
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountGetResults":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -158,9 +158,9 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        update_parameters: "models.DatabaseAccountUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.DatabaseAccountGetResults"]:
+        update_parameters: "_models.DatabaseAccountUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.DatabaseAccountGetResults"]:
         """Updates the properties of an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -171,8 +171,8 @@ class DatabaseAccountsOperations:
         :type update_parameters: ~azure.mgmt.cosmosdb.models.DatabaseAccountUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DatabaseAccountGetResults or the result of cls(response)
@@ -180,7 +180,7 @@ class DatabaseAccountsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -229,10 +229,10 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        create_update_parameters: "models.DatabaseAccountCreateUpdateParameters",
-        **kwargs
-    ) -> "models.DatabaseAccountGetResults":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountGetResults"]
+        create_update_parameters: "_models.DatabaseAccountCreateUpdateParameters",
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountGetResults":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -282,9 +282,9 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        create_update_parameters: "models.DatabaseAccountCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.DatabaseAccountGetResults"]:
+        create_update_parameters: "_models.DatabaseAccountCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.DatabaseAccountGetResults"]:
         """Creates or updates an Azure Cosmos DB database account. The "Update" method is preferred when
         performing updates on an account.
 
@@ -296,8 +296,8 @@ class DatabaseAccountsOperations:
         :type create_update_parameters: ~azure.mgmt.cosmosdb.models.DatabaseAccountCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DatabaseAccountGetResults or the result of cls(response)
@@ -305,7 +305,7 @@ class DatabaseAccountsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -354,7 +354,7 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -396,7 +396,7 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB database account.
 
@@ -406,8 +406,8 @@ class DatabaseAccountsOperations:
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -460,8 +460,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        failover_parameters: "models.FailoverPolicies",
-        **kwargs
+        failover_parameters: "_models.FailoverPolicies",
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -508,8 +508,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        failover_parameters: "models.FailoverPolicies",
-        **kwargs
+        failover_parameters: "_models.FailoverPolicies",
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Changes the failover priority for the Azure Cosmos DB database account. A failover priority of
         0 indicates a write region. The maximum value for a failover priority = (total number of
@@ -524,8 +524,8 @@ class DatabaseAccountsOperations:
         :type failover_parameters: ~azure.mgmt.cosmosdb.models.FailoverPolicies
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -577,8 +577,8 @@ class DatabaseAccountsOperations:
 
     def list(
         self,
-        **kwargs
-    ) -> AsyncIterable["models.DatabaseAccountsListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.DatabaseAccountsListResult"]:
         """Lists all the Azure Cosmos DB database accounts available under the subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -586,7 +586,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.DatabaseAccountsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountsListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -644,8 +644,8 @@ class DatabaseAccountsOperations:
     def list_by_resource_group(
         self,
         resource_group_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.DatabaseAccountsListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.DatabaseAccountsListResult"]:
         """Lists all the Azure Cosmos DB database accounts available under the given resource group.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -655,7 +655,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.DatabaseAccountsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountsListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -715,8 +715,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> "models.DatabaseAccountListKeysResult":
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountListKeysResult":
         """Lists the access keys for the specified Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -728,7 +728,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DatabaseAccountListKeysResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountListKeysResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountListKeysResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -773,8 +773,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> "models.DatabaseAccountListConnectionStringsResult":
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountListConnectionStringsResult":
         """Lists the connection strings for the specified Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -786,7 +786,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DatabaseAccountListConnectionStringsResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountListConnectionStringsResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountListConnectionStringsResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -831,8 +831,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        region_parameter_for_offline: "models.RegionForOnlineOffline",
-        **kwargs
+        region_parameter_for_offline: "_models.RegionForOnlineOffline",
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -870,7 +870,7 @@ class DatabaseAccountsOperations:
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -882,8 +882,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        region_parameter_for_offline: "models.RegionForOnlineOffline",
-        **kwargs
+        region_parameter_for_offline: "_models.RegionForOnlineOffline",
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Offline the specified region for the specified Azure Cosmos DB database account.
 
@@ -895,8 +895,8 @@ class DatabaseAccountsOperations:
         :type region_parameter_for_offline: ~azure.mgmt.cosmosdb.models.RegionForOnlineOffline
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -950,8 +950,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        region_parameter_for_online: "models.RegionForOnlineOffline",
-        **kwargs
+        region_parameter_for_online: "_models.RegionForOnlineOffline",
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -989,7 +989,7 @@ class DatabaseAccountsOperations:
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -1001,8 +1001,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        region_parameter_for_online: "models.RegionForOnlineOffline",
-        **kwargs
+        region_parameter_for_online: "_models.RegionForOnlineOffline",
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Online the specified region for the specified Azure Cosmos DB database account.
 
@@ -1014,8 +1014,8 @@ class DatabaseAccountsOperations:
         :type region_parameter_for_online: ~azure.mgmt.cosmosdb.models.RegionForOnlineOffline
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1069,8 +1069,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> "models.DatabaseAccountListReadOnlyKeysResult":
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountListReadOnlyKeysResult":
         """Lists the read-only access keys for the specified Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1082,7 +1082,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DatabaseAccountListReadOnlyKeysResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountListReadOnlyKeysResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountListReadOnlyKeysResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1127,8 +1127,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> "models.DatabaseAccountListReadOnlyKeysResult":
+        **kwargs: Any
+    ) -> "_models.DatabaseAccountListReadOnlyKeysResult":
         """Lists the read-only access keys for the specified Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1140,7 +1140,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DatabaseAccountListReadOnlyKeysResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabaseAccountListReadOnlyKeysResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabaseAccountListReadOnlyKeysResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1185,8 +1185,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        key_to_regenerate: "models.DatabaseAccountRegenerateKeyParameters",
-        **kwargs
+        key_to_regenerate: "_models.DatabaseAccountRegenerateKeyParameters",
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -1233,8 +1233,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        key_to_regenerate: "models.DatabaseAccountRegenerateKeyParameters",
-        **kwargs
+        key_to_regenerate: "_models.DatabaseAccountRegenerateKeyParameters",
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Regenerates an access key for the specified Azure Cosmos DB database account.
 
@@ -1246,8 +1246,8 @@ class DatabaseAccountsOperations:
         :type key_to_regenerate: ~azure.mgmt.cosmosdb.models.DatabaseAccountRegenerateKeyParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1300,7 +1300,7 @@ class DatabaseAccountsOperations:
     async def check_name_exists(
         self,
         account_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> bool:
         """Checks that the Azure Cosmos DB account name already exists. A valid account name may contain
         only lowercase letters, numbers, and the '-' character, and must be between 3 and 50
@@ -1353,8 +1353,8 @@ class DatabaseAccountsOperations:
         resource_group_name: str,
         account_name: str,
         filter: str,
-        **kwargs
-    ) -> AsyncIterable["models.MetricListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.MetricListResult"]:
         """Retrieves the metrics determined by the given filter for the given database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1370,7 +1370,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.MetricListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MetricListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MetricListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1433,8 +1433,8 @@ class DatabaseAccountsOperations:
         resource_group_name: str,
         account_name: str,
         filter: Optional[str] = None,
-        **kwargs
-    ) -> AsyncIterable["models.UsagesResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.UsagesResult"]:
         """Retrieves the usages (most recent data) for the given database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1449,7 +1449,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.UsagesResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.UsagesResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.UsagesResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1512,8 +1512,8 @@ class DatabaseAccountsOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.MetricDefinitionsListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.MetricDefinitionsListResult"]:
         """Retrieves metric definitions for the given database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1525,7 +1525,7 @@ class DatabaseAccountsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.MetricDefinitionsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MetricDefinitionsListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MetricDefinitionsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

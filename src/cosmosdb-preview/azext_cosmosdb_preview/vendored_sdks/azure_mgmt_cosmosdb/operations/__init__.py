@@ -21,7 +21,7 @@ from ._partition_key_range_id_operations import PartitionKeyRangeIdOperations
 from ._partition_key_range_id_region_operations import PartitionKeyRangeIdRegionOperations
 from ._graph_resources_operations import GraphResourcesOperations
 from ._sql_resources_operations import SqlResourcesOperations
-from ._mongo_db_resources_operations import MongoDbResourcesOperations
+from ._mongo_db_resources_operations import MongoDBResourcesOperations
 from ._table_resources_operations import TableResourcesOperations
 from ._cassandra_resources_operations import CassandraResourcesOperations
 from ._gremlin_resources_operations import GremlinResourcesOperations
@@ -57,7 +57,7 @@ __all__ = [
     'PartitionKeyRangeIdRegionOperations',
     'GraphResourcesOperations',
     'SqlResourcesOperations',
-    'MongoDbResourcesOperations',
+    'MongoDBResourcesOperations',
     'TableResourcesOperations',
     'CassandraResourcesOperations',
     'GremlinResourcesOperations',

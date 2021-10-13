@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from typing import Any, Optional
 
     from azure.core.credentials import TokenCredential
+    from azure.core.pipeline.transport import HttpRequest, HttpResponse
 
 from ._configuration import CosmosDBManagementClientConfiguration
 from .operations import DatabaseAccountsOperations
@@ -33,7 +34,7 @@ from .operations import PartitionKeyRangeIdOperations
 from .operations import PartitionKeyRangeIdRegionOperations
 from .operations import GraphResourcesOperations
 from .operations import SqlResourcesOperations
-from .operations import MongoDbResourcesOperations
+from .operations import MongoDBResourcesOperations
 from .operations import TableResourcesOperations
 from .operations import CassandraResourcesOperations
 from .operations import GremlinResourcesOperations
@@ -88,8 +89,8 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
     :vartype graph_resources: azure.mgmt.cosmosdb.operations.GraphResourcesOperations
     :ivar sql_resources: SqlResourcesOperations operations
     :vartype sql_resources: azure.mgmt.cosmosdb.operations.SqlResourcesOperations
-    :ivar mongo_db_resources: MongoDbResourcesOperations operations
-    :vartype mongo_db_resources: azure.mgmt.cosmosdb.operations.MongoDbResourcesOperations
+    :ivar mongo_db_resources: MongoDBResourcesOperations operations
+    :vartype mongo_db_resources: azure.mgmt.cosmosdb.operations.MongoDBResourcesOperations
     :ivar table_resources: TableResourcesOperations operations
     :vartype table_resources: azure.mgmt.cosmosdb.operations.TableResourcesOperations
     :ivar cassandra_resources: CassandraResourcesOperations operations
@@ -180,7 +181,7 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
             self._client, self._config, self._serialize, self._deserialize)
         self.sql_resources = SqlResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.mongo_db_resources = MongoDbResourcesOperations(
+        self.mongo_db_resources = MongoDBResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.table_resources = TableResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
@@ -216,6 +217,24 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
             self._client, self._config, self._serialize, self._deserialize)
         self.data_transfer_jobs = DataTransferJobsOperations(
             self._client, self._config, self._serialize, self._deserialize)
+
+    def _send_request(self, http_request, **kwargs):
+        # type: (HttpRequest, Any) -> HttpResponse
+        """Runs the network request through the client's chained policies.
+
+        :param http_request: The network request you want to make. Required.
+        :type http_request: ~azure.core.pipeline.transport.HttpRequest
+        :keyword bool stream: Whether the response payload will be streamed. Defaults to True.
+        :return: The response of your network call. Does not do error handling on your response.
+        :rtype: ~azure.core.pipeline.transport.HttpResponse
+        """
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+        }
+        http_request.url = self._client.format_url(http_request.url, **path_format_arguments)
+        stream = kwargs.pop("stream", True)
+        pipeline_response = self._client._pipeline.run(http_request, stream=stream, **kwargs)
+        return pipeline_response.http_response
 
     def close(self):
         # type: () -> None

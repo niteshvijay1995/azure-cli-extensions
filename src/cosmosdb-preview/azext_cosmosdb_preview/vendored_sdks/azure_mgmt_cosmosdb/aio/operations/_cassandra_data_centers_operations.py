@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class CassandraDataCentersOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,8 +47,8 @@ class CassandraDataCentersOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.ListDataCenters"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.ListDataCenters"]:
         """List all data centers in a particular managed Cassandra cluster.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class CassandraDataCentersOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.ListDataCenters]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ListDataCenters"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ListDataCenters"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,8 +122,8 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        **kwargs
-    ) -> "models.DataCenterResource":
+        **kwargs: Any
+    ) -> "_models.DataCenterResource":
         """Get the properties of a managed Cassandra data center.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -137,7 +137,7 @@ class CassandraDataCentersOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataCenterResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataCenterResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataCenterResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -184,7 +184,7 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -230,7 +230,7 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Delete a managed Cassandra data center.
 
@@ -242,8 +242,8 @@ class CassandraDataCentersOperations:
         :type data_center_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -299,10 +299,10 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        body: "models.DataCenterResource",
-        **kwargs
-    ) -> "models.DataCenterResource":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataCenterResource"]
+        body: "_models.DataCenterResource",
+        **kwargs: Any
+    ) -> "_models.DataCenterResource":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataCenterResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -358,9 +358,9 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        body: "models.DataCenterResource",
-        **kwargs
-    ) -> AsyncLROPoller["models.DataCenterResource"]:
+        body: "_models.DataCenterResource",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.DataCenterResource"]:
         """Create or update a managed Cassandra data center. When updating, overwrite all properties. To
         update only some properties, use PATCH.
 
@@ -374,8 +374,8 @@ class CassandraDataCentersOperations:
         :type body: ~azure.mgmt.cosmosdb.models.DataCenterResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DataCenterResource or the result of cls(response)
@@ -383,7 +383,7 @@ class CassandraDataCentersOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataCenterResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataCenterResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -435,10 +435,10 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        body: "models.DataCenterResource",
-        **kwargs
-    ) -> "models.DataCenterResource":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataCenterResource"]
+        body: "_models.DataCenterResource",
+        **kwargs: Any
+    ) -> "_models.DataCenterResource":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataCenterResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -494,9 +494,9 @@ class CassandraDataCentersOperations:
         resource_group_name: str,
         cluster_name: str,
         data_center_name: str,
-        body: "models.DataCenterResource",
-        **kwargs
-    ) -> AsyncLROPoller["models.DataCenterResource"]:
+        body: "_models.DataCenterResource",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.DataCenterResource"]:
         """Update some of the properties of a managed Cassandra data center.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -509,8 +509,8 @@ class CassandraDataCentersOperations:
         :type body: ~azure.mgmt.cosmosdb.models.DataCenterResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DataCenterResource or the result of cls(response)
@@ -518,7 +518,7 @@ class CassandraDataCentersOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataCenterResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataCenterResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

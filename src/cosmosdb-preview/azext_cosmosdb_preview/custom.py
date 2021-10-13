@@ -301,6 +301,7 @@ def cosmosdb_data_transfer_export_job(client,
                                       account_name,
                                       cassandra_table,
                                       blob_container,
+                                      worker_count=0,
                                       job_name=None):
 
     if cassandra_table is None:
@@ -323,6 +324,9 @@ def cosmosdb_data_transfer_export_job(client,
     job_create_properties['source'] = job_source
     job_create_properties['destination'] = job_destination
 
+    if worker_count > 0:
+        job_create_properties['worker_count'] = worker_count
+
     job_create_parameters = {}
     job_create_parameters['properties'] = job_create_properties
 
@@ -339,6 +343,7 @@ def cosmosdb_data_transfer_import_job(client,
                                       account_name,
                                       cassandra_table,
                                       blob_container,
+                                      worker_count=0,
                                       job_name=None):
     if blob_container is None:
         raise CLIError('Source is required for dts import')
@@ -359,6 +364,9 @@ def cosmosdb_data_transfer_import_job(client,
     job_create_properties = {}
     job_create_properties['source'] = job_source
     job_create_properties['destination'] = job_destination
+
+    if worker_count > 0:
+        job_create_properties['worker_count'] = worker_count
 
     job_create_parameters = {}
     job_create_parameters['properties'] = job_create_properties

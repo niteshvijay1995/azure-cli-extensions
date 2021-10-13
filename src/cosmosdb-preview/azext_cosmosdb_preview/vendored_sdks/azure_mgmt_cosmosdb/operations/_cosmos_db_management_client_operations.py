@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -29,7 +29,7 @@ class CosmosDBManagementClientOperationsMixin(object):
         self,
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.LocationListResult"]
+        # type: (...) -> Iterable["_models.LocationListResult"]
         """List Cosmos DB locations and their properties.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -37,7 +37,7 @@ class CosmosDBManagementClientOperationsMixin(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.LocationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.LocationListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.LocationListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -97,7 +97,7 @@ class CosmosDBManagementClientOperationsMixin(object):
         location,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.LocationGetResult"
+        # type: (...) -> "_models.LocationGetResult"
         """Get the properties of an existing Cosmos DB location.
 
         :param location: Cosmos DB region, with spaces between words and each word capitalized.
@@ -107,7 +107,7 @@ class CosmosDBManagementClientOperationsMixin(object):
         :rtype: ~azure.mgmt.cosmosdb.models.LocationGetResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.LocationGetResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.LocationGetResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class GremlinResourcesOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,8 +47,8 @@ class GremlinResourcesOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.GremlinDatabaseListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.GremlinDatabaseListResult"]:
         """Lists the Gremlin databases under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class GremlinResourcesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.GremlinDatabaseListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GremlinDatabaseListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GremlinDatabaseListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,8 +122,8 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> "models.GremlinDatabaseGetResults":
+        **kwargs: Any
+    ) -> "_models.GremlinDatabaseGetResults":
         """Gets the Gremlin databases under an existing Azure Cosmos DB database account with the provided
         name.
 
@@ -138,7 +138,7 @@ class GremlinResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.GremlinDatabaseGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GremlinDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GremlinDatabaseGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -185,10 +185,10 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        create_update_gremlin_database_parameters: "models.GremlinDatabaseCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.GremlinDatabaseGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.GremlinDatabaseGetResults"]]
+        create_update_gremlin_database_parameters: "_models.GremlinDatabaseCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.GremlinDatabaseGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.GremlinDatabaseGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -242,9 +242,9 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        create_update_gremlin_database_parameters: "models.GremlinDatabaseCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.GremlinDatabaseGetResults"]:
+        create_update_gremlin_database_parameters: "_models.GremlinDatabaseCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.GremlinDatabaseGetResults"]:
         """Create or update an Azure Cosmos DB Gremlin database.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -258,8 +258,8 @@ class GremlinResourcesOperations:
         :type create_update_gremlin_database_parameters: ~azure.mgmt.cosmosdb.models.GremlinDatabaseCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either GremlinDatabaseGetResults or the result of cls(response)
@@ -267,7 +267,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GremlinDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GremlinDatabaseGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -319,7 +319,7 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -363,7 +363,7 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB Gremlin database.
 
@@ -375,8 +375,8 @@ class GremlinResourcesOperations:
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -432,8 +432,8 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the RUs per second of the Gremlin database under an existing Azure Cosmos DB database
         account with the provided name.
 
@@ -448,7 +448,7 @@ class GremlinResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -495,10 +495,10 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -552,9 +552,9 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update RUs per second of an Azure Cosmos DB Gremlin database.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -568,8 +568,8 @@ class GremlinResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -577,7 +577,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -629,9 +629,9 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -680,8 +680,8 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Gremlin database from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -692,8 +692,8 @@ class GremlinResourcesOperations:
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -701,7 +701,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -752,9 +752,9 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -803,8 +803,8 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Gremlin database from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -815,8 +815,8 @@ class GremlinResourcesOperations:
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -824,7 +824,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -875,8 +875,8 @@ class GremlinResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.GremlinGraphListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.GremlinGraphListResult"]:
         """Lists the Gremlin graph under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -890,7 +890,7 @@ class GremlinResourcesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.GremlinGraphListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GremlinGraphListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GremlinGraphListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -954,8 +954,8 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
-    ) -> "models.GremlinGraphGetResults":
+        **kwargs: Any
+    ) -> "_models.GremlinGraphGetResults":
         """Gets the Gremlin graph under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -971,7 +971,7 @@ class GremlinResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.GremlinGraphGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GremlinGraphGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GremlinGraphGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1020,10 +1020,10 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        create_update_gremlin_graph_parameters: "models.GremlinGraphCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.GremlinGraphGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.GremlinGraphGetResults"]]
+        create_update_gremlin_graph_parameters: "_models.GremlinGraphCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.GremlinGraphGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.GremlinGraphGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1079,9 +1079,9 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        create_update_gremlin_graph_parameters: "models.GremlinGraphCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.GremlinGraphGetResults"]:
+        create_update_gremlin_graph_parameters: "_models.GremlinGraphCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.GremlinGraphGetResults"]:
         """Create or update an Azure Cosmos DB Gremlin graph.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1097,8 +1097,8 @@ class GremlinResourcesOperations:
         :type create_update_gremlin_graph_parameters: ~azure.mgmt.cosmosdb.models.GremlinGraphCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either GremlinGraphGetResults or the result of cls(response)
@@ -1106,7 +1106,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GremlinGraphGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GremlinGraphGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1161,7 +1161,7 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -1207,7 +1207,7 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB Gremlin graph.
 
@@ -1221,8 +1221,8 @@ class GremlinResourcesOperations:
         :type graph_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1281,8 +1281,8 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the Gremlin graph throughput under an existing Azure Cosmos DB database account with the
         provided name.
 
@@ -1299,7 +1299,7 @@ class GremlinResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1348,10 +1348,10 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1407,9 +1407,9 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update RUs per second of an Azure Cosmos DB Gremlin graph.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1425,8 +1425,8 @@ class GremlinResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1434,7 +1434,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1489,9 +1489,9 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1542,8 +1542,8 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Gremlin graph from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1556,8 +1556,8 @@ class GremlinResourcesOperations:
         :type graph_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1565,7 +1565,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1619,9 +1619,9 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1672,8 +1672,8 @@ class GremlinResourcesOperations:
         account_name: str,
         database_name: str,
         graph_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1686,8 +1686,8 @@ class GremlinResourcesOperations:
         :type graph_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1695,7 +1695,7 @@ class GremlinResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

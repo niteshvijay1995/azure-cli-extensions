@@ -92,6 +92,17 @@ def step_cassandra_cluster_list2(test, checks=None):
              checks=checks)
 
 
+# EXAMPLE: /CassandraClusters/get/CosmosDBManagedCassandraStatus
+@try_manual
+def step_cassandra_cluster_status(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az cosmosdb cassandra-cluster status '
+             '--cluster-name "cassandra-prod" '
+             '--resource-group "{rg_5}"',
+             checks=checks)
+
+
 # EXAMPLE: /CassandraClusters/patch/CosmosDBManagedCassandraClusterPatch
 @try_manual
 def step_cassandra_cluster_update(test, checks=None):
@@ -111,25 +122,36 @@ def step_cassandra_cluster_update(test, checks=None):
              checks=checks)
 
 
-# EXAMPLE: /CassandraClusters/post/CosmosDBManagedCassandraClusterFetchNodeStatus
+# EXAMPLE: /CassandraClusters/post/CosmosDBManagedCassandraClusterDeallocate
 @try_manual
-def step_cassandra_cluster_fetch_node_status(test, checks=None):
+def step_cassandra_cluster_deallocate(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az cosmosdb cassandra-cluster fetch-node-status '
+    test.cmd('az cosmosdb cassandra-cluster deallocate '
              '--cluster-name "cassandra-prod" '
              '--resource-group "{rg_5}"',
              checks=checks)
 
 
-# EXAMPLE: /CassandraClusters/post/CosmosDBManagedCassandraRepair
+# EXAMPLE: /CassandraClusters/post/CosmosDBManagedCassandraClusterStart
 @try_manual
-def step_cassandra_cluster_request_repair(test, checks=None):
+def step_cassandra_cluster_start(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az cosmosdb cassandra-cluster request-repair '
-             '--keyspace "my-keyspace" '
-             '--tables "table1" "table42" '
+    test.cmd('az cosmosdb cassandra-cluster start '
+             '--cluster-name "cassandra-prod" '
+             '--resource-group "{rg_5}"',
+             checks=checks)
+
+
+# EXAMPLE: /CassandraClusters/post/CosmosDBManagedCassandraCommand
+@try_manual
+def step_cassandra_cluster_invoke_command(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az cosmosdb cassandra-cluster invoke-command '
+             '--command "nodetool status" '
+             '--host "10.0.1.12" '
              '--cluster-name "cassandra-prod" '
              '--resource-group "{rg_5}"',
              checks=checks)
@@ -728,6 +750,7 @@ def step_database_account_create(test, checks=None):
              '--consistency-policy default-consistency-level="BoundedStaleness" max-interval-in-seconds=10 '
              'max-staleness-prefix=200 '
              '--cors allowed-origins="https://test" '
+             '--create-mode "Default" '
              '--default-identity "FirstPartyIdentity" '
              '--enable-analytical-storage true '
              '--enable-free-tier false '
@@ -756,6 +779,7 @@ def step_database_account_create2(test, checks=None):
     test.cmd('az cosmosdb database-account create '
              '--account-name "ddb1" '
              '--location "westus" '
+             '--create-mode "Default" '
              '--locations failover-priority={myPartitionKeyRangeId} is-zone-redundant=false '
              'location-name="southcentralus" '
              '--resource-group "{rg}"',
@@ -1928,6 +1952,23 @@ def step_service_delete3(test, checks=None):
              checks=checks)
 
 
+# EXAMPLE: /SqlResources/put/CosmosDBClientEncryptionKeyCreateUpdate
+@try_manual
+def step_sql_resource_create(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az cosmosdb sql-resource create-update-client-encryption-key '
+             '--account-name "accountName" '
+             '--client-encryption-key-name "cekName" '
+             '--encryption-algorithm "AEAD_AES_256_CBC_HMAC_SHA256" '
+             '--key-wrap-metadata name="customerManagedKey" type="AzureKeyVault" value="AzureKeyVault Key URL" '
+             '--wrapped-data-encryption-key "This is actually an array of bytes. This request/response is being '
+             'presented as a string for readability in the example" '
+             '--database-name "{myDatabase}" '
+             '--resource-group "{rg_2}"',
+             checks=checks)
+
+
 # EXAMPLE: /SqlResources/put/CosmosDBSqlContainerCreateUpdate
 @try_manual
 def step_sql_resource_create_update_sql_container(test, checks=None):
@@ -1994,7 +2035,7 @@ def step_sql_resource_update_sql_database_throughput(test, checks=None):
 
 # EXAMPLE: /SqlResources/put/CosmosDBSqlRoleAssignmentCreateUpdate
 @try_manual
-def step_sql_resource_create(test, checks=None):
+def step_sql_resource_create2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az cosmosdb sql-resource create-update-sql-role-assignment '
@@ -2011,7 +2052,7 @@ def step_sql_resource_create(test, checks=None):
 
 # EXAMPLE: /SqlResources/put/CosmosDBSqlRoleDefinitionCreateUpdate
 @try_manual
-def step_sql_resource_create2(test, checks=None):
+def step_sql_resource_create3(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az cosmosdb sql-resource create-update-sql-role-definition '
@@ -2030,7 +2071,7 @@ def step_sql_resource_create2(test, checks=None):
 
 # EXAMPLE: /SqlResources/put/CosmosDBSqlStoredProcedureCreateUpdate
 @try_manual
-def step_sql_resource_create3(test, checks=None):
+def step_sql_resource_create4(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az cosmosdb sql-resource create-update-sql-stored-procedure '
@@ -2060,7 +2101,7 @@ def step_sql_resource_create_update_sql_trigger(test, checks=None):
 
 # EXAMPLE: /SqlResources/put/CosmosDBSqlUserDefinedFunctionCreateUpdate
 @try_manual
-def step_sql_resource_create4(test, checks=None):
+def step_sql_resource_create5(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az cosmosdb sql-resource create-update-sql-user-defined-function '
@@ -2070,6 +2111,31 @@ def step_sql_resource_create4(test, checks=None):
              '--database-name "{myDatabase}" '
              '--resource-group "{rg}" '
              '--user-defined-function-name "userDefinedFunctionName"',
+             checks=checks)
+
+
+# EXAMPLE: /SqlResources/get/CosmosDBClientEncryptionKeyGet
+@try_manual
+def step_sql_resource_show_client_encryption_key(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az cosmosdb sql-resource show-client-encryption-key '
+             '--account-name "accountName" '
+             '--client-encryption-key-name "cekName" '
+             '--database-name "{myDatabase}" '
+             '--resource-group "{rg_2}"',
+             checks=checks)
+
+
+# EXAMPLE: /SqlResources/get/CosmosDBClientEncryptionKeysList
+@try_manual
+def step_sql_resource_list_client_encryption_key(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az cosmosdb sql-resource list-client-encryption-key '
+             '--account-name "accountName" '
+             '--database-name "{myDatabase}" '
+             '--resource-group "{rg_2}"',
              checks=checks)
 
 

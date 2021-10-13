@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -23,8 +23,8 @@ class CosmosDBManagementClientOperationsMixin:
 
     def location_list(
         self,
-        **kwargs
-    ) -> AsyncIterable["models.LocationListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.LocationListResult"]:
         """List Cosmos DB locations and their properties.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -32,7 +32,7 @@ class CosmosDBManagementClientOperationsMixin:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.LocationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.LocationListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.LocationListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -90,8 +90,8 @@ class CosmosDBManagementClientOperationsMixin:
     async def location_get(
         self,
         location: str,
-        **kwargs
-    ) -> "models.LocationGetResult":
+        **kwargs: Any
+    ) -> "_models.LocationGetResult":
         """Get the properties of an existing Cosmos DB location.
 
         :param location: Cosmos DB region, with spaces between words and each word capitalized.
@@ -101,7 +101,7 @@ class CosmosDBManagementClientOperationsMixin:
         :rtype: ~azure.mgmt.cosmosdb.models.LocationGetResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.LocationGetResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.LocationGetResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

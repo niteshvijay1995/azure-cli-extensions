@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class PrivateEndpointConnectionsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -53,7 +53,7 @@ class PrivateEndpointConnectionsOperations(object):
         account_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.PrivateEndpointConnectionListResult"]
+        # type: (...) -> Iterable["_models.PrivateEndpointConnectionListResult"]
         """List all private endpoint connections on a Cosmos DB account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -65,7 +65,7 @@ class PrivateEndpointConnectionsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.PrivateEndpointConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnectionListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnectionListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -129,7 +129,7 @@ class PrivateEndpointConnectionsOperations(object):
         private_endpoint_connection_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.PrivateEndpointConnection"
+        # type: (...) -> "_models.PrivateEndpointConnection"
         """Gets a private endpoint connection.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -143,7 +143,7 @@ class PrivateEndpointConnectionsOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -190,11 +190,11 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         account_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        parameters,  # type: "models.PrivateEndpointConnection"
+        parameters,  # type: "_models.PrivateEndpointConnection"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.PrivateEndpointConnection"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.PrivateEndpointConnection"]]
+        # type: (...) -> Optional["_models.PrivateEndpointConnection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.PrivateEndpointConnection"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -231,7 +231,7 @@ class PrivateEndpointConnectionsOperations(object):
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -249,10 +249,10 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         account_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        parameters,  # type: "models.PrivateEndpointConnection"
+        parameters,  # type: "_models.PrivateEndpointConnection"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.PrivateEndpointConnection"]
+        # type: (...) -> LROPoller["_models.PrivateEndpointConnection"]
         """Approve or reject a private endpoint connection with a given name.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -265,8 +265,8 @@ class PrivateEndpointConnectionsOperations(object):
         :type parameters: ~azure.mgmt.cosmosdb.models.PrivateEndpointConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either PrivateEndpointConnection or the result of cls(response)
@@ -274,7 +274,7 @@ class PrivateEndpointConnectionsOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnection"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -361,7 +361,7 @@ class PrivateEndpointConnectionsOperations(object):
 
         if response.status_code not in [202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -387,8 +387,8 @@ class PrivateEndpointConnectionsOperations(object):
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)

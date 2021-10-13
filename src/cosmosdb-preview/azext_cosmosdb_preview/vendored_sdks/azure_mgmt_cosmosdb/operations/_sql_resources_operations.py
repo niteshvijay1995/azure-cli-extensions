@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class SqlResourcesOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -53,7 +53,7 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlDatabaseListResult"]
+        # type: (...) -> Iterable["_models.SqlDatabaseListResult"]
         """Lists the SQL databases under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -65,7 +65,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlDatabaseListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlDatabaseListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlDatabaseListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -129,7 +129,7 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlDatabaseGetResults"
+        # type: (...) -> "_models.SqlDatabaseGetResults"
         """Gets the SQL database under an existing Azure Cosmos DB database account with the provided
         name.
 
@@ -144,7 +144,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlDatabaseGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlDatabaseGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -191,11 +191,11 @@ class SqlResourcesOperations(object):
         resource_group_name,  # type: str
         account_name,  # type: str
         database_name,  # type: str
-        create_update_sql_database_parameters,  # type: "models.SqlDatabaseCreateUpdateParameters"
+        create_update_sql_database_parameters,  # type: "_models.SqlDatabaseCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlDatabaseGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlDatabaseGetResults"]]
+        # type: (...) -> Optional["_models.SqlDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlDatabaseGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -249,10 +249,10 @@ class SqlResourcesOperations(object):
         resource_group_name,  # type: str
         account_name,  # type: str
         database_name,  # type: str
-        create_update_sql_database_parameters,  # type: "models.SqlDatabaseCreateUpdateParameters"
+        create_update_sql_database_parameters,  # type: "_models.SqlDatabaseCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlDatabaseGetResults"]
+        # type: (...) -> LROPoller["_models.SqlDatabaseGetResults"]
         """Create or update an Azure Cosmos DB SQL database.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -266,8 +266,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_database_parameters: ~azure.mgmt.cosmosdb.models.SqlDatabaseCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlDatabaseGetResults or the result of cls(response)
@@ -275,7 +275,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlDatabaseGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -385,8 +385,8 @@ class SqlResourcesOperations(object):
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -444,7 +444,7 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.ThroughputSettingsGetResults"
+        # type: (...) -> "_models.ThroughputSettingsGetResults"
         """Gets the RUs per second of the SQL database under an existing Azure Cosmos DB database account
         with the provided name.
 
@@ -459,7 +459,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -506,11 +506,11 @@ class SqlResourcesOperations(object):
         resource_group_name,  # type: str
         account_name,  # type: str
         database_name,  # type: str
-        update_throughput_parameters,  # type: "models.ThroughputSettingsUpdateParameters"
+        update_throughput_parameters,  # type: "_models.ThroughputSettingsUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.ThroughputSettingsGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        # type: (...) -> Optional["_models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -564,10 +564,10 @@ class SqlResourcesOperations(object):
         resource_group_name,  # type: str
         account_name,  # type: str
         database_name,  # type: str
-        update_throughput_parameters,  # type: "models.ThroughputSettingsUpdateParameters"
+        update_throughput_parameters,  # type: "_models.ThroughputSettingsUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ThroughputSettingsGetResults"]
+        # type: (...) -> LROPoller["_models.ThroughputSettingsGetResults"]
         """Update RUs per second of an Azure Cosmos DB SQL database.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -581,8 +581,8 @@ class SqlResourcesOperations(object):
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -590,7 +590,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -644,8 +644,8 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.ThroughputSettingsGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        # type: (...) -> Optional["_models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -696,7 +696,7 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ThroughputSettingsGetResults"]
+        # type: (...) -> LROPoller["_models.ThroughputSettingsGetResults"]
         """Migrate an Azure Cosmos DB SQL database from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -707,8 +707,8 @@ class SqlResourcesOperations(object):
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -716,7 +716,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -769,8 +769,8 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.ThroughputSettingsGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        # type: (...) -> Optional["_models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -821,7 +821,7 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ThroughputSettingsGetResults"]
+        # type: (...) -> LROPoller["_models.ThroughputSettingsGetResults"]
         """Migrate an Azure Cosmos DB SQL database from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -832,8 +832,8 @@ class SqlResourcesOperations(object):
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -841,7 +841,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -887,6 +887,229 @@ class SqlResourcesOperations(object):
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_migrate_sql_database_to_manual_throughput.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput'}  # type: ignore
 
+    def list_client_encryption_keys(
+        self,
+        resource_group_name,  # type: str
+        account_name,  # type: str
+        database_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> Iterable["_models.ClientEncryptionKeysListResult"]
+        """Lists the ClientEncryptionKeys under an existing Azure Cosmos DB SQL database.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param account_name: Cosmos DB database account name.
+        :type account_name: str
+        :param database_name: Cosmos DB database name.
+        :type database_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: An iterator like instance of either ClientEncryptionKeysListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.ClientEncryptionKeysListResult]
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClientEncryptionKeysListResult"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-15-preview"
+        accept = "application/json"
+
+        def prepare_request(next_link=None):
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+            if not next_link:
+                # Construct URL
+                url = self.list_client_encryption_keys.metadata['url']  # type: ignore
+                path_format_arguments = {
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+                    'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*'),
+                    'databaseName': self._serialize.url("database_name", database_name, 'str'),
+                }
+                url = self._client.format_url(url, **path_format_arguments)
+                # Construct parameters
+                query_parameters = {}  # type: Dict[str, Any]
+                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+                request = self._client.get(url, query_parameters, header_parameters)
+            else:
+                url = next_link
+                query_parameters = {}  # type: Dict[str, Any]
+                request = self._client.get(url, query_parameters, header_parameters)
+            return request
+
+        def extract_data(pipeline_response):
+            deserialized = self._deserialize('ClientEncryptionKeysListResult', pipeline_response)
+            list_of_elem = deserialized.value
+            if cls:
+                list_of_elem = cls(list_of_elem)
+            return None, iter(list_of_elem)
+
+        def get_next(next_link=None):
+            request = prepare_request(next_link)
+
+            pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+            response = pipeline_response.http_response
+
+            if response.status_code not in [200]:
+                map_error(status_code=response.status_code, response=response, error_map=error_map)
+                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+            return pipeline_response
+
+        return ItemPaged(
+            get_next, extract_data
+        )
+    list_client_encryption_keys.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys'}  # type: ignore
+
+    def get_client_encryption_key(
+        self,
+        resource_group_name,  # type: str
+        account_name,  # type: str
+        database_name,  # type: str
+        client_encryption_key_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "_models.ClientEncryptionKeyGetResults"
+        """Gets the ClientEncryptionKey under an existing Azure Cosmos DB SQL database.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param account_name: Cosmos DB database account name.
+        :type account_name: str
+        :param database_name: Cosmos DB database name.
+        :type database_name: str
+        :param client_encryption_key_name: Cosmos DB ClientEncryptionKey name.
+        :type client_encryption_key_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: ClientEncryptionKeyGetResults, or the result of cls(response)
+        :rtype: ~azure.mgmt.cosmosdb.models.ClientEncryptionKeyGetResults
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClientEncryptionKeyGetResults"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-15-preview"
+        accept = "application/json"
+
+        # Construct URL
+        url = self.get_client_encryption_key.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*'),
+            'databaseName': self._serialize.url("database_name", database_name, 'str'),
+            'clientEncryptionKeyName': self._serialize.url("client_encryption_key_name", client_encryption_key_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        request = self._client.get(url, query_parameters, header_parameters)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('ClientEncryptionKeyGetResults', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    get_client_encryption_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}'}  # type: ignore
+
+    def create_update_client_encryption_key(
+        self,
+        resource_group_name,  # type: str
+        account_name,  # type: str
+        database_name,  # type: str
+        client_encryption_key_name,  # type: str
+        create_update_client_encryption_key_parameters,  # type: "_models.ClientEncryptionKeyCreateUpdateParameters"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "_models.ClientEncryptionKeyGetResults"
+        """Create or update a ClientEncryptionKey. This API is meant to be invoked via tools such as the
+        Azure Powershell (instead of directly).
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param account_name: Cosmos DB database account name.
+        :type account_name: str
+        :param database_name: Cosmos DB database name.
+        :type database_name: str
+        :param client_encryption_key_name: Cosmos DB ClientEncryptionKey name.
+        :type client_encryption_key_name: str
+        :param create_update_client_encryption_key_parameters: The parameters to provide for the client
+         encryption key.
+        :type create_update_client_encryption_key_parameters: ~azure.mgmt.cosmosdb.models.ClientEncryptionKeyCreateUpdateParameters
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: ClientEncryptionKeyGetResults, or the result of cls(response)
+        :rtype: ~azure.mgmt.cosmosdb.models.ClientEncryptionKeyGetResults
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClientEncryptionKeyGetResults"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-15-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+        accept = "application/json"
+
+        # Construct URL
+        url = self.create_update_client_encryption_key.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*'),
+            'databaseName': self._serialize.url("database_name", database_name, 'str'),
+            'clientEncryptionKeyName': self._serialize.url("client_encryption_key_name", client_encryption_key_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(create_update_client_encryption_key_parameters, 'ClientEncryptionKeyCreateUpdateParameters')
+        body_content_kwargs['content'] = body_content
+        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('ClientEncryptionKeyGetResults', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    create_update_client_encryption_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}'}  # type: ignore
+
     def list_sql_containers(
         self,
         resource_group_name,  # type: str
@@ -894,7 +1117,7 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlContainerListResult"]
+        # type: (...) -> Iterable["_models.SqlContainerListResult"]
         """Lists the SQL container under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -908,7 +1131,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlContainerListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlContainerListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlContainerListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -974,7 +1197,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlContainerGetResults"
+        # type: (...) -> "_models.SqlContainerGetResults"
         """Gets the SQL container under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -990,7 +1213,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlContainerGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlContainerGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlContainerGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1039,11 +1262,11 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         database_name,  # type: str
         container_name,  # type: str
-        create_update_sql_container_parameters,  # type: "models.SqlContainerCreateUpdateParameters"
+        create_update_sql_container_parameters,  # type: "_models.SqlContainerCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlContainerGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlContainerGetResults"]]
+        # type: (...) -> Optional["_models.SqlContainerGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlContainerGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1099,10 +1322,10 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         database_name,  # type: str
         container_name,  # type: str
-        create_update_sql_container_parameters,  # type: "models.SqlContainerCreateUpdateParameters"
+        create_update_sql_container_parameters,  # type: "_models.SqlContainerCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlContainerGetResults"]
+        # type: (...) -> LROPoller["_models.SqlContainerGetResults"]
         """Create or update an Azure Cosmos DB SQL container.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1118,8 +1341,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_container_parameters: ~azure.mgmt.cosmosdb.models.SqlContainerCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlContainerGetResults or the result of cls(response)
@@ -1127,7 +1350,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlContainerGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlContainerGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1244,8 +1467,8 @@ class SqlResourcesOperations(object):
         :type container_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -1306,7 +1529,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.ThroughputSettingsGetResults"
+        # type: (...) -> "_models.ThroughputSettingsGetResults"
         """Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database
         account.
 
@@ -1323,7 +1546,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1372,11 +1595,11 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         database_name,  # type: str
         container_name,  # type: str
-        update_throughput_parameters,  # type: "models.ThroughputSettingsUpdateParameters"
+        update_throughput_parameters,  # type: "_models.ThroughputSettingsUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.ThroughputSettingsGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        # type: (...) -> Optional["_models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1432,10 +1655,10 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         database_name,  # type: str
         container_name,  # type: str
-        update_throughput_parameters,  # type: "models.ThroughputSettingsUpdateParameters"
+        update_throughput_parameters,  # type: "_models.ThroughputSettingsUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ThroughputSettingsGetResults"]
+        # type: (...) -> LROPoller["_models.ThroughputSettingsGetResults"]
         """Update RUs per second of an Azure Cosmos DB SQL container.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1451,8 +1674,8 @@ class SqlResourcesOperations(object):
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1460,7 +1683,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1517,8 +1740,8 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.ThroughputSettingsGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        # type: (...) -> Optional["_models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1571,7 +1794,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ThroughputSettingsGetResults"]
+        # type: (...) -> LROPoller["_models.ThroughputSettingsGetResults"]
         """Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1584,8 +1807,8 @@ class SqlResourcesOperations(object):
         :type container_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1593,7 +1816,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1649,8 +1872,8 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.ThroughputSettingsGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        # type: (...) -> Optional["_models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1703,7 +1926,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ThroughputSettingsGetResults"]
+        # type: (...) -> LROPoller["_models.ThroughputSettingsGetResults"]
         """Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1716,8 +1939,8 @@ class SqlResourcesOperations(object):
         :type container_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1725,7 +1948,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1781,7 +2004,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlStoredProcedureListResult"]
+        # type: (...) -> Iterable["_models.SqlStoredProcedureListResult"]
         """Lists the SQL storedProcedure under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1797,7 +2020,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlStoredProcedureListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlStoredProcedureListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlStoredProcedureListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1865,7 +2088,7 @@ class SqlResourcesOperations(object):
         stored_procedure_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlStoredProcedureGetResults"
+        # type: (...) -> "_models.SqlStoredProcedureGetResults"
         """Gets the SQL storedProcedure under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1883,7 +2106,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlStoredProcedureGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlStoredProcedureGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlStoredProcedureGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1934,11 +2157,11 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         container_name,  # type: str
         stored_procedure_name,  # type: str
-        create_update_sql_stored_procedure_parameters,  # type: "models.SqlStoredProcedureCreateUpdateParameters"
+        create_update_sql_stored_procedure_parameters,  # type: "_models.SqlStoredProcedureCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlStoredProcedureGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlStoredProcedureGetResults"]]
+        # type: (...) -> Optional["_models.SqlStoredProcedureGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlStoredProcedureGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1996,10 +2219,10 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         container_name,  # type: str
         stored_procedure_name,  # type: str
-        create_update_sql_stored_procedure_parameters,  # type: "models.SqlStoredProcedureCreateUpdateParameters"
+        create_update_sql_stored_procedure_parameters,  # type: "_models.SqlStoredProcedureCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlStoredProcedureGetResults"]
+        # type: (...) -> LROPoller["_models.SqlStoredProcedureGetResults"]
         """Create or update an Azure Cosmos DB SQL storedProcedure.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2017,8 +2240,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_stored_procedure_parameters: ~azure.mgmt.cosmosdb.models.SqlStoredProcedureCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlStoredProcedureGetResults or the result of cls(response)
@@ -2026,7 +2249,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlStoredProcedureGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlStoredProcedureGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -2150,8 +2373,8 @@ class SqlResourcesOperations(object):
         :type stored_procedure_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -2214,7 +2437,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlUserDefinedFunctionListResult"]
+        # type: (...) -> Iterable["_models.SqlUserDefinedFunctionListResult"]
         """Lists the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2230,7 +2453,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlUserDefinedFunctionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlUserDefinedFunctionListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlUserDefinedFunctionListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2298,7 +2521,7 @@ class SqlResourcesOperations(object):
         user_defined_function_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlUserDefinedFunctionGetResults"
+        # type: (...) -> "_models.SqlUserDefinedFunctionGetResults"
         """Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2316,7 +2539,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlUserDefinedFunctionGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlUserDefinedFunctionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlUserDefinedFunctionGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2367,11 +2590,11 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         container_name,  # type: str
         user_defined_function_name,  # type: str
-        create_update_sql_user_defined_function_parameters,  # type: "models.SqlUserDefinedFunctionCreateUpdateParameters"
+        create_update_sql_user_defined_function_parameters,  # type: "_models.SqlUserDefinedFunctionCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlUserDefinedFunctionGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlUserDefinedFunctionGetResults"]]
+        # type: (...) -> Optional["_models.SqlUserDefinedFunctionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlUserDefinedFunctionGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2429,10 +2652,10 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         container_name,  # type: str
         user_defined_function_name,  # type: str
-        create_update_sql_user_defined_function_parameters,  # type: "models.SqlUserDefinedFunctionCreateUpdateParameters"
+        create_update_sql_user_defined_function_parameters,  # type: "_models.SqlUserDefinedFunctionCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlUserDefinedFunctionGetResults"]
+        # type: (...) -> LROPoller["_models.SqlUserDefinedFunctionGetResults"]
         """Create or update an Azure Cosmos DB SQL userDefinedFunction.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2450,8 +2673,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_user_defined_function_parameters: ~azure.mgmt.cosmosdb.models.SqlUserDefinedFunctionCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlUserDefinedFunctionGetResults or the result of cls(response)
@@ -2459,7 +2682,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlUserDefinedFunctionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlUserDefinedFunctionGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -2583,8 +2806,8 @@ class SqlResourcesOperations(object):
         :type user_defined_function_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -2647,7 +2870,7 @@ class SqlResourcesOperations(object):
         container_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlTriggerListResult"]
+        # type: (...) -> Iterable["_models.SqlTriggerListResult"]
         """Lists the SQL trigger under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2663,7 +2886,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlTriggerListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlTriggerListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlTriggerListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2731,7 +2954,7 @@ class SqlResourcesOperations(object):
         trigger_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlTriggerGetResults"
+        # type: (...) -> "_models.SqlTriggerGetResults"
         """Gets the SQL trigger under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2749,7 +2972,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlTriggerGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlTriggerGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlTriggerGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2800,11 +3023,11 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         container_name,  # type: str
         trigger_name,  # type: str
-        create_update_sql_trigger_parameters,  # type: "models.SqlTriggerCreateUpdateParameters"
+        create_update_sql_trigger_parameters,  # type: "_models.SqlTriggerCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlTriggerGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlTriggerGetResults"]]
+        # type: (...) -> Optional["_models.SqlTriggerGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlTriggerGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2862,10 +3085,10 @@ class SqlResourcesOperations(object):
         database_name,  # type: str
         container_name,  # type: str
         trigger_name,  # type: str
-        create_update_sql_trigger_parameters,  # type: "models.SqlTriggerCreateUpdateParameters"
+        create_update_sql_trigger_parameters,  # type: "_models.SqlTriggerCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlTriggerGetResults"]
+        # type: (...) -> LROPoller["_models.SqlTriggerGetResults"]
         """Create or update an Azure Cosmos DB SQL trigger.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -2883,8 +3106,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_trigger_parameters: ~azure.mgmt.cosmosdb.models.SqlTriggerCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlTriggerGetResults or the result of cls(response)
@@ -2892,7 +3115,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlTriggerGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlTriggerGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -3016,8 +3239,8 @@ class SqlResourcesOperations(object):
         :type trigger_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -3079,7 +3302,7 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlRoleDefinitionGetResults"
+        # type: (...) -> "_models.SqlRoleDefinitionGetResults"
         """Retrieves the properties of an existing Azure Cosmos DB SQL Role Definition with the given Id.
 
         :param role_definition_id: The GUID for the Role Definition.
@@ -3093,7 +3316,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlRoleDefinitionGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlRoleDefinitionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleDefinitionGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3140,11 +3363,11 @@ class SqlResourcesOperations(object):
         role_definition_id,  # type: str
         resource_group_name,  # type: str
         account_name,  # type: str
-        create_update_sql_role_definition_parameters,  # type: "models.SqlRoleDefinitionCreateUpdateParameters"
+        create_update_sql_role_definition_parameters,  # type: "_models.SqlRoleDefinitionCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlRoleDefinitionGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlRoleDefinitionGetResults"]]
+        # type: (...) -> Optional["_models.SqlRoleDefinitionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlRoleDefinitionGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3198,10 +3421,10 @@ class SqlResourcesOperations(object):
         role_definition_id,  # type: str
         resource_group_name,  # type: str
         account_name,  # type: str
-        create_update_sql_role_definition_parameters,  # type: "models.SqlRoleDefinitionCreateUpdateParameters"
+        create_update_sql_role_definition_parameters,  # type: "_models.SqlRoleDefinitionCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlRoleDefinitionGetResults"]
+        # type: (...) -> LROPoller["_models.SqlRoleDefinitionGetResults"]
         """Creates or updates an Azure Cosmos DB SQL Role Definition.
 
         :param role_definition_id: The GUID for the Role Definition.
@@ -3215,8 +3438,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_role_definition_parameters: ~azure.mgmt.cosmosdb.models.SqlRoleDefinitionCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlRoleDefinitionGetResults or the result of cls(response)
@@ -3224,7 +3447,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlRoleDefinitionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleDefinitionGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -3336,8 +3559,8 @@ class SqlResourcesOperations(object):
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -3394,7 +3617,7 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlRoleDefinitionListResult"]
+        # type: (...) -> Iterable["_models.SqlRoleDefinitionListResult"]
         """Retrieves the list of all Azure Cosmos DB SQL Role Definitions.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -3406,7 +3629,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlRoleDefinitionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlRoleDefinitionListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleDefinitionListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3470,7 +3693,7 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlRoleAssignmentGetResults"
+        # type: (...) -> "_models.SqlRoleAssignmentGetResults"
         """Retrieves the properties of an existing Azure Cosmos DB SQL Role Assignment with the given Id.
 
         :param role_assignment_id: The GUID for the Role Assignment.
@@ -3484,7 +3707,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.SqlRoleAssignmentGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlRoleAssignmentGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleAssignmentGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3531,11 +3754,11 @@ class SqlResourcesOperations(object):
         role_assignment_id,  # type: str
         resource_group_name,  # type: str
         account_name,  # type: str
-        create_update_sql_role_assignment_parameters,  # type: "models.SqlRoleAssignmentCreateUpdateParameters"
+        create_update_sql_role_assignment_parameters,  # type: "_models.SqlRoleAssignmentCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SqlRoleAssignmentGetResults"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlRoleAssignmentGetResults"]]
+        # type: (...) -> Optional["_models.SqlRoleAssignmentGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlRoleAssignmentGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3589,10 +3812,10 @@ class SqlResourcesOperations(object):
         role_assignment_id,  # type: str
         resource_group_name,  # type: str
         account_name,  # type: str
-        create_update_sql_role_assignment_parameters,  # type: "models.SqlRoleAssignmentCreateUpdateParameters"
+        create_update_sql_role_assignment_parameters,  # type: "_models.SqlRoleAssignmentCreateUpdateParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.SqlRoleAssignmentGetResults"]
+        # type: (...) -> LROPoller["_models.SqlRoleAssignmentGetResults"]
         """Creates or updates an Azure Cosmos DB SQL Role Assignment.
 
         :param role_assignment_id: The GUID for the Role Assignment.
@@ -3606,8 +3829,8 @@ class SqlResourcesOperations(object):
         :type create_update_sql_role_assignment_parameters: ~azure.mgmt.cosmosdb.models.SqlRoleAssignmentCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either SqlRoleAssignmentGetResults or the result of cls(response)
@@ -3615,7 +3838,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlRoleAssignmentGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleAssignmentGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -3727,8 +3950,8 @@ class SqlResourcesOperations(object):
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -3785,7 +4008,7 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.SqlRoleAssignmentListResult"]
+        # type: (...) -> Iterable["_models.SqlRoleAssignmentListResult"]
         """Retrieves the list of all Azure Cosmos DB SQL Role Assignments.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -3797,7 +4020,7 @@ class SqlResourcesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlRoleAssignmentListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlRoleAssignmentListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleAssignmentListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3860,11 +4083,11 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         database_name,  # type: str
         container_name,  # type: str
-        location,  # type: "models.ContinuousBackupRestoreLocation"
+        location,  # type: "_models.ContinuousBackupRestoreLocation"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.BackupInformation"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.BackupInformation"]]
+        # type: (...) -> Optional["_models.BackupInformation"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.BackupInformation"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3920,10 +4143,10 @@ class SqlResourcesOperations(object):
         account_name,  # type: str
         database_name,  # type: str
         container_name,  # type: str
-        location,  # type: "models.ContinuousBackupRestoreLocation"
+        location,  # type: "_models.ContinuousBackupRestoreLocation"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.BackupInformation"]
+        # type: (...) -> LROPoller["_models.BackupInformation"]
         """Retrieves continuous backup information for a container resource.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -3938,8 +4161,8 @@ class SqlResourcesOperations(object):
         :type location: ~azure.mgmt.cosmosdb.models.ContinuousBackupRestoreLocation
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either BackupInformation or the result of cls(response)
@@ -3947,7 +4170,7 @@ class SqlResourcesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BackupInformation"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BackupInformation"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

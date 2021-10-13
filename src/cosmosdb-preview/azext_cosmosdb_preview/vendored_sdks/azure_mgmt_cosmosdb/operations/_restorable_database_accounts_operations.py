@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -37,7 +37,7 @@ class RestorableDatabaseAccountsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -50,7 +50,7 @@ class RestorableDatabaseAccountsOperations(object):
         location,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.RestorableDatabaseAccountsListResult"]
+        # type: (...) -> Iterable["_models.RestorableDatabaseAccountsListResult"]
         """Lists all the restorable Azure Cosmos DB database accounts available under the subscription and
         in a region.  This call requires
         'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
@@ -62,7 +62,7 @@ class RestorableDatabaseAccountsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableDatabaseAccountsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.RestorableDatabaseAccountsListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableDatabaseAccountsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,7 +122,7 @@ class RestorableDatabaseAccountsOperations(object):
         self,
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.RestorableDatabaseAccountsListResult"]
+        # type: (...) -> Iterable["_models.RestorableDatabaseAccountsListResult"]
         """Lists all the restorable Azure Cosmos DB database accounts available under the subscription.
         This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
 
@@ -131,7 +131,7 @@ class RestorableDatabaseAccountsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableDatabaseAccountsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.RestorableDatabaseAccountsListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableDatabaseAccountsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -192,7 +192,7 @@ class RestorableDatabaseAccountsOperations(object):
         instance_id,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.RestorableDatabaseAccountGetResult"
+        # type: (...) -> "_models.RestorableDatabaseAccountGetResult"
         """Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call
         requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
 
@@ -205,7 +205,7 @@ class RestorableDatabaseAccountsOperations(object):
         :rtype: ~azure.mgmt.cosmosdb.models.RestorableDatabaseAccountGetResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.RestorableDatabaseAccountGetResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableDatabaseAccountGetResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

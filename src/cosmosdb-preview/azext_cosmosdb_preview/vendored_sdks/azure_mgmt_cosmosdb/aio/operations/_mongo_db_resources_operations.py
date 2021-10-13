@@ -16,13 +16,13 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
-class MongoDbResourcesOperations:
-    """MongoDbResourcesOperations async operations.
+class MongoDBResourcesOperations:
+    """MongoDBResourcesOperations async operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -35,7 +35,7 @@ class MongoDbResourcesOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,8 +47,8 @@ class MongoDbResourcesOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.MongoDbDatabaseListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.MongoDBDatabaseListResult"]:
         """Lists the MongoDB databases under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -56,11 +56,11 @@ class MongoDbResourcesOperations:
         :param account_name: Cosmos DB database account name.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either MongoDbDatabaseListResult or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.MongoDbDatabaseListResult]
+        :return: An iterator like instance of either MongoDBDatabaseListResult or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.MongoDBDatabaseListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MongoDbDatabaseListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBDatabaseListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -94,7 +94,7 @@ class MongoDbResourcesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('MongoDbDatabaseListResult', pipeline_response)
+            deserialized = self._deserialize('MongoDBDatabaseListResult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -122,8 +122,8 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> "models.MongoDbDatabaseGetResults":
+        **kwargs: Any
+    ) -> "_models.MongoDBDatabaseGetResults":
         """Gets the MongoDB databases under an existing Azure Cosmos DB database account with the provided
         name.
 
@@ -134,11 +134,11 @@ class MongoDbResourcesOperations:
         :param database_name: Cosmos DB database name.
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: MongoDbDatabaseGetResults, or the result of cls(response)
-        :rtype: ~azure.mgmt.cosmosdb.models.MongoDbDatabaseGetResults
+        :return: MongoDBDatabaseGetResults, or the result of cls(response)
+        :rtype: ~azure.mgmt.cosmosdb.models.MongoDBDatabaseGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MongoDbDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBDatabaseGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -172,7 +172,7 @@ class MongoDbResourcesOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('MongoDbDatabaseGetResults', pipeline_response)
+        deserialized = self._deserialize('MongoDBDatabaseGetResults', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -185,10 +185,10 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        create_update_mongo_db_database_parameters: "models.MongoDbDatabaseCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.MongoDbDatabaseGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.MongoDbDatabaseGetResults"]]
+        create_update_mongo_db_database_parameters: "_models.MongoDBDatabaseCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.MongoDBDatabaseGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.MongoDBDatabaseGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -217,7 +217,7 @@ class MongoDbResourcesOperations:
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(create_update_mongo_db_database_parameters, 'MongoDbDatabaseCreateUpdateParameters')
+        body_content = self._serialize.body(create_update_mongo_db_database_parameters, 'MongoDBDatabaseCreateUpdateParameters')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -229,7 +229,7 @@ class MongoDbResourcesOperations:
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('MongoDbDatabaseGetResults', pipeline_response)
+            deserialized = self._deserialize('MongoDBDatabaseGetResults', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -242,9 +242,9 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        create_update_mongo_db_database_parameters: "models.MongoDbDatabaseCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.MongoDbDatabaseGetResults"]:
+        create_update_mongo_db_database_parameters: "_models.MongoDBDatabaseCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.MongoDBDatabaseGetResults"]:
         """Create or updates Azure Cosmos DB MongoDB database.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -255,19 +255,19 @@ class MongoDbResourcesOperations:
         :type database_name: str
         :param create_update_mongo_db_database_parameters: The parameters to provide for the current
          MongoDB database.
-        :type create_update_mongo_db_database_parameters: ~azure.mgmt.cosmosdb.models.MongoDbDatabaseCreateUpdateParameters
+        :type create_update_mongo_db_database_parameters: ~azure.mgmt.cosmosdb.models.MongoDBDatabaseCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either MongoDbDatabaseGetResults or the result of cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.cosmosdb.models.MongoDbDatabaseGetResults]
+        :return: An instance of AsyncLROPoller that returns either MongoDBDatabaseGetResults or the result of cls(response)
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.cosmosdb.models.MongoDBDatabaseGetResults]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MongoDbDatabaseGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBDatabaseGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -287,7 +287,7 @@ class MongoDbResourcesOperations:
         kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('MongoDbDatabaseGetResults', pipeline_response)
+            deserialized = self._deserialize('MongoDBDatabaseGetResults', pipeline_response)
 
             if cls:
                 return cls(pipeline_response, deserialized, {})
@@ -319,7 +319,7 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -363,7 +363,7 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB MongoDB database.
 
@@ -375,8 +375,8 @@ class MongoDbResourcesOperations:
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -432,8 +432,8 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the RUs per second of the MongoDB database under an existing Azure Cosmos DB database
         account with the provided name.
 
@@ -448,7 +448,7 @@ class MongoDbResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -495,10 +495,10 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -552,9 +552,9 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update RUs per second of the an Azure Cosmos DB MongoDB database.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -568,8 +568,8 @@ class MongoDbResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -577,7 +577,7 @@ class MongoDbResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -629,9 +629,9 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -680,8 +680,8 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB MongoDB database from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -692,8 +692,8 @@ class MongoDbResourcesOperations:
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -701,7 +701,7 @@ class MongoDbResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -752,9 +752,9 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -803,8 +803,8 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB MongoDB database from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -815,8 +815,8 @@ class MongoDbResourcesOperations:
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -824,7 +824,7 @@ class MongoDbResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -875,8 +875,8 @@ class MongoDbResourcesOperations:
         resource_group_name: str,
         account_name: str,
         database_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.MongoDbCollectionListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.MongoDBCollectionListResult"]:
         """Lists the MongoDB collection under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -886,11 +886,11 @@ class MongoDbResourcesOperations:
         :param database_name: Cosmos DB database name.
         :type database_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either MongoDbCollectionListResult or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.MongoDbCollectionListResult]
+        :return: An iterator like instance of either MongoDBCollectionListResult or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.MongoDBCollectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MongoDbCollectionListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBCollectionListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -925,7 +925,7 @@ class MongoDbResourcesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('MongoDbCollectionListResult', pipeline_response)
+            deserialized = self._deserialize('MongoDBCollectionListResult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -954,8 +954,8 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
-    ) -> "models.MongoDbCollectionGetResults":
+        **kwargs: Any
+    ) -> "_models.MongoDBCollectionGetResults":
         """Gets the MongoDB collection under an existing Azure Cosmos DB database account.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -967,11 +967,11 @@ class MongoDbResourcesOperations:
         :param collection_name: Cosmos DB collection name.
         :type collection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: MongoDbCollectionGetResults, or the result of cls(response)
-        :rtype: ~azure.mgmt.cosmosdb.models.MongoDbCollectionGetResults
+        :return: MongoDBCollectionGetResults, or the result of cls(response)
+        :rtype: ~azure.mgmt.cosmosdb.models.MongoDBCollectionGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MongoDbCollectionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBCollectionGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1006,7 +1006,7 @@ class MongoDbResourcesOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('MongoDbCollectionGetResults', pipeline_response)
+        deserialized = self._deserialize('MongoDBCollectionGetResults', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -1020,10 +1020,10 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        create_update_mongo_db_collection_parameters: "models.MongoDbCollectionCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.MongoDbCollectionGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.MongoDbCollectionGetResults"]]
+        create_update_mongo_db_collection_parameters: "_models.MongoDBCollectionCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.MongoDBCollectionGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.MongoDBCollectionGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1053,7 +1053,7 @@ class MongoDbResourcesOperations:
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(create_update_mongo_db_collection_parameters, 'MongoDbCollectionCreateUpdateParameters')
+        body_content = self._serialize.body(create_update_mongo_db_collection_parameters, 'MongoDBCollectionCreateUpdateParameters')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -1065,7 +1065,7 @@ class MongoDbResourcesOperations:
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('MongoDbCollectionGetResults', pipeline_response)
+            deserialized = self._deserialize('MongoDBCollectionGetResults', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -1079,9 +1079,9 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        create_update_mongo_db_collection_parameters: "models.MongoDbCollectionCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.MongoDbCollectionGetResults"]:
+        create_update_mongo_db_collection_parameters: "_models.MongoDBCollectionCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.MongoDBCollectionGetResults"]:
         """Create or update an Azure Cosmos DB MongoDB Collection.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1094,19 +1094,19 @@ class MongoDbResourcesOperations:
         :type collection_name: str
         :param create_update_mongo_db_collection_parameters: The parameters to provide for the current
          MongoDB Collection.
-        :type create_update_mongo_db_collection_parameters: ~azure.mgmt.cosmosdb.models.MongoDbCollectionCreateUpdateParameters
+        :type create_update_mongo_db_collection_parameters: ~azure.mgmt.cosmosdb.models.MongoDBCollectionCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either MongoDbCollectionGetResults or the result of cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.cosmosdb.models.MongoDbCollectionGetResults]
+        :return: An instance of AsyncLROPoller that returns either MongoDBCollectionGetResults or the result of cls(response)
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.cosmosdb.models.MongoDBCollectionGetResults]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.MongoDbCollectionGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBCollectionGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1127,7 +1127,7 @@ class MongoDbResourcesOperations:
         kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('MongoDbCollectionGetResults', pipeline_response)
+            deserialized = self._deserialize('MongoDBCollectionGetResults', pipeline_response)
 
             if cls:
                 return cls(pipeline_response, deserialized, {})
@@ -1161,7 +1161,7 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -1207,7 +1207,7 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB MongoDB Collection.
 
@@ -1221,8 +1221,8 @@ class MongoDbResourcesOperations:
         :type collection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1281,8 +1281,8 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
-    ) -> "models.ThroughputSettingsGetResults":
+        **kwargs: Any
+    ) -> "_models.ThroughputSettingsGetResults":
         """Gets the RUs per second of the MongoDB collection under an existing Azure Cosmos DB database
         account with the provided name.
 
@@ -1299,7 +1299,7 @@ class MongoDbResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1348,10 +1348,10 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1407,9 +1407,9 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        update_throughput_parameters: "models.ThroughputSettingsUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        update_throughput_parameters: "_models.ThroughputSettingsUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Update the RUs per second of an Azure Cosmos DB MongoDB collection.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1425,8 +1425,8 @@ class MongoDbResourcesOperations:
         :type update_throughput_parameters: ~azure.mgmt.cosmosdb.models.ThroughputSettingsUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1434,7 +1434,7 @@ class MongoDbResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1489,9 +1489,9 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1542,8 +1542,8 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB MongoDB collection from manual throughput to autoscale.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1556,8 +1556,8 @@ class MongoDbResourcesOperations:
         :type collection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1565,7 +1565,7 @@ class MongoDbResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1619,9 +1619,9 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
-    ) -> Optional["models.ThroughputSettingsGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ThroughputSettingsGetResults"]]
+        **kwargs: Any
+    ) -> Optional["_models.ThroughputSettingsGetResults"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ThroughputSettingsGetResults"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1672,8 +1672,8 @@ class MongoDbResourcesOperations:
         account_name: str,
         database_name: str,
         collection_name: str,
-        **kwargs
-    ) -> AsyncLROPoller["models.ThroughputSettingsGetResults"]:
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ThroughputSettingsGetResults"]:
         """Migrate an Azure Cosmos DB MongoDB collection from autoscale to manual throughput.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -1686,8 +1686,8 @@ class MongoDbResourcesOperations:
         :type collection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ThroughputSettingsGetResults or the result of cls(response)
@@ -1695,7 +1695,7 @@ class MongoDbResourcesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ThroughputSettingsGetResults"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class ServiceOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,8 +47,8 @@ class ServiceOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
-    ) -> AsyncIterable["models.ServiceResourceListResult"]:
+        **kwargs: Any
+    ) -> AsyncIterable["_models.ServiceResourceListResult"]:
         """Gets the status of service.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class ServiceOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.ServiceResourceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ServiceResourceListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResourceListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,10 +122,10 @@ class ServiceOperations:
         resource_group_name: str,
         account_name: str,
         service_name: str,
-        create_update_parameters: "models.ServiceResourceCreateUpdateParameters",
-        **kwargs
-    ) -> Optional["models.ServiceResource"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ServiceResource"]]
+        create_update_parameters: "_models.ServiceResourceCreateUpdateParameters",
+        **kwargs: Any
+    ) -> Optional["_models.ServiceResource"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ServiceResource"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -179,9 +179,9 @@ class ServiceOperations:
         resource_group_name: str,
         account_name: str,
         service_name: str,
-        create_update_parameters: "models.ServiceResourceCreateUpdateParameters",
-        **kwargs
-    ) -> AsyncLROPoller["models.ServiceResource"]:
+        create_update_parameters: "_models.ServiceResourceCreateUpdateParameters",
+        **kwargs: Any
+    ) -> AsyncLROPoller["_models.ServiceResource"]:
         """Creates a service.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -194,8 +194,8 @@ class ServiceOperations:
         :type create_update_parameters: ~azure.mgmt.cosmosdb.models.ServiceResourceCreateUpdateParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ServiceResource or the result of cls(response)
@@ -203,7 +203,7 @@ class ServiceOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ServiceResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -255,8 +255,8 @@ class ServiceOperations:
         resource_group_name: str,
         account_name: str,
         service_name: str,
-        **kwargs
-    ) -> "models.ServiceResource":
+        **kwargs: Any
+    ) -> "_models.ServiceResource":
         """Gets the status of service.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -270,7 +270,7 @@ class ServiceOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.ServiceResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ServiceResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -317,7 +317,7 @@ class ServiceOperations:
         resource_group_name: str,
         account_name: str,
         service_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
@@ -363,7 +363,7 @@ class ServiceOperations:
         resource_group_name: str,
         account_name: str,
         service_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes service with the given serviceName.
 
@@ -375,8 +375,8 @@ class ServiceOperations:
         :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
