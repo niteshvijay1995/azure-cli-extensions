@@ -50,6 +50,8 @@ class RestorableMongodbCollectionsOperations(object):
         location,  # type: str
         instance_id,  # type: str
         restorable_mongodb_database_rid=None,  # type: Optional[str]
+        start_time=None,  # type: Optional[str]
+        end_time=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["_models.RestorableMongodbCollectionsListResult"]
@@ -63,6 +65,10 @@ class RestorableMongodbCollectionsOperations(object):
         :type instance_id: str
         :param restorable_mongodb_database_rid: The resource ID of the MongoDB database.
         :type restorable_mongodb_database_rid: str
+        :param start_time: Restorable MongoDB collections event feed start time.
+        :type start_time: str
+        :param end_time: Restorable MongoDB collections event feed end time.
+        :type end_time: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either RestorableMongodbCollectionsListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableMongodbCollectionsListResult]
@@ -73,7 +79,7 @@ class RestorableMongodbCollectionsOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -95,6 +101,10 @@ class RestorableMongodbCollectionsOperations(object):
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
                 if restorable_mongodb_database_rid is not None:
                     query_parameters['restorableMongodbDatabaseRid'] = self._serialize.query("restorable_mongodb_database_rid", restorable_mongodb_database_rid, 'str')
+                if start_time is not None:
+                    query_parameters['startTime'] = self._serialize.query("start_time", start_time, 'str')
+                if end_time is not None:
+                    query_parameters['endTime'] = self._serialize.query("end_time", end_time, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:

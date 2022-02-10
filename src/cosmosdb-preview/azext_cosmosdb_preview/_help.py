@@ -274,6 +274,47 @@ helps['cosmosdb dts import'] = """
 
 """
 
+helps['cosmosdb dts copy'] = """
+    type: command
+    short-summary: "Creates a data transfer import Job."
+    parameters:
+      - name: --source-cassandra-table
+        short-summary: "Source cassandra table" 
+        long-summary: |
+            Usage: --source-cassandra-table keyspace=XX table=XX'
+            keyspace: Keyspace name of CosmosDB Cassandra.
+            table: Table name of CosmosDB Cassandra.
+
+      - name: --destination-cassandra-table
+        short-summary: "Destination cassandra table"
+        long-summary: |
+            Usage: --destination-cassandra-table keyspace=XX table=XX'
+            keyspace: Keyspace name of CosmosDB Cassandra.
+            table: Table name of CosmosDB Cassandra.
+
+      - name: --source-sql-container
+        short-summary: "Blob conatiner data source"
+        short-summary: "Source sql container"
+        long-summary: |
+            Usage: --source-sql-container database=XX container=XX'
+            database: Database name of CosmosDB Sql.
+            container: Container name of CosmosDB Sql.
+
+      - name: --destination-sql-container
+        short-summary: "Blob conatiner data source"
+        short-summary: "Destination sql container"
+        long-summary: |
+            Usage: --destination-sql-container database=XX container=XX'
+            database: Database name of CosmosDB Sql.
+            container: Container name of CosmosDB Sql.
+            
+    examples:
+      - name: CosmosDBDataTransferJobCreate
+        text: |-
+          az cosmosdb dts copy --resource-group "rg1" --job-name "j1" --account-name "db1" --source-sql-container database=db1 container=c1 --destination-sql-container database=db2 container=c2
+          az cosmosdb dts copy --resource-group "rg1" --job-name "j1" --account-name "db1" --source-cassandra-table keyspace=k1 table=t1 --destination-cassandra-table keyspace=k1 table=t1
+"""
+
 helps['cosmosdb cassandra table export'] = """
     type: command
     short-summary: "Creates a Data Transfer Job to export cassandra table to blob storage"

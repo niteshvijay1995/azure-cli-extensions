@@ -74,7 +74,7 @@ class DataTransferJobsOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -142,7 +142,7 @@ class DataTransferJobsOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -202,7 +202,7 @@ class DataTransferJobsOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):

@@ -59,7 +59,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -128,7 +128,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -201,7 +201,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -248,7 +248,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -357,7 +357,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -486,7 +486,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -614,7 +614,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -643,7 +643,7 @@ class CassandraClustersOperations:
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
@@ -653,7 +653,7 @@ class CassandraClustersOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    _invoke_command_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/command'}  # type: ignore
+    _invoke_command_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommand'}  # type: ignore
 
     async def begin_invoke_command(
         self,
@@ -724,7 +724,7 @@ class CassandraClustersOperations:
             )
         else:
             return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_invoke_command.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/command'}  # type: ignore
+    begin_invoke_command.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommand'}  # type: ignore
 
     def list_backups(
         self,
@@ -748,7 +748,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -825,7 +825,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -873,7 +873,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -897,7 +897,7 @@ class CassandraClustersOperations:
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
@@ -983,7 +983,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL
@@ -1007,7 +1007,7 @@ class CassandraClustersOperations:
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
@@ -1104,7 +1104,7 @@ class CassandraClustersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         # Construct URL

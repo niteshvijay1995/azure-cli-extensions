@@ -22,6 +22,7 @@ try:
     from ._models_py3 import BackupResource
     from ._models_py3 import BackupResourceProperties
     from ._models_py3 import Capability
+    from ._models_py3 import Capacity
     from ._models_py3 import CassandraClusterPublicStatus
     from ._models_py3 import CassandraClusterPublicStatusDataCentersItem
     from ._models_py3 import CassandraKeyspaceCreateUpdateParameters
@@ -68,14 +69,15 @@ try:
     from ._models_py3 import ContinuousModeBackupPolicy
     from ._models_py3 import CorsPolicy
     from ._models_py3 import CosmosCassandraDataTransferDataSourceSink
+    from ._models_py3 import CosmosSqlDataTransferDataSourceSink
     from ._models_py3 import CreateJobRequest
     from ._models_py3 import CreateUpdateOptions
     from ._models_py3 import DataCenterResource
     from ._models_py3 import DataCenterResourceProperties
-    from ._models_py3 import DataTransferCreateJobProperties
     from ._models_py3 import DataTransferDataSourceSink
     from ._models_py3 import DataTransferJobFeedResults
     from ._models_py3 import DataTransferJobGetResults
+    from ._models_py3 import DataTransferJobProperties
     from ._models_py3 import DataTransferRegionalServiceResource
     from ._models_py3 import DataTransferServiceResource
     from ._models_py3 import DataTransferServiceResourceProperties
@@ -110,6 +112,7 @@ try:
     from ._models_py3 import GremlinDatabaseGetResults
     from ._models_py3 import GremlinDatabaseListResult
     from ._models_py3 import GremlinDatabaseResource
+    from ._models_py3 import GremlinDatabaseRestoreResource
     from ._models_py3 import GremlinGraphCreateUpdateParameters
     from ._models_py3 import GremlinGraphGetPropertiesOptions
     from ._models_py3 import GremlinGraphGetPropertiesResource
@@ -132,6 +135,9 @@ try:
     from ._models_py3 import ManagedCassandraManagedServiceIdentity
     from ._models_py3 import ManagedCassandraReaperStatus
     from ._models_py3 import ManagedServiceIdentity
+    from ._models_py3 import MaterializedViewsBuilderRegionalServiceResource
+    from ._models_py3 import MaterializedViewsBuilderServiceResource
+    from ._models_py3 import MaterializedViewsBuilderServiceResourceProperties
     from ._models_py3 import Metric
     from ._models_py3 import MetricAvailability
     from ._models_py3 import MetricDefinition
@@ -154,6 +160,12 @@ try:
     from ._models_py3 import MongoIndex
     from ._models_py3 import MongoIndexKeys
     from ._models_py3 import MongoIndexOptions
+    from ._models_py3 import MongoRoleDefinitionCreateUpdateParameters
+    from ._models_py3 import MongoRoleDefinitionGetResults
+    from ._models_py3 import MongoRoleDefinitionListResult
+    from ._models_py3 import MongoUserDefinitionCreateUpdateParameters
+    from ._models_py3 import MongoUserDefinitionGetResults
+    from ._models_py3 import MongoUserDefinitionListResult
     from ._models_py3 import NotebookWorkspace
     from ._models_py3 import NotebookWorkspaceConnectionInfoResult
     from ._models_py3 import NotebookWorkspaceCreateUpdateParameters
@@ -178,12 +190,21 @@ try:
     from ._models_py3 import PrivateLinkResource
     from ._models_py3 import PrivateLinkResourceListResult
     from ._models_py3 import PrivateLinkServiceConnectionStateProperty
+    from ._models_py3 import Privilege
+    from ._models_py3 import PrivilegeResource
     from ._models_py3 import ProxyResource
     from ._models_py3 import RegionForOnlineOffline
     from ._models_py3 import RegionalServiceResource
     from ._models_py3 import Resource
     from ._models_py3 import RestorableDatabaseAccountGetResult
     from ._models_py3 import RestorableDatabaseAccountsListResult
+    from ._models_py3 import RestorableGremlinDatabaseGetResult
+    from ._models_py3 import RestorableGremlinDatabasePropertiesResource
+    from ._models_py3 import RestorableGremlinDatabasesListResult
+    from ._models_py3 import RestorableGremlinGraphGetResult
+    from ._models_py3 import RestorableGremlinGraphPropertiesResource
+    from ._models_py3 import RestorableGremlinGraphsListResult
+    from ._models_py3 import RestorableGremlinResourcesListResult
     from ._models_py3 import RestorableLocationResource
     from ._models_py3 import RestorableMongodbCollectionGetResult
     from ._models_py3 import RestorableMongodbCollectionPropertiesResource
@@ -201,7 +222,12 @@ try:
     from ._models_py3 import RestorableSqlDatabasePropertiesResourceDatabase
     from ._models_py3 import RestorableSqlDatabasesListResult
     from ._models_py3 import RestorableSqlResourcesListResult
+    from ._models_py3 import RestorableTableGetResult
+    from ._models_py3 import RestorableTablePropertiesResource
+    from ._models_py3 import RestorableTableResourcesGetResult
+    from ._models_py3 import RestorableTablesListResult
     from ._models_py3 import RestoreParameters
+    from ._models_py3 import Role
     from ._models_py3 import SeedNode
     from ._models_py3 import ServiceResource
     from ._models_py3 import ServiceResourceCreateUpdateParameters
@@ -277,6 +303,7 @@ except (SyntaxError, ImportError):
     from ._models import BackupResource  # type: ignore
     from ._models import BackupResourceProperties  # type: ignore
     from ._models import Capability  # type: ignore
+    from ._models import Capacity  # type: ignore
     from ._models import CassandraClusterPublicStatus  # type: ignore
     from ._models import CassandraClusterPublicStatusDataCentersItem  # type: ignore
     from ._models import CassandraKeyspaceCreateUpdateParameters  # type: ignore
@@ -323,14 +350,15 @@ except (SyntaxError, ImportError):
     from ._models import ContinuousModeBackupPolicy  # type: ignore
     from ._models import CorsPolicy  # type: ignore
     from ._models import CosmosCassandraDataTransferDataSourceSink  # type: ignore
+    from ._models import CosmosSqlDataTransferDataSourceSink  # type: ignore
     from ._models import CreateJobRequest  # type: ignore
     from ._models import CreateUpdateOptions  # type: ignore
     from ._models import DataCenterResource  # type: ignore
     from ._models import DataCenterResourceProperties  # type: ignore
-    from ._models import DataTransferCreateJobProperties  # type: ignore
     from ._models import DataTransferDataSourceSink  # type: ignore
     from ._models import DataTransferJobFeedResults  # type: ignore
     from ._models import DataTransferJobGetResults  # type: ignore
+    from ._models import DataTransferJobProperties  # type: ignore
     from ._models import DataTransferRegionalServiceResource  # type: ignore
     from ._models import DataTransferServiceResource  # type: ignore
     from ._models import DataTransferServiceResourceProperties  # type: ignore
@@ -365,6 +393,7 @@ except (SyntaxError, ImportError):
     from ._models import GremlinDatabaseGetResults  # type: ignore
     from ._models import GremlinDatabaseListResult  # type: ignore
     from ._models import GremlinDatabaseResource  # type: ignore
+    from ._models import GremlinDatabaseRestoreResource  # type: ignore
     from ._models import GremlinGraphCreateUpdateParameters  # type: ignore
     from ._models import GremlinGraphGetPropertiesOptions  # type: ignore
     from ._models import GremlinGraphGetPropertiesResource  # type: ignore
@@ -387,6 +416,9 @@ except (SyntaxError, ImportError):
     from ._models import ManagedCassandraManagedServiceIdentity  # type: ignore
     from ._models import ManagedCassandraReaperStatus  # type: ignore
     from ._models import ManagedServiceIdentity  # type: ignore
+    from ._models import MaterializedViewsBuilderRegionalServiceResource  # type: ignore
+    from ._models import MaterializedViewsBuilderServiceResource  # type: ignore
+    from ._models import MaterializedViewsBuilderServiceResourceProperties  # type: ignore
     from ._models import Metric  # type: ignore
     from ._models import MetricAvailability  # type: ignore
     from ._models import MetricDefinition  # type: ignore
@@ -409,6 +441,12 @@ except (SyntaxError, ImportError):
     from ._models import MongoIndex  # type: ignore
     from ._models import MongoIndexKeys  # type: ignore
     from ._models import MongoIndexOptions  # type: ignore
+    from ._models import MongoRoleDefinitionCreateUpdateParameters  # type: ignore
+    from ._models import MongoRoleDefinitionGetResults  # type: ignore
+    from ._models import MongoRoleDefinitionListResult  # type: ignore
+    from ._models import MongoUserDefinitionCreateUpdateParameters  # type: ignore
+    from ._models import MongoUserDefinitionGetResults  # type: ignore
+    from ._models import MongoUserDefinitionListResult  # type: ignore
     from ._models import NotebookWorkspace  # type: ignore
     from ._models import NotebookWorkspaceConnectionInfoResult  # type: ignore
     from ._models import NotebookWorkspaceCreateUpdateParameters  # type: ignore
@@ -433,12 +471,21 @@ except (SyntaxError, ImportError):
     from ._models import PrivateLinkResource  # type: ignore
     from ._models import PrivateLinkResourceListResult  # type: ignore
     from ._models import PrivateLinkServiceConnectionStateProperty  # type: ignore
+    from ._models import Privilege  # type: ignore
+    from ._models import PrivilegeResource  # type: ignore
     from ._models import ProxyResource  # type: ignore
     from ._models import RegionForOnlineOffline  # type: ignore
     from ._models import RegionalServiceResource  # type: ignore
     from ._models import Resource  # type: ignore
     from ._models import RestorableDatabaseAccountGetResult  # type: ignore
     from ._models import RestorableDatabaseAccountsListResult  # type: ignore
+    from ._models import RestorableGremlinDatabaseGetResult  # type: ignore
+    from ._models import RestorableGremlinDatabasePropertiesResource  # type: ignore
+    from ._models import RestorableGremlinDatabasesListResult  # type: ignore
+    from ._models import RestorableGremlinGraphGetResult  # type: ignore
+    from ._models import RestorableGremlinGraphPropertiesResource  # type: ignore
+    from ._models import RestorableGremlinGraphsListResult  # type: ignore
+    from ._models import RestorableGremlinResourcesListResult  # type: ignore
     from ._models import RestorableLocationResource  # type: ignore
     from ._models import RestorableMongodbCollectionGetResult  # type: ignore
     from ._models import RestorableMongodbCollectionPropertiesResource  # type: ignore
@@ -456,7 +503,12 @@ except (SyntaxError, ImportError):
     from ._models import RestorableSqlDatabasePropertiesResourceDatabase  # type: ignore
     from ._models import RestorableSqlDatabasesListResult  # type: ignore
     from ._models import RestorableSqlResourcesListResult  # type: ignore
+    from ._models import RestorableTableGetResult  # type: ignore
+    from ._models import RestorableTablePropertiesResource  # type: ignore
+    from ._models import RestorableTableResourcesGetResult  # type: ignore
+    from ._models import RestorableTablesListResult  # type: ignore
     from ._models import RestoreParameters  # type: ignore
+    from ._models import Role  # type: ignore
     from ._models import SeedNode  # type: ignore
     from ._models import ServiceResource  # type: ignore
     from ._models import ServiceResourceCreateUpdateParameters  # type: ignore
@@ -540,6 +592,7 @@ from ._cosmos_db_management_client_enums import (
     KeyKind,
     ManagedCassandraProvisioningState,
     ManagedCassandraResourceIdentityType,
+    MongoRoleDefinitionType,
     NetworkAclBypass,
     NodeState,
     NodeStatus,
@@ -577,6 +630,7 @@ __all__ = [
     'BackupResource',
     'BackupResourceProperties',
     'Capability',
+    'Capacity',
     'CassandraClusterPublicStatus',
     'CassandraClusterPublicStatusDataCentersItem',
     'CassandraKeyspaceCreateUpdateParameters',
@@ -623,14 +677,15 @@ __all__ = [
     'ContinuousModeBackupPolicy',
     'CorsPolicy',
     'CosmosCassandraDataTransferDataSourceSink',
+    'CosmosSqlDataTransferDataSourceSink',
     'CreateJobRequest',
     'CreateUpdateOptions',
     'DataCenterResource',
     'DataCenterResourceProperties',
-    'DataTransferCreateJobProperties',
     'DataTransferDataSourceSink',
     'DataTransferJobFeedResults',
     'DataTransferJobGetResults',
+    'DataTransferJobProperties',
     'DataTransferRegionalServiceResource',
     'DataTransferServiceResource',
     'DataTransferServiceResourceProperties',
@@ -665,6 +720,7 @@ __all__ = [
     'GremlinDatabaseGetResults',
     'GremlinDatabaseListResult',
     'GremlinDatabaseResource',
+    'GremlinDatabaseRestoreResource',
     'GremlinGraphCreateUpdateParameters',
     'GremlinGraphGetPropertiesOptions',
     'GremlinGraphGetPropertiesResource',
@@ -687,6 +743,9 @@ __all__ = [
     'ManagedCassandraManagedServiceIdentity',
     'ManagedCassandraReaperStatus',
     'ManagedServiceIdentity',
+    'MaterializedViewsBuilderRegionalServiceResource',
+    'MaterializedViewsBuilderServiceResource',
+    'MaterializedViewsBuilderServiceResourceProperties',
     'Metric',
     'MetricAvailability',
     'MetricDefinition',
@@ -709,6 +768,12 @@ __all__ = [
     'MongoIndex',
     'MongoIndexKeys',
     'MongoIndexOptions',
+    'MongoRoleDefinitionCreateUpdateParameters',
+    'MongoRoleDefinitionGetResults',
+    'MongoRoleDefinitionListResult',
+    'MongoUserDefinitionCreateUpdateParameters',
+    'MongoUserDefinitionGetResults',
+    'MongoUserDefinitionListResult',
     'NotebookWorkspace',
     'NotebookWorkspaceConnectionInfoResult',
     'NotebookWorkspaceCreateUpdateParameters',
@@ -733,12 +798,21 @@ __all__ = [
     'PrivateLinkResource',
     'PrivateLinkResourceListResult',
     'PrivateLinkServiceConnectionStateProperty',
+    'Privilege',
+    'PrivilegeResource',
     'ProxyResource',
     'RegionForOnlineOffline',
     'RegionalServiceResource',
     'Resource',
     'RestorableDatabaseAccountGetResult',
     'RestorableDatabaseAccountsListResult',
+    'RestorableGremlinDatabaseGetResult',
+    'RestorableGremlinDatabasePropertiesResource',
+    'RestorableGremlinDatabasesListResult',
+    'RestorableGremlinGraphGetResult',
+    'RestorableGremlinGraphPropertiesResource',
+    'RestorableGremlinGraphsListResult',
+    'RestorableGremlinResourcesListResult',
     'RestorableLocationResource',
     'RestorableMongodbCollectionGetResult',
     'RestorableMongodbCollectionPropertiesResource',
@@ -756,7 +830,12 @@ __all__ = [
     'RestorableSqlDatabasePropertiesResourceDatabase',
     'RestorableSqlDatabasesListResult',
     'RestorableSqlResourcesListResult',
+    'RestorableTableGetResult',
+    'RestorableTablePropertiesResource',
+    'RestorableTableResourcesGetResult',
+    'RestorableTablesListResult',
     'RestoreParameters',
+    'Role',
     'SeedNode',
     'ServiceResource',
     'ServiceResourceCreateUpdateParameters',
@@ -838,6 +917,7 @@ __all__ = [
     'KeyKind',
     'ManagedCassandraProvisioningState',
     'ManagedCassandraResourceIdentityType',
+    'MongoRoleDefinitionType',
     'NetworkAclBypass',
     'NodeState',
     'NodeStatus',

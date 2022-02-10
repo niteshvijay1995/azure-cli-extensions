@@ -38,7 +38,8 @@ from .operations import MongoDBResourcesOperations
 from .operations import TableResourcesOperations
 from .operations import CassandraResourcesOperations
 from .operations import GremlinResourcesOperations
-from .operations import CosmosDBManagementClientOperationsMixin
+from .operations import LocationsOperations
+from .operations import DataTransferJobsOperations
 from .operations import CassandraClustersOperations
 from .operations import CassandraDataCentersOperations
 from .operations import NotebookWorkspacesOperations
@@ -51,12 +52,16 @@ from .operations import RestorableSqlResourcesOperations
 from .operations import RestorableMongodbDatabasesOperations
 from .operations import RestorableMongodbCollectionsOperations
 from .operations import RestorableMongodbResourcesOperations
+from .operations import RestorableGremlinDatabasesOperations
+from .operations import RestorableGremlinGraphsOperations
+from .operations import RestorableGremlinResourcesOperations
+from .operations import RestorableTablesOperations
+from .operations import RestorableTableResourcesOperations
 from .operations import ServiceOperations
-from .operations import DataTransferJobsOperations
 from . import models
 
 
-class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
+class CosmosDBManagementClient(object):
     """Azure Cosmos DB Database Service Resource Provider REST API.
 
     :ivar database_accounts: DatabaseAccountsOperations operations
@@ -97,6 +102,10 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
     :vartype cassandra_resources: azure.mgmt.cosmosdb.operations.CassandraResourcesOperations
     :ivar gremlin_resources: GremlinResourcesOperations operations
     :vartype gremlin_resources: azure.mgmt.cosmosdb.operations.GremlinResourcesOperations
+    :ivar locations: LocationsOperations operations
+    :vartype locations: azure.mgmt.cosmosdb.operations.LocationsOperations
+    :ivar data_transfer_jobs: DataTransferJobsOperations operations
+    :vartype data_transfer_jobs: azure.mgmt.cosmosdb.operations.DataTransferJobsOperations
     :ivar cassandra_clusters: CassandraClustersOperations operations
     :vartype cassandra_clusters: azure.mgmt.cosmosdb.operations.CassandraClustersOperations
     :ivar cassandra_data_centers: CassandraDataCentersOperations operations
@@ -121,10 +130,18 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
     :vartype restorable_mongodb_collections: azure.mgmt.cosmosdb.operations.RestorableMongodbCollectionsOperations
     :ivar restorable_mongodb_resources: RestorableMongodbResourcesOperations operations
     :vartype restorable_mongodb_resources: azure.mgmt.cosmosdb.operations.RestorableMongodbResourcesOperations
+    :ivar restorable_gremlin_databases: RestorableGremlinDatabasesOperations operations
+    :vartype restorable_gremlin_databases: azure.mgmt.cosmosdb.operations.RestorableGremlinDatabasesOperations
+    :ivar restorable_gremlin_graphs: RestorableGremlinGraphsOperations operations
+    :vartype restorable_gremlin_graphs: azure.mgmt.cosmosdb.operations.RestorableGremlinGraphsOperations
+    :ivar restorable_gremlin_resources: RestorableGremlinResourcesOperations operations
+    :vartype restorable_gremlin_resources: azure.mgmt.cosmosdb.operations.RestorableGremlinResourcesOperations
+    :ivar restorable_tables: RestorableTablesOperations operations
+    :vartype restorable_tables: azure.mgmt.cosmosdb.operations.RestorableTablesOperations
+    :ivar restorable_table_resources: RestorableTableResourcesOperations operations
+    :vartype restorable_table_resources: azure.mgmt.cosmosdb.operations.RestorableTableResourcesOperations
     :ivar service: ServiceOperations operations
     :vartype service: azure.mgmt.cosmosdb.operations.ServiceOperations
-    :ivar data_transfer_jobs: DataTransferJobsOperations operations
-    :vartype data_transfer_jobs: azure.mgmt.cosmosdb.operations.DataTransferJobsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The ID of the target subscription.
@@ -189,6 +206,10 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
             self._client, self._config, self._serialize, self._deserialize)
         self.gremlin_resources = GremlinResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
+        self.locations = LocationsOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.data_transfer_jobs = DataTransferJobsOperations(
+            self._client, self._config, self._serialize, self._deserialize)
         self.cassandra_clusters = CassandraClustersOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.cassandra_data_centers = CassandraDataCentersOperations(
@@ -213,9 +234,17 @@ class CosmosDBManagementClient(CosmosDBManagementClientOperationsMixin):
             self._client, self._config, self._serialize, self._deserialize)
         self.restorable_mongodb_resources = RestorableMongodbResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.service = ServiceOperations(
+        self.restorable_gremlin_databases = RestorableGremlinDatabasesOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.data_transfer_jobs = DataTransferJobsOperations(
+        self.restorable_gremlin_graphs = RestorableGremlinGraphsOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.restorable_gremlin_resources = RestorableGremlinResourcesOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.restorable_tables = RestorableTablesOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.restorable_table_resources = RestorableTableResourcesOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.service = ServiceOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     def _send_request(self, http_request, **kwargs):

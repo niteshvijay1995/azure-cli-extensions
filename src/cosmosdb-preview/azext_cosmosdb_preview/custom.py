@@ -379,6 +379,67 @@ def cosmosdb_data_transfer_import_job(client,
                          job_name=job_name,
                          job_create_parameters=job_create_parameters)
 
+def cosmosdb_data_transfer_copy_job(client,
+                                    resource_group_name,
+                                    account_name,
+                                    source_cassandra_table=None,
+                                    destination_cassandra_table=None,
+                                    source_sql_container=None,
+                                    destination_sql_container=None,
+                                    worker_count=0,
+                                    job_name=None):
+    if source_cassandra_table is None and source_sql_container is None:
+        raise CLIError('Source is required for dts copy')
+
+    if source_cassandra_table is not None and source_sql_container is not None:
+        raise CLIError('dts copy cannot have multiple sources')
+
+    if destination_cassandra_table is None and destination_sql_container is None:
+        raise CLIError('Destination is required for dts copy')
+    
+    if destination_cassandra_table is not None and destination_sql_container is not None:
+        raise CLIError('dts copy cannot have multiple destinations')
+        
+    job_source = {}
+    if (source_cassandra_table is not None):
+        job_source['component'] = 'CosmosDBCassandra'
+        job_source['keyspace_name'] = source_cassandra_table['keyspace_name']
+        job_source['table_name'] = source_cassandra_table['table_name']
+
+    if (source_sql_container is not None):
+        job_source['component'] = 'CosmosDBSql'
+        job_source['database_name'] = source_sql_container['database_name']
+        job_source['container_name'] = source_sql_container['container_name']
+    
+    job_destination = {}
+    if (destination_cassandra_table is not None):
+        job_destination['component'] = 'CosmosDBCassandra'
+        job_destination['keyspace_name'] = destination_cassandra_table['keyspace_name']
+        job_destination['table_name'] = destination_cassandra_table['table_name']
+
+    if (destination_sql_container is not None):
+        job_destination['component'] = 'CosmosDBSql'
+        job_destination['database_name'] = destination_sql_container['database_name']
+        job_destination['container_name'] = destination_sql_container['container_name']
+
+    job_create_properties = {}
+    job_create_properties['source'] = job_source
+    job_create_properties['destination'] = job_destination
+
+    if worker_count > 0:
+        job_create_properties['worker_count'] = worker_count
+
+    job_create_parameters = {}
+    job_create_parameters['properties'] = job_create_properties
+
+    if job_name is None:
+        job_name = _gen_guid()
+
+    return client.create(resource_group_name=resource_group_name,
+                         account_name=account_name,
+                         job_name=job_name,
+                         job_create_parameters=job_create_parameters)
+
 
 def cosmosdb_data_transfer_cassandra_export_job(client,
                                       resource_group_name,

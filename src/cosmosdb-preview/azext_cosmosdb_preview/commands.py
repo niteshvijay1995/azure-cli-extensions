@@ -22,7 +22,6 @@ from azext_cosmosdb_preview._format import (
     amc_node_status_table_format
 )
 
-
 def load_command_table(self, _):
     cosmosdb_graph_resources_sdk = CliCommandType(
         operations_tmpl='azext_cosmosdb_preview.vendored_sdks.azure_mgmt_cosmosdb.operations#GraphResourcesOperations.{}',
@@ -38,7 +37,7 @@ def load_command_table(self, _):
 
     cosmosdb_data_transfer_job = CliCommandType(
         operations_tmpl='azext_cosmosdb_preview.vendored_sdks.cosmodb.operations._data_transfer_jobs_operations#DataTransferJobsOperations.{}',
-        client_factory=cf_data_transfer_job,
+        client_factory=cf_data_transfer_job
     )
 
     cosmosdb_cassandra_sdk = CliCommandType(
@@ -83,10 +82,9 @@ def load_command_table(self, _):
         ) as g:
             g.custom_command('export', 'cosmosdb_data_transfer_export_job')
             g.custom_command('import', 'cosmosdb_data_transfer_import_job')
-            # g.custom_command('create2', 'cosmosdb_data_transfer_job_create2')
+            g.custom_command('copy', 'cosmosdb_data_transfer_copy_job')
             g.custom_command('list', 'cosmosdb_dts_list')
             g.custom_show_command('show', 'cosmosdb_dts_show')
-            # g.custom_command('create', 'cosmosdb_dts_create')
 
     with self.command_group(
             'cosmosdb cassandra table', cosmosdb_cassandra_sdk, client_factory=cf_data_transfer_job
@@ -97,3 +95,8 @@ def load_command_table(self, _):
             'cosmosdb cassandra table', cosmosdb_cassandra_sdk, client_factory=cf_data_transfer_job
         ) as g:
             g.custom_command('import', 'cosmosdb_data_transfer_cassandra_import_job')
+
+    with self.command_group(
+            'cosmosdb sql container', cosmosdb_data_transfer_job, client_factory=cf_data_transfer_job
+        ) as g:
+            g.custom_command('copy', 'cosmosdb_data_transfer_sql_copy_container')

@@ -18,7 +18,7 @@ from azext_cosmosdb_preview._validators import (
 
 from azext_cosmosdb_preview.action import (
     AddDataTransferDataSource,
-    AddDataTransferDataSink, AddCassandraTableAction, AddBlobContainerAction)
+    AddDataTransferDataSink, AddCassandraTableAction, AddBlobContainerAction, AddSqlContainerAction)
 
 from azure.cli.core.commands.validators import (
     get_default_location_from_resource_group,
@@ -131,6 +131,16 @@ def load_arguments(self, _):
         c.argument('job_name', type=str, help='Name of the Data Transfer Job. A random job name will be generated if not passed.')
         c.argument('cassandra_table', nargs='+', action=AddCassandraTableAction, help='Data sink cassandra table')
         c.argument('blob_container', nargs='+', action=AddBlobContainerAction, help='Data source blob container')
+        c.argument('worker_count', type=int, help='Worker count')
+
+    with self.argument_context('cosmosdb dts copy') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('account_name', type=str, help='Cosmos DB database account name.')
+        c.argument('job_name', type=str, help='Name of the Data Transfer Job')
+        c.argument('source_cassandra_table',nargs='+', action=AddCassandraTableAction, help='Source cassandra table')
+        c.argument('source_sql_container', nargs='+', action=AddSqlContainerAction, help='Source sql collection')
+        c.argument('destination_cassandra_table', nargs='+', action=AddCassandraTableAction, help='Destination cassandra table')
+        c.argument('destination_sql_container', nargs='+', action=AddSqlContainerAction, help='Destination sql collection')
         c.argument('worker_count', type=int, help='Worker count')
 
     with self.argument_context('cosmosdb dts list') as c:

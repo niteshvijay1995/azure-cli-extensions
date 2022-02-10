@@ -60,9 +60,9 @@ class RestorableSqlContainersOperations:
         :type instance_id: str
         :param restorable_sql_database_rid: The resource ID of the SQL database.
         :type restorable_sql_database_rid: str
-        :param start_time: The snapshot create timestamp after which snapshots need to be listed.
+        :param start_time: Restorable Sql containers event feed start time.
         :type start_time: str
-        :param end_time: The snapshot create timestamp before which snapshots need to be listed.
+        :param end_time: Restorable Sql containers event feed end time.
         :type end_time: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either RestorableSqlContainersListResult or the result of cls(response)
@@ -74,7 +74,7 @@ class RestorableSqlContainersOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):

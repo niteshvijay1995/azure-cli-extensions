@@ -23,8 +23,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class RestorableMongodbResourcesOperations(object):
-    """RestorableMongodbResourcesOperations operations.
+class RestorableGremlinResourcesOperations(object):
+    """RestorableGremlinResourcesOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -53,10 +53,10 @@ class RestorableMongodbResourcesOperations(object):
         restore_timestamp_in_utc=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["_models.RestorableMongodbResourcesListResult"]
-        """Return a list of database and collection combo that exist on the account at the given timestamp
-        and location. This helps in scenarios to validate what resources exist at given timestamp and
-        location. This API requires
+        # type: (...) -> Iterable["_models.RestorableGremlinResourcesListResult"]
+        """Return a list of gremlin database and graphs combo that exist on the account at the given
+        timestamp and location. This helps in scenarios to validate what resources exist at given
+        timestamp and location. This API requires
         'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
 
         :param location: Cosmos DB region, with spaces between words and each word capitalized.
@@ -68,11 +68,11 @@ class RestorableMongodbResourcesOperations(object):
         :param restore_timestamp_in_utc: The timestamp when the restorable resources existed.
         :type restore_timestamp_in_utc: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either RestorableMongodbResourcesListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableMongodbResourcesListResult]
+        :return: An iterator like instance of either RestorableGremlinResourcesListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableGremlinResourcesListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableMongodbResourcesListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableGremlinResourcesListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -110,7 +110,7 @@ class RestorableMongodbResourcesOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('RestorableMongodbResourcesListResult', pipeline_response)
+            deserialized = self._deserialize('RestorableGremlinResourcesListResult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -131,4 +131,4 @@ class RestorableMongodbResourcesOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableMongodbResources'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableGremlinResources'}  # type: ignore

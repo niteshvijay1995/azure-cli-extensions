@@ -47,7 +47,7 @@ class ApiType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 class AuthenticationMethod(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Which authentication method Cassandra should use to authenticate clients. 'None' turns off
     authentication, so should not be used except in emergencies. 'Cassandra' is the default
-    password based authentication. The default is 'Cassandra'.
+    password based authentication. The default is 'Cassandra'. 'Ldap' is in preview.
     """
 
     NONE = "None"
@@ -136,7 +136,8 @@ class DatabaseAccountKind(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 class DataTransferComponent(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
     COSMOS_DB_CASSANDRA = "CosmosDBCassandra"
-    AZURE_STORAGE = "AzureStorage"
+    COSMOS_DB_SQL = "CosmosDBSql"
+    AZURE_BLOB_STORAGE = "AzureBlobStorage"
 
 class DataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The datatype for which the indexing behavior is applied to.
@@ -209,6 +210,13 @@ class ManagedCassandraResourceIdentityType(with_metaclass(_CaseInsensitiveEnumMe
 
     SYSTEM_ASSIGNED = "SystemAssigned"
     NONE = "None"
+
+class MongoRoleDefinitionType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Indicates whether the Role Definition was built-in or user created.
+    """
+
+    BUILT_IN_ROLE = "BuiltInRole"
+    CUSTOM_ROLE = "CustomRole"
 
 class NetworkAclBypass(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Indicates what services are allowed to bypass firewall checks.
@@ -332,6 +340,7 @@ class ServiceType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     SQL_DEDICATED_GATEWAY = "SqlDedicatedGateway"
     DATA_TRANSFER = "DataTransfer"
     GRAPH_API_COMPUTE = "GraphAPICompute"
+    MATERIALIZED_VIEWS_BUILDER = "MaterializedViewsBuilder"
 
 class SpatialType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Indicates the spatial type of index.

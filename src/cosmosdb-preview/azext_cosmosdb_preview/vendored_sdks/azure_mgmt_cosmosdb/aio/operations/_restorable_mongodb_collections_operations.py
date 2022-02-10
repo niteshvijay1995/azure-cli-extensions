@@ -46,6 +46,8 @@ class RestorableMongodbCollectionsOperations:
         location: str,
         instance_id: str,
         restorable_mongodb_database_rid: Optional[str] = None,
+        start_time: Optional[str] = None,
+        end_time: Optional[str] = None,
         **kwargs: Any
     ) -> AsyncIterable["_models.RestorableMongodbCollectionsListResult"]:
         """Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under
@@ -58,6 +60,10 @@ class RestorableMongodbCollectionsOperations:
         :type instance_id: str
         :param restorable_mongodb_database_rid: The resource ID of the MongoDB database.
         :type restorable_mongodb_database_rid: str
+        :param start_time: Restorable MongoDB collections event feed start time.
+        :type start_time: str
+        :param end_time: Restorable MongoDB collections event feed end time.
+        :type end_time: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either RestorableMongodbCollectionsListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.RestorableMongodbCollectionsListResult]
@@ -68,7 +74,7 @@ class RestorableMongodbCollectionsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-15-preview"
+        api_version = "2021-11-15-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -90,6 +96,10 @@ class RestorableMongodbCollectionsOperations:
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
                 if restorable_mongodb_database_rid is not None:
                     query_parameters['restorableMongodbDatabaseRid'] = self._serialize.query("restorable_mongodb_database_rid", restorable_mongodb_database_rid, 'str')
+                if start_time is not None:
+                    query_parameters['startTime'] = self._serialize.query("start_time", start_time, 'str')
+                if end_time is not None:
+                    query_parameters['endTime'] = self._serialize.query("end_time", end_time, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:

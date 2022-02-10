@@ -23,8 +23,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class RestorableMongodbResourcesOperations(object):
-    """RestorableMongodbResourcesOperations operations.
+class RestorableGremlinGraphsOperations(object):
+    """RestorableGremlinGraphsOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -49,30 +49,32 @@ class RestorableMongodbResourcesOperations(object):
         self,
         location,  # type: str
         instance_id,  # type: str
-        restore_location=None,  # type: Optional[str]
-        restore_timestamp_in_utc=None,  # type: Optional[str]
+        restorable_gremlin_database_rid=None,  # type: Optional[str]
+        start_time=None,  # type: Optional[str]
+        end_time=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["_models.RestorableMongodbResourcesListResult"]
-        """Return a list of database and collection combo that exist on the account at the given timestamp
-        and location. This helps in scenarios to validate what resources exist at given timestamp and
-        location. This API requires
-        'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
+        # type: (...) -> Iterable["_models.RestorableGremlinGraphsListResult"]
+        """Show the event feed of all mutations done on all the Azure Cosmos DB Gremlin graphs under a
+        specific database. This helps in scenario where container was accidentally deleted. This API
+        requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission.
 
         :param location: Cosmos DB region, with spaces between words and each word capitalized.
         :type location: str
         :param instance_id: The instanceId GUID of a restorable database account.
         :type instance_id: str
-        :param restore_location: The location where the restorable resources are located.
-        :type restore_location: str
-        :param restore_timestamp_in_utc: The timestamp when the restorable resources existed.
-        :type restore_timestamp_in_utc: str
+        :param restorable_gremlin_database_rid: The resource ID of the Gremlin database.
+        :type restorable_gremlin_database_rid: str
+        :param start_time: Restorable Gremlin graphs event feed start time.
+        :type start_time: str
+        :param end_time: Restorable Gremlin graphs event feed end time.
+        :type end_time: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either RestorableMongodbResourcesListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableMongodbResourcesListResult]
+        :return: An iterator like instance of either RestorableGremlinGraphsListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.RestorableGremlinGraphsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableMongodbResourcesListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorableGremlinGraphsListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -97,10 +99,12 @@ class RestorableMongodbResourcesOperations(object):
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-                if restore_location is not None:
-                    query_parameters['restoreLocation'] = self._serialize.query("restore_location", restore_location, 'str')
-                if restore_timestamp_in_utc is not None:
-                    query_parameters['restoreTimestampInUtc'] = self._serialize.query("restore_timestamp_in_utc", restore_timestamp_in_utc, 'str')
+                if restorable_gremlin_database_rid is not None:
+                    query_parameters['restorableGremlinDatabaseRid'] = self._serialize.query("restorable_gremlin_database_rid", restorable_gremlin_database_rid, 'str')
+                if start_time is not None:
+                    query_parameters['startTime'] = self._serialize.query("start_time", start_time, 'str')
+                if end_time is not None:
+                    query_parameters['endTime'] = self._serialize.query("end_time", end_time, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -110,7 +114,7 @@ class RestorableMongodbResourcesOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('RestorableMongodbResourcesListResult', pipeline_response)
+            deserialized = self._deserialize('RestorableGremlinGraphsListResult', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -131,4 +135,4 @@ class RestorableMongodbResourcesOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableMongodbResources'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableGraphs'}  # type: ignore
